@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>YESSING 工程計算</title>
+<title>YESSING 工程計算工具箱</title>
 
 <style>
 body{
@@ -35,7 +34,7 @@ body{
     box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
-input{
+input,select{
     width:100%;
     height:50px;
     font-size:22px;
@@ -67,6 +66,15 @@ label{
     font-weight:bold;
 }
 
+.result{
+    background:#fafafa;
+    border-radius:8px;
+    padding:12px;
+    margin-top:10px;
+    text-align:center;
+    font-size:20px;
+}
+
 .nav{
     position:fixed;
     bottom:0;
@@ -82,7 +90,7 @@ label{
     flex:1;
     border:none;
     background:white;
-    font-size:16px;
+    font-size:14px;
 }
 
 .hidden{
@@ -112,6 +120,16 @@ label{
     cursor:pointer;
     font-size:14px;
     margin-left:5px;
+}
+
+.note{
+    background:#fff3cd;
+    color:red;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:10px;
 }
 
 .modal{
@@ -151,37 +169,22 @@ label{
 
 <body>
 
-<div class="header">
-YESSING 工程計算
-</div>
+<div class="header">YESSING 工程計算工具箱</div>
 
 <div id="page1" class="page">
-
 <div class="card">
-<h2>刺皮剩餘長度計算</h2>
+<h2>剩餘長度計算</h2>
 
-<label>
-外徑(mm)
-<span class="help-btn" onclick="showImage('outer_diameter')">?</span>
-</label>
+<label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
 <input id="outerDia">
 
-<label>
-內徑(mm)不含紙管
-<span class="help-btn" onclick="showImage('inner_diameter')">?</span>
-</label>
+<label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
 <input id="innerDia">
 
-<label>
-刺皮總厚(mm)
-<span class="help-btn" onclick="showImage('total_thickness')">?</span>
-</label>
+<label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
 <input id="totalThickness">
 
-<label>
-刺皮厚(mm)(一般是1.7)
-<span class="help-btn" onclick="showImage('layer_thickness')">?</span>
-</label>
+<label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
 <input id="layerThickness">
 
 <div class="total">
@@ -190,61 +193,42 @@ YESSING 工程計算
 </div>
 
 <button class="btn" onclick="clearRemain()">清除資料</button>
-
 </div>
 </div>
 
 <div id="page2" class="page hidden">
-
 <div class="card">
-<h2>輪子需要的刺皮長度計算</h2>
+<h2>刺皮長度計算</h2>
 
-<label>
-輪面長度(mm)
-<span class="help-btn" onclick="showImage('surface_length')">?</span>
-</label>
+<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
 <input id="faceLength">
 
-<label>
-刺皮寬度(mm)
-<span class="help-btn" onclick="showImage('skin_width')">?</span>
-</label>
+<label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
 <input id="skinWidth">
 
-<label>
-輪子直徑(mm)
-<span class="help-btn" onclick="showImage('surface_length')">?</span>
-</label>
+<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
 <input id="skinDiameter">
 
 <div class="total">
-<div>刺皮所需總長度</div>
+<div>刺皮總長度</div>
 <div id="skinResult" class="total-value">0 mm</div>
 </div>
 
 <button class="btn" onclick="clearSkin()">清除資料</button>
-
 </div>
 </div>
 
 <div id="page3" class="page hidden">
-
 <div class="card">
 <h2>鐵氟龍長度計算</h2>
 
-<label>
-輪子直徑(mm)
-<span class="help-btn" onclick="showImage('surface_length')">?</span>
-</label>
+<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
 <input id="teflonDiameter">
 
-<label>鐵氟龍寬度(mm)(一般是1000)</label>
+<label>鐵氟龍寬度(mm)</label>
 <input id="teflonWidth">
 
-<label>
-輪面長度(mm)
-<span class="help-btn" onclick="showImage('surface_length')">?</span>
-</label>
+<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
 <input id="teflonFace">
 
 <label>支數</label>
@@ -256,30 +240,61 @@ YESSING 工程計算
 </div>
 
 <button class="btn" onclick="clearTeflon()">清除資料</button>
+</div>
+</div>
 
+<div id="page4" class="page hidden">
+<div class="card">
+<h2>電熱管電流計算</h2>
+
+<div class="note">注意是機台電壓，不是電熱管電壓</div>
+
+<label>電熱管瓦特數(W)</label>
+<input id="heaterWatt">
+
+<label>支數</label>
+<input id="heaterQty">
+
+<label>機台電壓(V)</label>
+<input id="machineVoltage" value="380">
+
+<label>相數</label>
+<select id="phaseType">
+<option value="3">三相</option>
+<option value="1">單相 / 兩相</option>
+</select>
+
+<div class="total">
+<div>安培數</div>
+<div id="heaterAmpResult" class="total-value">0.00 A</div>
+</div>
+
+<div class="result">
+總瓦數：<span id="heaterTotalWatt">0</span> W
+</div>
+
+<button class="btn" onclick="clearHeater()">清除資料</button>
 </div>
 </div>
 
 <div class="nav">
-<button onclick="showPage(1)">🧵<br>刺皮剩餘長度</button>
-<button onclick="showPage(2)">📏<br>所需刺皮長度</button>
-<button onclick="showPage(3)">🟫<br>鐵氟龍</button>
+<button onclick="showPage(1)">🧵<br>剩餘長度</button>
+<button onclick="showPage(2)">📏<br>刺皮長度</button>
+<button onclick="showPage(3)">⚙️<br>鐵氟龍</button>
+<button onclick="showPage(4)">⚡<br>電熱管</button>
 </div>
 
 <div id="imgModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeImage()">×</span>
-        <img id="helpImage" src="">
-    </div>
+<div class="modal-content">
+<span class="close" onclick="closeImage()">×</span>
+<img id="helpImage" src="">
+</div>
 </div>
 
 <script>
 function showPage(page){
-    document.querySelectorAll('.page')
-    .forEach(p=>p.classList.add('hidden'));
-
-    document.getElementById('page'+page)
-    .classList.remove('hidden');
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById('page'+page).classList.remove('hidden');
 }
 
 function getValue(id){
@@ -296,8 +311,7 @@ function calcRemain(){
     let turns = layer > 0 ? total / layer : 0;
     let len = avg * turns;
 
-    document.getElementById("remainResult").innerHTML =
-    len.toFixed(2) + " mm";
+    document.getElementById("remainResult").innerHTML = len.toFixed(2) + " mm";
 }
 
 function calcSkin(){
@@ -308,8 +322,7 @@ function calcSkin(){
     let turns = width > 0 ? face / width : 0;
     let len = turns * (dia * Math.PI);
 
-    document.getElementById("skinResult").innerHTML =
-    len.toFixed(2) + " mm";
+    document.getElementById("skinResult").innerHTML = len.toFixed(2) + " mm";
 }
 
 function calcTeflon(){
@@ -322,44 +335,68 @@ function calcTeflon(){
     let sheets = width > 0 ? Math.ceil(circumference / width) : 0;
     let len = face * sheets * qtys;
 
-    document.getElementById("teflonResult").innerHTML =
-    len.toFixed(0) + " mm";
+    document.getElementById("teflonResult").innerHTML = len.toFixed(0) + " mm";
+}
+
+function calcHeater(){
+    let watt = getValue("heaterWatt");
+    let qty = getValue("heaterQty");
+    let voltage = getValue("machineVoltage");
+    let phase = document.getElementById("phaseType").value;
+
+    let totalWatt = watt * qty;
+    let amp = 0;
+
+    if(voltage > 0){
+        if(phase === "3"){
+            amp = totalWatt / voltage / 1.732;
+        }else{
+            amp = totalWatt / voltage;
+        }
+    }
+
+    document.getElementById("heaterAmpResult").innerHTML = amp.toFixed(2) + " A";
+    document.getElementById("heaterTotalWatt").innerHTML = totalWatt.toFixed(0);
 }
 
 function clearRemain(){
-    document.getElementById("outerDia").value = "";
-    document.getElementById("innerDia").value = "";
-    document.getElementById("totalThickness").value = "";
-    document.getElementById("layerThickness").value = "";
+    outerDia.value="";
+    innerDia.value="";
+    totalThickness.value="";
+    layerThickness.value="";
     calcRemain();
 }
 
 function clearSkin(){
-    document.getElementById("faceLength").value = "";
-    document.getElementById("skinWidth").value = "";
-    document.getElementById("skinDiameter").value = "";
+    faceLength.value="";
+    skinWidth.value="";
+    skinDiameter.value="";
     calcSkin();
 }
 
 function clearTeflon(){
-    document.getElementById("teflonDiameter").value = "";
-    document.getElementById("teflonWidth").value = "";
-    document.getElementById("teflonFace").value = "";
-    document.getElementById("qty").value = "";
+    teflonDiameter.value="";
+    teflonWidth.value="";
+    teflonFace.value="";
+    qty.value="";
     calcTeflon();
 }
 
-function showImage(fileName){
-    document.getElementById("helpImage").src =
-    "./images/" + fileName + ".jpg";
+function clearHeater(){
+    heaterWatt.value="";
+    heaterQty.value="";
+    machineVoltage.value="380";
+    phaseType.value="3";
+    calcHeater();
+}
 
-    document.getElementById("imgModal").style.display =
-    "block";
+function showImage(fileName){
+    document.getElementById("helpImage").src = "./images/" + fileName + ".jpg";
+    document.getElementById("imgModal").style.display = "block";
 }
 
 function closeImage(){
-    document.getElementById("imgModal").style.display =
-    "none";
+    document.getElementById("imgModal").style.display = "none";
 }
 
 document.getElementById("imgModal").addEventListener("click",function(e){
@@ -368,12 +405,19 @@ document.getElementById("imgModal").addEventListener("click",function(e){
     }
 });
 
-document.querySelectorAll("input")
-.forEach(i=>{
+document.querySelectorAll("input,select").forEach(i=>{
     i.addEventListener("input",()=>{
         calcRemain();
         calcSkin();
         calcTeflon();
+        calcHeater();
+    });
+
+    i.addEventListener("change",()=>{
+        calcRemain();
+        calcSkin();
+        calcTeflon();
+        calcHeater();
     });
 });
 </script>
