@@ -158,7 +158,7 @@ YESSING 工程計算工具箱
 <div id="page1" class="page">
 
 <div class="card">
-<h2>剩餘長度計算</h2>
+<h2>刺皮剩餘長度計算</h2>
 
 <label>
 外徑(mm)
@@ -167,19 +167,19 @@ YESSING 工程計算工具箱
 <input id="outerDia">
 
 <label>
-內徑(mm)
+內徑(mm)不含紙管
 <span class="help-btn" onclick="showImage('inner_diameter')">?</span>
 </label>
 <input id="innerDia">
 
 <label>
-剩皮總厚(mm)
+刺皮總厚(mm)
 <span class="help-btn" onclick="showImage('total_thickness')">?</span>
 </label>
 <input id="totalThickness">
 
 <label>
-次皮厚(mm)
+刺皮厚(mm)(一般是1.7)
 <span class="help-btn" onclick="showImage('layer_thickness')">?</span>
 </label>
 <input id="layerThickness">
@@ -197,7 +197,7 @@ YESSING 工程計算工具箱
 <div id="page2" class="page hidden">
 
 <div class="card">
-<h2>刺皮長度計算</h2>
+<h2>輪子需要的刺皮長度計算</h2>
 
 <label>
 輪面長度(mm)
@@ -215,7 +215,7 @@ YESSING 工程計算工具箱
 <input id="skinDiameter">
 
 <div class="total">
-<div>刺皮總長度</div>
+<div>刺皮所需總長度</div>
 <div id="skinResult" class="total-value">0 mm</div>
 </div>
 
@@ -235,7 +235,7 @@ YESSING 工程計算工具箱
 </label>
 <input id="teflonDiameter">
 
-<label>鐵氟龍寬度(mm)</label>
+<label>鐵氟龍寬度(mm)(一般是1000)</label>
 <input id="teflonWidth">
 
 <label>
@@ -258,8 +258,8 @@ YESSING 工程計算工具箱
 </div>
 
 <div class="nav">
-<button onclick="showPage(1)">📏<br>剩餘長度</button>
-<button onclick="showPage(2)">🧵<br>刺皮長度</button>
+<button onclick="showPage(1)">📏<br>刺皮剩餘長度</button>
+<button onclick="showPage(2)">🧵<br>所需刺皮長度</button>
 <button onclick="showPage(3)">⚙️<br>鐵氟龍</button>
 </div>
 
