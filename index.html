@@ -257,6 +257,83 @@ label{
 .main{
     margin-left:220px;
 }
+
+@media (min-width:769px){
+
+    body{
+        background:#f3f4f6;
+    }
+
+    .header{
+        margin-left:220px;
+        height:80px;
+        padding:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:15px;
+    }
+
+    .top-logo{
+        width:58px;
+        height:58px;
+        object-fit:contain;
+        background:white;
+        padding:4px;
+    }
+
+    .header-title{
+        font-size:26px;
+        font-weight:bold;
+    }
+
+    .sidebar{
+        display:block;
+        position:fixed;
+        left:0;
+        top:0;
+        width:220px;
+        height:100vh;
+        background:#003366;
+        padding-top:25px;
+        z-index:1000;
+    }
+
+    .sidebar button{
+        width:100%;
+        height:72px;
+        border:none;
+        background:#003366;
+        color:white;
+        font-size:22px;
+        font-weight:bold;
+        text-align:left;
+        padding-left:18px;
+        cursor:pointer;
+    }
+
+    .sidebar button:hover{
+        background:#004c99;
+    }
+
+    .page{
+        margin-left:220px;
+        max-width:980px;
+        padding:15px;
+        margin-right:auto;
+    }
+
+    .card{
+        max-width:900px;
+        margin:0 auto 20px auto;
+        padding:25px;
+    }
+
+    .nav{
+        display:none;
+    }
+}
+    
     
 </style>
 </head>
