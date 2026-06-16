@@ -113,107 +113,13 @@ label{
     font-size:18px;
 }
 
-/* ===== Sidebar ===== */
-.sidebar{
-    position:fixed;
-    top:0;
-    left:-240px;
-    width:240px;
-    height:100%;
-    background:#003366;
-    color:white;
-    padding-top:60px;
-    transition:0.3s;
-    z-index:1000;
-}
-
-.sidebar button{
-    width:100%;
-    padding:15px;
-    border:none;
-    background:none;
-    color:white;
-    text-align:left;
-    font-size:18px;
-}
-
-.sidebar.active{
-    left:0;
-}
-
-/* ===== Overlay ===== */
-.overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.4);
-    opacity:0;
-    visibility:hidden;
-    transition:0.2s;
-    z-index:900;
-}
-
-.overlay.active{
-    opacity:1;
-    visibility:visible;
-}
-
-/* ===== 深色模式 ===== */
-.dark{
-    background:#121212;
-    color:white;
-}
-
-.dark .card{
-    background:#1e1e1e;
-    color:white;
-}
-
-.dark input{
-    background:#333;
-    color:white;
-    border:1px solid #555;
-}
-
-.dark .header{
-    background:#000;
-}
-
-/* ===== 深色按鈕 ===== */
-.theme-toggle{
-    position:fixed;
-    top:10px;
-    right:10px;
-    font-size:22px;
-    cursor:pointer;
-    z-index:2000;
-}
-    
-
 </style>
 </head>
-<!-- 深色模式按鈕 -->
-<div class="theme-toggle" onclick="toggleTheme()">
-    🌙
-</div>
 
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar">
-    <button onclick="showPage(1);closeSidebar()">📏 剩餘長度</button>
-    <button onclick="showPage(2);closeSidebar()">🧵 刺皮長度</button>
-    <button onclick="showPage(3);closeSidebar()">⚙️ 鐵氟龍</button>
-</div>
-
-<!-- 背景遮罩 -->
-<div id="overlay" class="overlay" onclick="closeSidebar()"></div>
-    
 <body>
 
 <div class="header">
-    <button class="menu-btn" onclick="openSidebar()">☰</button>
-    YESSING 工程計算
+YESSING 工程計算
 </div>
 
 <!-- 剩餘長度 -->
@@ -443,37 +349,6 @@ calcTeflon();
 });
 
 });
-
-/* ===== Sidebar 開關 ===== */
-function openSidebar(){
-    document.getElementById("sidebar").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
-}
-
-function closeSidebar(){
-    document.getElementById("sidebar").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
-}
-
-/* ===== 深色模式 ===== */
-function toggleTheme(){
-    document.body.classList.toggle("dark");
-
-    let isDark = document.body.classList.contains("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-
-    document.querySelector(".theme-toggle").innerText =
-        isDark ? "🌞" : "🌙";
-}
-
-/* ===== 初始化深色模式 ===== */
-(function(){
-    if(localStorage.getItem("theme") === "dark"){
-        document.body.classList.add("dark");
-        document.querySelector(".theme-toggle").innerText = "🌞";
-    }
-})();    
-    
 
 </script>
 
