@@ -369,13 +369,23 @@ function calcSkin(){
 }
 
 function calcTeflon(){
-    let d=getValue("teflonDiameter");
-    let w=getValue("teflonWidth");
-    let f=getValue("teflonFace");
-    let q=getValue("qty");
+    let dia = getValue("teflonDiameter");
+    let width = getValue("teflonWidth");
+    let face = getValue("teflonFace");
+    let qtys = getValue("qty");
 
-    let sheets=Math.ceil((d*Math.PI)/w);
-    document.getElementById("teflonResult").innerText=(f*sheets*q).toFixed(0)+" mm";
+    let len = 0;
+
+    if(dia > 0 && width > 0 && face > 0 && qtys > 0){
+
+        let circumference = dia * Math.PI;
+        let sheets = Math.ceil(circumference / width);
+
+        len = face * sheets * qtys;
+    }
+
+    document.getElementById("teflonResult").innerText =
+        len.toFixed(0) + " mm";
 }
 
 function calcHeater(){
