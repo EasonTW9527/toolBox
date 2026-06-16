@@ -275,23 +275,51 @@ label{
     }
 
     .main{
-        margin-left:220px;
-    }
+    margin-left:0;
+    transition:.3s;
+}
+
+.main.shift{
+    margin-left:220px;
+}
 
     .header{
-        margin-left:220px;
-        height:80px;
-        padding:0;
-    }
-
-    .header-title{
-        font-size:26px;
-    }
-
+    transition:.3s;
 }
+
+.header.shift{
+    margin-left:220px;
+}
+
+    /* ===================================
+   側滑
+=================================== */
+
+    .menu-btn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
+}
+    .sidebar{
+    position:fixed;
+    left:-220px;
+    top:0;
+    width:220px;
+    height:100vh;
+    background:#003366;
+    transition:.3s;
+    z-index:1000;
+}
+
+.sidebar.active{
+    left:0;
+}
+    
     </style>
     
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
 
     <button onclick="showPage(1)">
         🧵 剩餘長度
@@ -311,14 +339,17 @@ label{
 
 </div>
 <div class="header">
-    <img
-        src="./images/logo.jpg"
-        class="logo"
-        alt="葉興機械">
+    <button class="menu-btn"
+            onclick="toggleSidebar()">
+        ☰
+    </button>
+    <img src="./images/logo.jpg"
+         class="logo">
     <span class="header-title">
         YESSING 工程計算
     </span>
 </div>
+    
 <div class="main">
 <div id="page1" class="page">
 <div class="card">
@@ -610,6 +641,23 @@ document.querySelectorAll("input,select").forEach(i=>{
         calcHeater();
     });
 });
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("active");
+
+    document
+        .querySelector(".main")
+        .classList.toggle("shift");
+
+    document
+        .querySelector(".header")
+        .classList.toggle("shift");
+
+}
+    
 </script>
 
 </body>
