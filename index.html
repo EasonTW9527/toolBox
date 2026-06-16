@@ -211,16 +211,24 @@ label{
 <h2>刺皮剩餘長度</h2>
 
 <label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
-<input id="outerDia">
+<input id="outerDia" 
+       type="number"
+       inputmode="decimal">
 
 <label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
-<input id="innerDia">
+<input id="innerDia"
+       type="number"
+       inputmode="decimal">
 
 <label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
-<input id="totalThickness">
+<input id="totalThickness"
+    type="number"
+       inputmode="decimal">
 
 <label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
-<input id="layerThickness">
+<input id="layerThickness"
+    type="number"
+       inputmode="decimal">
 
 <div class="total">
 <div>總長度</div>
@@ -236,13 +244,19 @@ label{
 <h2>輪子所需刺皮長度</h2>
 
 <label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="faceLength">
+<input id="faceLength"
+    type="number"
+       inputmode="decimal">
 
 <label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
-<input id="skinWidth">
+<input id="skinWidth"
+    type="number"
+       inputmode="decimal">
 
 <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="skinDiameter">
+<input id="skinDiameter"
+    type="number"
+       inputmode="decimal">
 
 <div class="total">
 <div>刺皮總長度</div>
@@ -258,16 +272,24 @@ label{
 <h2>鐵氟龍長度計算</h2>
 
 <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonDiameter">
+<input id="teflonDiameter"
+    type="number"
+       inputmode="decimal">
 
 <label>鐵氟龍寬度(mm)</label>
-<input id="teflonWidth">
+<input id="teflonWidth"
+    type="number"
+       inputmode="decimal">
 
 <label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonFace">
+<input id="teflonFace"
+    type="number"
+       inputmode="decimal">
 
 <label>支數</label>
-<input id="qty">
+<input id="qty"
+    type="number"
+       inputmode="decimal">
 
 <div class="total">
 <div>鐵氟龍總長度</div>
@@ -285,13 +307,19 @@ label{
 <div class="note">注意是機台電壓，不是電熱管電壓</div>
 
 <label>電熱管瓦特數(W)</label>
-<input id="heaterWatt">
+<input id="heaterWatt"
+    type="number"
+       inputmode="decimal">
 
 <label>支數(如果是三相，支數必定是3的倍數)</label>
-<input id="heaterQty">
+<input id="heaterQty"
+    type="number"
+       inputmode="decimal">
 
 <label>機台電壓(V)</label>
-<input id="machineVoltage" value="380">
+<input id="machineVoltage" value="380"
+    type="number"
+       inputmode="decimal">
 
 <label>相數</label>
 <select id="phaseType">
