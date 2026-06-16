@@ -183,6 +183,14 @@ label{
     cursor:pointer;
     font-weight:bold;
 }
+.error-msg{
+    color:red;
+    font-size:22px;
+    font-weight:bold;
+    text-align:center;
+    margin-top:10px;
+}
+    
 </style>
 </head>
 
@@ -300,6 +308,8 @@ label{
 總瓦數：<span id="heaterTotalWatt">0</span> W
 </div>
 
+<div id="heaterError" class="error-msg"></div>
+
 <button class="btn" onclick="clearHeater()">清除資料</button>
 </div>
 </div>
@@ -374,6 +384,16 @@ function calcHeater(){
     let totalWatt = watt * qty;
     let amp = 0;
 
+    document.getElementById("heaterError").innerHTML = "";
+    if(phase === "3" && qty > 0 && qty % 3 !== 0){
+        document.getElementById("heaterError").innerHTML =
+        "支數錯誤：三相支數必須是 3 的倍數";
+        document.getElementById("heaterAmpResult").innerHTML =
+        "0.00 A";
+        document.getElementById("heaterTotalWatt").innerHTML =
+        totalWatt.toFixed(0);
+        return;
+    }
     if(voltage > 0){
         if(phase === "3"){
             amp = totalWatt / voltage / 1.732;
@@ -381,9 +401,10 @@ function calcHeater(){
             amp = totalWatt / voltage;
         }
     }
-
-    document.getElementById("heaterAmpResult").innerHTML = amp.toFixed(2) + " A";
-    document.getElementById("heaterTotalWatt").innerHTML = totalWatt.toFixed(0);
+    document.getElementById("heaterAmpResult").innerHTML =
+    amp.toFixed(2) + " A";
+    document.getElementById("heaterTotalWatt").innerHTML =
+    totalWatt.toFixed(0);
 }
 
 function clearRemain(){
