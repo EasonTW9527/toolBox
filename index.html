@@ -7,9 +7,6 @@
 <title>YESSING 工程計算工具箱</title>
 
 <style>
-
-/* ===== 全域 ===== */
-
 body{
     margin:0;
     background:#f3f4f6;
@@ -46,23 +43,13 @@ input{
     background:#ffff66;
     border:1px solid #ccc;
     border-radius:8px;
+    box-sizing:border-box;
 }
 
 label{
     display:block;
     margin-bottom:5px;
-    font-weight:bold;
-}
-
-.result{
-    background:#fafafa;
-    border-radius:8px;
-    padding:10px;
-    margin-top:10px;
-}
-
-.result-value{
-    font-size:28px;
+    margin-top:12px;
     font-weight:bold;
 }
 
@@ -113,6 +100,52 @@ label{
     font-size:18px;
 }
 
+.help-btn{
+    display:inline-block;
+    width:22px;
+    height:22px;
+    line-height:22px;
+    text-align:center;
+    background:#007bff;
+    color:white;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:14px;
+    margin-left:5px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.7);
+}
+
+.modal-content{
+    background:white;
+    margin:5% auto;
+    padding:15px;
+    width:90%;
+    max-width:600px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.modal-content img{
+    width:100%;
+    max-width:550px;
+}
+
+.close{
+    float:right;
+    font-size:30px;
+    cursor:pointer;
+    font-weight:bold;
+}
 </style>
 </head>
 
@@ -122,82 +155,93 @@ label{
 YESSING 工程計算工具箱
 </div>
 
-<!-- 剩餘長度 -->
 <div id="page1" class="page">
 
 <div class="card">
 <h2>剩餘長度計算</h2>
 
-<label>外徑(mm)</label>
+<label>
+外徑(mm)
+<span class="help-btn" onclick="showImage('outer_diameter')">?</span>
+</label>
 <input id="outerDia">
 
-<label>內徑(mm)</label>
+<label>
+內徑(mm)
+<span class="help-btn" onclick="showImage('inner_diameter')">?</span>
+</label>
 <input id="innerDia">
 
-<label>剩皮總厚(mm)</label>
+<label>
+剩皮總厚(mm)
+<span class="help-btn" onclick="showImage('total_thickness')">?</span>
+</label>
 <input id="totalThickness">
 
-<label>次皮厚(mm)</label>
+<label>
+次皮厚(mm)
+<span class="help-btn" onclick="showImage('layer_thickness')">?</span>
+</label>
 <input id="layerThickness">
 
 <div class="total">
 <div>總長度</div>
-<div id="remainResult" class="total-value">
-0 mm
-</div>
+<div id="remainResult" class="total-value">0 mm</div>
 </div>
 
-<button class="btn" onclick="clearRemain()">
-清除資料
-</button>
+<button class="btn" onclick="clearRemain()">清除資料</button>
 
 </div>
-
 </div>
 
-<!-- 刺皮長度 -->
 <div id="page2" class="page hidden">
 
 <div class="card">
 <h2>刺皮長度計算</h2>
 
-<label>輪面長度(mm)</label>
+<label>
+輪面長度(mm)
+<span class="help-btn" onclick="showImage('surface_length')">?</span>
+</label>
 <input id="faceLength">
 
 <label>刺皮寬度(mm)</label>
 <input id="skinWidth">
 
-<label>輪子直徑(mm)</label>
+<label>
+輪子直徑(mm)
+<span class="help-btn" onclick="showImage('wheel_diameter')">?</span>
+</label>
 <input id="skinDiameter">
 
 <div class="total">
 <div>刺皮總長度</div>
-<div id="skinResult" class="total-value">
-0 mm
-</div>
+<div id="skinResult" class="total-value">0 mm</div>
 </div>
 
-<button class="btn" onclick="clearSkin()">
-清除資料
-</button>
+<button class="btn" onclick="clearSkin()">清除資料</button>
 
 </div>
-
 </div>
 
-<!-- 鐵氟龍 -->
 <div id="page3" class="page hidden">
 
 <div class="card">
 <h2>鐵氟龍長度計算</h2>
 
-<label>輪子直徑(mm)</label>
+<label>
+輪子直徑(mm)
+<span class="help-btn" onclick="showImage('wheel_diameter')">?</span>
+</label>
 <input id="teflonDiameter">
 
 <label>鐵氟龍寬度(mm)</label>
 <input id="teflonWidth">
 
-<label>輪面長度(mm)</label>
+<label>
+輪面長度(mm)
+<span class="help-btn" onclick="showImage('surface_length')">?</span>
+</label>
 <input id="teflonFace">
 
 <label>支數</label>
@@ -205,151 +249,130 @@ YESSING 工程計算工具箱
 
 <div class="total">
 <div>鐵氟龍總長度</div>
-<div id="teflonResult" class="total-value">
-0 mm
-</div>
+<div id="teflonResult" class="total-value">0 mm</div>
 </div>
 
-<button class="btn" onclick="clearTeflon()">
-清除資料
-</button>
+<button class="btn" onclick="clearTeflon()">清除資料</button>
 
 </div>
-
 </div>
-
-<!-- 底部選單 -->
 
 <div class="nav">
+<button onclick="showPage(1)">📏<br>剩餘長度</button>
+<button onclick="showPage(2)">🧵<br>刺皮長度</button>
+<button onclick="showPage(3)">⚙️<br>鐵氟龍</button>
+</div>
 
-<button onclick="showPage(1)">
-📏<br>剩餘長度
-</button>
-
-<button onclick="showPage(2)">
-🧵<br>刺皮長度
-</button>
-
-<button onclick="showPage(3)">
-⚙️<br>鐵氟龍
-</button>
-
+<div id="imgModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeImage()">×</span>
+        <img id="helpImage" src="">
+    </div>
 </div>
 
 <script>
-
-/* 頁面切換 */
-
 function showPage(page){
+    document.querySelectorAll('.page')
+    .forEach(p=>p.classList.add('hidden'));
 
-document.querySelectorAll('.page')
-.forEach(p=>p.classList.add('hidden'));
-
-document.getElementById('page'+page)
-.classList.remove('hidden');
-
+    document.getElementById('page'+page)
+    .classList.remove('hidden');
 }
 
-/* 剩餘長度 */
+function getValue(id){
+    return parseFloat(document.getElementById(id).value) || 0;
+}
 
 function calcRemain(){
+    let od = getValue("outerDia");
+    let id = getValue("innerDia");
+    let total = getValue("totalThickness");
+    let layer = getValue("layerThickness");
 
-let od=parseFloat(outerDia.value)||0;
-let id=parseFloat(innerDia.value)||0;
-let total=parseFloat(totalThickness.value)||0;
-let layer=parseFloat(layerThickness.value)||0;
+    let avg = ((od * Math.PI) + (id * Math.PI)) / 2;
+    let turns = layer > 0 ? total / layer : 0;
+    let len = avg * turns;
 
-let avg=((od*Math.PI)+(id*Math.PI))/2;
-
-let turns=layer>0?total/layer:0;
-
-let len=avg*turns;
-
-remainResult.innerHTML=
-len.toFixed(2)+" mm";
-
+    document.getElementById("remainResult").innerHTML =
+    len.toFixed(2) + " mm";
 }
-
-/* 刺皮 */
 
 function calcSkin(){
+    let face = getValue("faceLength");
+    let width = getValue("skinWidth");
+    let dia = getValue("skinDiameter");
 
-let face=parseFloat(faceLength.value)||0;
-let width=parseFloat(skinWidth.value)||0;
-let dia=parseFloat(skinDiameter.value)||0;
+    let turns = width > 0 ? face / width : 0;
+    let len = turns * (dia * Math.PI);
 
-let turns=width>0?face/width:0;
-
-let len=turns*(dia*Math.PI);
-
-skinResult.innerHTML=
-len.toFixed(2)+" mm";
-
+    document.getElementById("skinResult").innerHTML =
+    len.toFixed(2) + " mm";
 }
-
-/* 鐵氟龍 */
 
 function calcTeflon(){
+    let dia = getValue("teflonDiameter");
+    let width = getValue("teflonWidth");
+    let face = getValue("teflonFace");
+    let qtys = getValue("qty");
 
-let dia=parseFloat(teflonDiameter.value)||0;
-let width=parseFloat(teflonWidth.value)||0;
-let face=parseFloat(teflonFace.value)||0;
-let qtys=parseFloat(qty.value)||0;
+    let circumference = dia * Math.PI;
+    let sheets = width > 0 ? Math.ceil(circumference / width) : 0;
+    let len = face * sheets * qtys;
 
-let circumference=dia*3.14;
-
-let sheets=
-width>0?
-Math.ceil(circumference/width):0;
-
-let len=
-face*sheets*qtys;
-
-teflonResult.innerHTML=
-len.toFixed(0)+" mm";
-
+    document.getElementById("teflonResult").innerHTML =
+    len.toFixed(0) + " mm";
 }
 
-/* 清除 */
-
 function clearRemain(){
-outerDia.value="";
-innerDia.value="";
-totalThickness.value="";
-layerThickness.value="";
-calcRemain();
+    document.getElementById("outerDia").value = "";
+    document.getElementById("innerDia").value = "";
+    document.getElementById("totalThickness").value = "";
+    document.getElementById("layerThickness").value = "";
+    calcRemain();
 }
 
 function clearSkin(){
-faceLength.value="";
-skinWidth.value="";
-skinDiameter.value="";
-calcSkin();
+    document.getElementById("faceLength").value = "";
+    document.getElementById("skinWidth").value = "";
+    document.getElementById("skinDiameter").value = "";
+    calcSkin();
 }
 
 function clearTeflon(){
-teflonDiameter.value="";
-teflonWidth.value="";
-teflonFace.value="";
-qty.value="";
-calcTeflon();
+    document.getElementById("teflonDiameter").value = "";
+    document.getElementById("teflonWidth").value = "";
+    document.getElementById("teflonFace").value = "";
+    document.getElementById("qty").value = "";
+    calcTeflon();
 }
 
-/* 即時計算 */
+function showImage(fileName){
+    document.getElementById("helpImage").src =
+    "./images/" + fileName + ".jpg";
+
+    document.getElementById("imgModal").style.display =
+    "block";
+}
+
+function closeImage(){
+    document.getElementById("imgModal").style.display =
+    "none";
+}
+
+document.getElementById("imgModal").addEventListener("click",function(e){
+    if(e.target.id === "imgModal"){
+        closeImage();
+    }
+});
 
 document.querySelectorAll("input")
 .forEach(i=>{
-
-i.addEventListener("input",()=>{
-
-calcRemain();
-calcSkin();
-calcTeflon();
-
+    i.addEventListener("input",()=>{
+        calcRemain();
+        calcSkin();
+        calcTeflon();
+    });
 });
-
-});
-
 </script>
 
 </body>
