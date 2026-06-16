@@ -3,149 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>YESSING 工程計算</title>
 
 <style>
 
-/* ===== Base ===== */
+/* ===== 全域 ===== */
+
 body{
     margin:0;
     background:#f3f4f6;
     font-family:"Microsoft JhengHei";
-    overflow-x:hidden;
 }
 
-/* ===== Overlay ===== */
-.overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.45);
-    opacity:0;
-    visibility:hidden;
-    transition:0.25s;
-    z-index:900;
-}
-
-.overlay.active{
-    opacity:1;
-    visibility:visible;
-}
-
-/* ===== Sidebar ===== */
-.sidebar{
-    position:fixed;
-    left:-220px;
-    top:0;
-    width:220px;
-    height:100vh;
-    background:#003366;
-    transition:0.3s ease;
-    z-index:1000;
-    padding-top:20px;
-}
-
-.sidebar.active{
-    left:0;
-}
-
-.sidebar button{
-    width:100%;
-    height:60px;
-    border:none;
-    background:#003366;
-    color:white;
-    font-size:16px;
-    text-align:left;
-    padding-left:15px;
-}
-
-.sidebar button:hover{
-    background:#004c99;
-}
-
-/* ===== Header ===== */
 .header{
     background:#003366;
     color:white;
-    padding:10px 15px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-}
-
-.menu-btn{
-    position:absolute;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-    background:none;
-    border:none;
-    color:white;
-    font-size:30px;
-    cursor:pointer;
-}
-
-.logo{
-    height:40px;
-    margin-right:10px;
-}
-
-/* ===== Layout ===== */
-.main{
-    margin-left:0;
-    transition:.3s;
-}
-
-.main.shift{
-    margin-left:220px;
-}
-
-.header.shift{
-    margin-left:220px;
-    transition:.3s;
-}
-
-/* ===== Pages ===== */
-.page{
-    max-width:900px;
-    margin:auto;
+    text-align:center;
     padding:15px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.page{
+    padding:15px;
+    padding-bottom:90px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+input{
+    width:100%;
+    height:50px;
+    font-size:22px;
+    text-align:center;
+    background:#ffff66;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.result{
+    background:#fafafa;
+    border-radius:8px;
+    padding:10px;
+    margin-top:10px;
+}
+
+.result-value{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.total{
+    background:#ff3333;
+    color:white;
+    text-align:center;
+    padding:20px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.total-value{
+    font-size:42px;
+    font-weight:bold;
+}
+
+.nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:70px;
+    background:white;
+    display:flex;
+    border-top:1px solid #ddd;
+}
+
+.nav button{
+    flex:1;
+    border:none;
+    background:white;
+    font-size:16px;
 }
 
 .hidden{
     display:none;
 }
 
-.card{
-    background:white;
-    padding:20px;
-    margin-bottom:15px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* ===== Inputs ===== */
-input, select{
+.btn{
     width:100%;
-    height:45px;
-    font-size:18px;
-    text-align:center;
-    margin-top:5px;
-}
-
-/* ===== Result ===== */
-.total{
-    margin-top:10px;
-    padding:15px;
-    background:#ff3333;
+    height:50px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    background:#666;
     color:white;
-    text-align:center;
-    border-radius:10px;
-    font-size:24px;
+    font-size:18px;
 }
 
 </style>
@@ -153,172 +118,236 @@ input, select{
 
 <body>
 
-<!-- Overlay -->
-<div id="overlay" class="overlay"></div>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <button onclick="showPage(1); closeSidebarAuto()">🧵 剩餘長度</button>
-    <button onclick="showPage(2); closeSidebarAuto()">📏 刺皮長度</button>
-    <button onclick="showPage(3); closeSidebarAuto()">⚙️ 鐵氟龍</button>
-    <button onclick="showPage(4); closeSidebarAuto()">⚡ 電熱管</button>
-</div>
-
-<!-- Header -->
 <div class="header">
-    <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">☰</button>
-    <img src="./images/logo.jpg" class="logo">
-    <div>YESSING 工程計算</div>
+YESSING 工程計算
 </div>
 
-<!-- Main -->
-<div class="main">
-
-<!-- Page 1 -->
+<!-- 剩餘長度 -->
 <div id="page1" class="page">
+
 <div class="card">
-<h3>刺皮剩餘長度</h3>
-<input id="outerDia" inputmode="decimal" placeholder="外徑">
-<input id="innerDia" inputmode="decimal" placeholder="內徑">
-<input id="totalThickness" inputmode="decimal" placeholder="總厚">
-<input id="layerThickness" inputmode="decimal" placeholder="單層厚">
-<div class="total" id="remainResult">0 mm</div>
+<h2>剩餘長度計算</h2>
+
+<label>外徑(mm)</label>
+<input id="outerDia">
+
+<label>內徑(mm)</label>
+<input id="innerDia">
+
+<label>剩皮總厚(mm)</label>
+<input id="totalThickness">
+
+<label>次皮厚(mm)</label>
+<input id="layerThickness">
+
+<div class="total">
+<div>總長度</div>
+<div id="remainResult" class="total-value">
+0 mm
 </div>
 </div>
 
-<!-- Page 2 -->
+<button class="btn" onclick="clearRemain()">
+清除資料
+</button>
+
+</div>
+
+</div>
+
+<!-- 刺皮長度 -->
 <div id="page2" class="page hidden">
+
 <div class="card">
-<h3>刺皮長度</h3>
-<input id="faceLength" inputmode="decimal" placeholder="輪面長度">
-<input id="skinWidth" inputmode="decimal" placeholder="寬度">
-<input id="skinDiameter" inputmode="decimal" placeholder="直徑">
-<div class="total" id="skinResult">0 mm</div>
+<h2>刺皮長度計算</h2>
+
+<label>輪面長度(mm)</label>
+<input id="faceLength">
+
+<label>刺皮寬度(mm)</label>
+<input id="skinWidth">
+
+<label>輪子直徑(mm)</label>
+<input id="skinDiameter">
+
+<div class="total">
+<div>刺皮總長度</div>
+<div id="skinResult" class="total-value">
+0 mm
 </div>
 </div>
 
-<!-- Page 3 -->
+<button class="btn" onclick="clearSkin()">
+清除資料
+</button>
+
+</div>
+
+</div>
+
+<!-- 鐵氟龍 -->
 <div id="page3" class="page hidden">
+
 <div class="card">
-<h3>鐵氟龍</h3>
-<input id="teflonDiameter" inputmode="decimal" placeholder="直徑">
-<input id="teflonWidth" inputmode="decimal" placeholder="寬度">
-<input id="teflonFace" inputmode="decimal" placeholder="輪面">
-<input id="qty" inputmode="decimal" placeholder="支數">
-<div class="total" id="teflonResult">0 mm</div>
+<h2>鐵氟龍長度計算</h2>
+
+<label>輪子直徑(mm)</label>
+<input id="teflonDiameter">
+
+<label>鐵氟龍寬度(mm)</label>
+<input id="teflonWidth">
+
+<label>輪面長度(mm)</label>
+<input id="teflonFace">
+
+<label>支數</label>
+<input id="qty">
+
+<div class="total">
+<div>鐵氟龍總長度</div>
+<div id="teflonResult" class="total-value">
+0 mm
 </div>
 </div>
 
-<!-- Page 4 -->
-<div id="page4" class="page hidden">
-<div class="card">
-<h3>電熱管</h3>
-<input id="heaterWatt" inputmode="decimal" placeholder="瓦特">
-<input id="heaterQty" inputmode="decimal" placeholder="支數">
-<input id="machineVoltage" inputmode="decimal" value="380">
+<button class="btn" onclick="clearTeflon()">
+清除資料
+</button>
 
-<select id="phaseType">
-<option value="3">三相</option>
-<option value="1">單相</option>
-</select>
+</div>
 
-<div class="total" id="heaterAmpResult">0 A</div>
 </div>
-</div>
+
+<!-- 底部選單 -->
+
+<div class="nav">
+
+<button onclick="showPage(1)">
+📏<br>剩餘長度
+</button>
+
+<button onclick="showPage(2)">
+🧵<br>刺皮長度
+</button>
+
+<button onclick="showPage(3)">
+⚙️<br>鐵氟龍
+</button>
 
 </div>
 
 <script>
 
-/* ===== Sidebar ===== */
-let sidebarOpen = false;
+/* 頁面切換 */
 
-function toggleSidebar(){
-    sidebarOpen = !sidebarOpen;
+function showPage(page){
 
-    document.getElementById("sidebar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
-    document.querySelector(".main").classList.toggle("shift");
-    document.querySelector(".header").classList.toggle("shift");
+document.querySelectorAll('.page')
+.forEach(p=>p.classList.add('hidden'));
 
-    document.getElementById("menuBtn").innerText = sidebarOpen ? "✕" : "☰";
+document.getElementById('page'+page)
+.classList.remove('hidden');
+
 }
 
-function closeSidebar(){
-    sidebarOpen = false;
+/* 剩餘長度 */
 
-    document.getElementById("sidebar").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
-    document.querySelector(".main").classList.remove("shift");
-    document.querySelector(".header").classList.remove("shift");
+function calcRemain(){
 
-    document.getElementById("menuBtn").innerText = "☰";
+let od=parseFloat(outerDia.value)||0;
+let id=parseFloat(innerDia.value)||0;
+let total=parseFloat(totalThickness.value)||0;
+let layer=parseFloat(layerThickness.value)||0;
+
+let avg=((od*Math.PI)+(id*Math.PI))/2;
+
+let turns=layer>0?total/layer:0;
+
+let len=avg*turns;
+
+remainResult.innerHTML=
+len.toFixed(2)+" mm";
+
 }
 
-document.getElementById("overlay").addEventListener("click", closeSidebar);
+/* 刺皮 */
 
-function closeSidebarAuto(){
-    closeSidebar();
+function calcSkin(){
+
+let face=parseFloat(faceLength.value)||0;
+let width=parseFloat(skinWidth.value)||0;
+let dia=parseFloat(skinDiameter.value)||0;
+
+let turns=width>0?face/width:0;
+
+let len=turns*(dia*Math.PI);
+
+skinResult.innerHTML=
+len.toFixed(2)+" mm";
+
 }
 
-/* ===== Page ===== */
-function showPage(p){
-    document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
-    document.getElementById("page"+p).classList.remove("hidden");
+/* 鐵氟龍 */
+
+function calcTeflon(){
+
+let dia=parseFloat(teflonDiameter.value)||0;
+let width=parseFloat(teflonWidth.value)||0;
+let face=parseFloat(teflonFace.value)||0;
+let qtys=parseFloat(qty.value)||0;
+
+let circumference=dia*3.14;
+
+let sheets=
+width>0?
+Math.ceil(circumference/width):0;
+
+let len=
+face*sheets*qtys;
+
+teflonResult.innerHTML=
+len.toFixed(0)+" mm";
+
 }
 
-/* ===== Input Clean ===== */
-function clean(el){
-    el.value = el.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');
+/* 清除 */
+
+function clearRemain(){
+outerDia.value="";
+innerDia.value="";
+totalThickness.value="";
+layerThickness.value="";
+calcRemain();
 }
 
-/* ===== Calc ===== */
-let timer;
-
-function calcAll(){
-    clearTimeout(timer);
-
-    timer = setTimeout(()=>{
-
-        let od = +outerDia.value || 0;
-        let id = +innerDia.value || 0;
-        let t = +totalThickness.value || 0;
-        let l = +layerThickness.value || 0;
-        remainResult.innerText = ((od+id)/2*Math.PI*(l? t/l:0)).toFixed(2)+" mm";
-
-        let f = +faceLength.value || 0;
-        let w = +skinWidth.value || 0;
-        let d = +skinDiameter.value || 0;
-        skinResult.innerText = (w? f/w:0)*Math.PI*d.toFixed(2)+" mm";
-
-        let td = +teflonDiameter.value || 0;
-        let tw = +teflonWidth.value || 1;
-        let tf = +teflonFace.value || 0;
-        let q = +qty.value || 0;
-        teflonResult.innerText = tf*Math.ceil((td*Math.PI)/tw)*q;
-
-        let watt = +heaterWatt.value || 0;
-        let qtyv = +heaterQty.value || 0;
-        let v = +machineVoltage.value || 1;
-        let phase = phaseType.value;
-        let total = watt*qtyv;
-
-        let amp = phase==="3"? total/v/1.732 : total/v;
-        heaterAmpResult.innerText = amp.toFixed(2)+" A";
-
-    },50);
+function clearSkin(){
+faceLength.value="";
+skinWidth.value="";
+skinDiameter.value="";
+calcSkin();
 }
 
-/* ===== Bind ===== */
-document.querySelectorAll("input").forEach(i=>{
-    i.addEventListener("input", e=>{
-        clean(e.target);
-        calcAll();
-    });
+function clearTeflon(){
+teflonDiameter.value="";
+teflonWidth.value="";
+teflonFace.value="";
+qty.value="";
+calcTeflon();
+}
+
+/* 即時計算 */
+
+document.querySelectorAll("input")
+.forEach(i=>{
+
+i.addEventListener("input",()=>{
+
+calcRemain();
+calcSkin();
+calcTeflon();
+
 });
 
-document.querySelectorAll("select").forEach(i=>{
-    i.addEventListener("change", calcAll);
 });
 
 </script>
