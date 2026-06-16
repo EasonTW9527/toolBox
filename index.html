@@ -57,7 +57,7 @@ body{
     border:none;
     background:#003366;
     color:white;
-    font-size:18px;
+    font-size:16px;
     text-align:left;
     padding-left:15px;
 }
@@ -178,12 +178,10 @@ input, select{
 <div id="page1" class="page">
 <div class="card">
 <h3>刺皮剩餘長度</h3>
-
-<input id="outerDia" placeholder="外徑(mm)">
-<input id="innerDia" placeholder="內徑(mm)">
-<input id="totalThickness" placeholder="剩皮總厚(mm)">
-<input id="layerThickness" placeholder="次皮厚(mm)">
-
+<input id="outerDia" inputmode="decimal" placeholder="外徑">
+<input id="innerDia" inputmode="decimal" placeholder="內徑">
+<input id="totalThickness" inputmode="decimal" placeholder="總厚">
+<input id="layerThickness" inputmode="decimal" placeholder="單層厚">
 <div class="total" id="remainResult">0 mm</div>
 </div>
 </div>
@@ -192,11 +190,9 @@ input, select{
 <div id="page2" class="page hidden">
 <div class="card">
 <h3>刺皮長度</h3>
-
-<input id="faceLength" placeholder="輪面長度">
-<input id="skinWidth" placeholder="刺皮寬度">
-<input id="skinDiameter" placeholder="輪子直徑">
-
+<input id="faceLength" inputmode="decimal" placeholder="輪面長度">
+<input id="skinWidth" inputmode="decimal" placeholder="寬度">
+<input id="skinDiameter" inputmode="decimal" placeholder="直徑">
 <div class="total" id="skinResult">0 mm</div>
 </div>
 </div>
@@ -205,12 +201,10 @@ input, select{
 <div id="page3" class="page hidden">
 <div class="card">
 <h3>鐵氟龍</h3>
-
-<input id="teflonDiameter" placeholder="直徑">
-<input id="teflonWidth" placeholder="寬度">
-<input id="teflonFace" placeholder="輪面長度">
-<input id="qty" placeholder="支數">
-
+<input id="teflonDiameter" inputmode="decimal" placeholder="直徑">
+<input id="teflonWidth" inputmode="decimal" placeholder="寬度">
+<input id="teflonFace" inputmode="decimal" placeholder="輪面">
+<input id="qty" inputmode="decimal" placeholder="支數">
 <div class="total" id="teflonResult">0 mm</div>
 </div>
 </div>
@@ -219,10 +213,9 @@ input, select{
 <div id="page4" class="page hidden">
 <div class="card">
 <h3>電熱管</h3>
-
-<input id="heaterWatt" placeholder="瓦特">
-<input id="heaterQty" placeholder="支數">
-<input id="machineVoltage" value="380" placeholder="電壓">
+<input id="heaterWatt" inputmode="decimal" placeholder="瓦特">
+<input id="heaterQty" inputmode="decimal" placeholder="支數">
+<input id="machineVoltage" inputmode="decimal" value="380">
 
 <select id="phaseType">
 <option value="3">三相</option>
@@ -248,7 +241,7 @@ function toggleSidebar(){
     document.querySelector(".main").classList.toggle("shift");
     document.querySelector(".header").classList.toggle("shift");
 
-    document.getElementById("menuBtn").innerHTML = sidebarOpen ? "✕" : "☰";
+    document.getElementById("menuBtn").innerText = sidebarOpen ? "✕" : "☰";
 }
 
 function closeSidebar(){
@@ -259,7 +252,7 @@ function closeSidebar(){
     document.querySelector(".main").classList.remove("shift");
     document.querySelector(".header").classList.remove("shift");
 
-    document.getElementById("menuBtn").innerHTML = "☰";
+    document.getElementById("menuBtn").innerText = "☰";
 }
 
 document.getElementById("overlay").addEventListener("click", closeSidebar);
@@ -268,52 +261,64 @@ function closeSidebarAuto(){
     closeSidebar();
 }
 
-/* ===== Pages ===== */
-function showPage(page){
-    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('page'+page).classList.remove('hidden');
+/* ===== Page ===== */
+function showPage(p){
+    document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
+    document.getElementById("page"+p).classList.remove("hidden");
 }
 
-/* ===== Helpers ===== */
-function getValue(id){
-    return parseFloat(document.getElementById(id).value) || 0;
+/* ===== Input Clean ===== */
+function clean(el){
+    el.value = el.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1');
 }
 
-/* ===== Calculations ===== */
+/* ===== Calc ===== */
+let timer;
+
 function calcAll(){
+    clearTimeout(timer);
 
-    let od = getValue("outerDia");
-    let id = getValue("innerDia");
-    let total = getValue("totalThickness");
-    let layer = getValue("layerThickness");
-    let len1 = ((od+id)/2)*Math.PI*(layer>0?total/layer:0);
-    document.getElementById("remainResult").innerText = len1.toFixed(2)+" mm";
+    timer = setTimeout(()=>{
 
-    let face = getValue("faceLength");
-    let width = getValue("skinWidth");
-    let dia = getValue("skinDiameter");
-    let len2 = (width>0?face/width:0)*(dia*Math.PI);
-    document.getElementById("skinResult").innerText = len2.toFixed(2)+" mm";
+        let od = +outerDia.value || 0;
+        let id = +innerDia.value || 0;
+        let t = +totalThickness.value || 0;
+        let l = +layerThickness.value || 0;
+        remainResult.innerText = ((od+id)/2*Math.PI*(l? t/l:0)).toFixed(2)+" mm";
 
-    let td = getValue("teflonDiameter");
-    let tw = getValue("teflonWidth");
-    let tf = getValue("teflonFace");
-    let q = getValue("qty");
-    let len3 = tf*Math.ceil((td*Math.PI)/(tw||1))*q;
-    document.getElementById("teflonResult").innerText = len3.toFixed(0)+" mm";
+        let f = +faceLength.value || 0;
+        let w = +skinWidth.value || 0;
+        let d = +skinDiameter.value || 0;
+        skinResult.innerText = (w? f/w:0)*Math.PI*d.toFixed(2)+" mm";
 
-    let watt = getValue("heaterWatt");
-    let qty = getValue("heaterQty");
-    let v = getValue("machineVoltage");
-    let phase = document.getElementById("phaseType").value;
-    let totalW = watt*qty;
-    let amp = phase==="3"?totalW/v/1.732:totalW/v;
-    document.getElementById("heaterAmpResult").innerText = amp.toFixed(2)+" A";
+        let td = +teflonDiameter.value || 0;
+        let tw = +teflonWidth.value || 1;
+        let tf = +teflonFace.value || 0;
+        let q = +qty.value || 0;
+        teflonResult.innerText = tf*Math.ceil((td*Math.PI)/tw)*q;
+
+        let watt = +heaterWatt.value || 0;
+        let qtyv = +heaterQty.value || 0;
+        let v = +machineVoltage.value || 1;
+        let phase = phaseType.value;
+        let total = watt*qtyv;
+
+        let amp = phase==="3"? total/v/1.732 : total/v;
+        heaterAmpResult.innerText = amp.toFixed(2)+" A";
+
+    },50);
 }
 
-/* ===== Auto calc ===== */
-document.querySelectorAll("input,select").forEach(i=>{
-    i.addEventListener("input",calcAll);
+/* ===== Bind ===== */
+document.querySelectorAll("input").forEach(i=>{
+    i.addEventListener("input", e=>{
+        clean(e.target);
+        calcAll();
+    });
+});
+
+document.querySelectorAll("select").forEach(i=>{
+    i.addEventListener("change", calcAll);
 });
 
 </script>
