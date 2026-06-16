@@ -6,6 +6,15 @@
 <title>YESSING 工程計算</title>
 
 <style>
+
+/* ===== Base ===== */
+body{
+    margin:0;
+    background:#f3f4f6;
+    font-family:"Microsoft JhengHei";
+    overflow-x:hidden;
+}
+
 /* ===== Overlay ===== */
 .overlay{
     position:fixed;
@@ -35,13 +44,39 @@
     background:#003366;
     transition:0.3s ease;
     z-index:1000;
+    padding-top:20px;
 }
 
 .sidebar.active{
     left:0;
 }
 
-/* ===== ☰ Button ===== */
+.sidebar button{
+    width:100%;
+    height:60px;
+    border:none;
+    background:#003366;
+    color:white;
+    font-size:18px;
+    text-align:left;
+    padding-left:15px;
+}
+
+.sidebar button:hover{
+    background:#004c99;
+}
+
+/* ===== Header ===== */
+.header{
+    background:#003366;
+    color:white;
+    padding:10px 15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
 .menu-btn{
     position:absolute;
     left:15px;
@@ -54,378 +89,233 @@
     cursor:pointer;
 }
 
-/* ===== shift effect ===== */
+.logo{
+    height:40px;
+    margin-right:10px;
+}
+
+/* ===== Layout ===== */
+.main{
+    margin-left:0;
+    transition:.3s;
+}
+
 .main.shift{
     margin-left:220px;
-    transition:.3s;
 }
 
 .header.shift{
     margin-left:220px;
     transition:.3s;
 }
-    </style>
-    
+
+/* ===== Pages ===== */
+.page{
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+}
+
+.hidden{
+    display:none;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ===== Inputs ===== */
+input, select{
+    width:100%;
+    height:45px;
+    font-size:18px;
+    text-align:center;
+    margin-top:5px;
+}
+
+/* ===== Result ===== */
+.total{
+    margin-top:10px;
+    padding:15px;
+    background:#ff3333;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    font-size:24px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-
-    <button onclick="showPage(1)">
-        🧵 剩餘長度
-    </button>
-
-    <button onclick="showPage(2)">
-        📏 刺皮長度
-    </button>
-
-    <button onclick="showPage(3)">
-        ⚙️ 鐵氟龍
-    </button>
-
-    <button onclick="showPage(4)">
-        ⚡ 電熱管
-    </button>
-
+    <button onclick="showPage(1); closeSidebarAuto()">🧵 剩餘長度</button>
+    <button onclick="showPage(2); closeSidebarAuto()">📏 刺皮長度</button>
+    <button onclick="showPage(3); closeSidebarAuto()">⚙️ 鐵氟龍</button>
+    <button onclick="showPage(4); closeSidebarAuto()">⚡ 電熱管</button>
 </div>
+
+<!-- Header -->
 <div class="header">
-    <button class="menu-btn" onclick="toggleSidebar()" id="menuBtn">
-        ☰
-    </button>
-    <img src="./images/logo.jpg"
-         class="logo">
-    <span class="header-title">
-        YESSING 工程計算
-    </span>
+    <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">☰</button>
+    <img src="./images/logo.jpg" class="logo">
+    <div>YESSING 工程計算</div>
 </div>
-    
+
+<!-- Main -->
 <div class="main">
+
+<!-- Page 1 -->
 <div id="page1" class="page">
 <div class="card">
-<h2>刺皮剩餘長度</h2>
+<h3>刺皮剩餘長度</h3>
 
-<label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
-<input id="outerDia" 
-       type="number"
-       inputmode="decimal">
+<input id="outerDia" placeholder="外徑(mm)">
+<input id="innerDia" placeholder="內徑(mm)">
+<input id="totalThickness" placeholder="剩皮總厚(mm)">
+<input id="layerThickness" placeholder="次皮厚(mm)">
 
-<label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
-<input id="innerDia"
-       type="number"
-       inputmode="decimal">
-
-<label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
-<input id="totalThickness"
-    type="number"
-       inputmode="decimal">
-
-<label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
-<input id="layerThickness"
-    type="number"
-       inputmode="decimal">
-
-<div class="total">
-<div>總長度</div>
-<div id="remainResult" class="total-value">0 mm</div>
-</div>
-
-<button class="btn" onclick="clearRemain()">清除資料</button>
+<div class="total" id="remainResult">0 mm</div>
 </div>
 </div>
 
+<!-- Page 2 -->
 <div id="page2" class="page hidden">
 <div class="card">
-<h2>輪子所需刺皮長度</h2>
+<h3>刺皮長度</h3>
 
-<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="faceLength"
-    type="number"
-       inputmode="decimal">
+<input id="faceLength" placeholder="輪面長度">
+<input id="skinWidth" placeholder="刺皮寬度">
+<input id="skinDiameter" placeholder="輪子直徑">
 
-<label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
-<input id="skinWidth"
-    type="number"
-       inputmode="decimal">
-
-<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="skinDiameter"
-    type="number"
-       inputmode="decimal">
-
-<div class="total">
-<div>刺皮總長度</div>
-<div id="skinResult" class="total-value">0 mm</div>
-</div>
-
-<button class="btn" onclick="clearSkin()">清除資料</button>
+<div class="total" id="skinResult">0 mm</div>
 </div>
 </div>
 
+<!-- Page 3 -->
 <div id="page3" class="page hidden">
 <div class="card">
-<h2>鐵氟龍長度計算</h2>
+<h3>鐵氟龍</h3>
 
-<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonDiameter"
-    type="number"
-       inputmode="decimal">
+<input id="teflonDiameter" placeholder="直徑">
+<input id="teflonWidth" placeholder="寬度">
+<input id="teflonFace" placeholder="輪面長度">
+<input id="qty" placeholder="支數">
 
-<label>鐵氟龍寬度(mm)(通常為1000)</label>
-<input id="teflonWidth"
-    type="number"
-       inputmode="decimal">
-
-<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonFace"
-    type="number"
-       inputmode="decimal">
-
-<label>支數</label>
-<input id="qty"
-    type="number"
-       inputmode="decimal">
-
-<div class="total">
-<div>鐵氟龍總長度</div>
-<div id="teflonResult" class="total-value">0 mm</div>
-</div>
-
-<button class="btn" onclick="clearTeflon()">清除資料</button>
+<div class="total" id="teflonResult">0 mm</div>
 </div>
 </div>
 
+<!-- Page 4 -->
 <div id="page4" class="page hidden">
 <div class="card">
-<h2>電熱管電流計算</h2>
+<h3>電熱管</h3>
 
-<div class="note">注意是機台電壓，不是電熱管電壓</div>
+<input id="heaterWatt" placeholder="瓦特">
+<input id="heaterQty" placeholder="支數">
+<input id="machineVoltage" value="380" placeholder="電壓">
 
-<label>電熱管瓦特數(W)</label>
-<input id="heaterWatt"
-    type="number"
-       inputmode="decimal">
-
-<label>支數(如果是三相，必定是3的倍數)</label>
-<input id="heaterQty"
-    type="number"
-       inputmode="decimal">
-
-<label>機台電壓(V)</label>
-<input id="machineVoltage" value="380"
-    type="number"
-       inputmode="decimal">
-
-<label>相數</label>
 <select id="phaseType">
 <option value="3">三相</option>
-<option value="1">單相 / 兩相</option>
+<option value="1">單相</option>
 </select>
 
-<div class="total">
-<div>安培數</div>
-<div id="heaterAmpResult" class="total-value">0.00 A</div>
+<div class="total" id="heaterAmpResult">0 A</div>
+</div>
 </div>
 
-<div class="result">
-總瓦數：<span id="heaterTotalWatt">0</span> W
-</div>
-
-<div id="heaterError" class="error-msg"></div>
-
-<button class="btn" onclick="clearHeater()">清除資料</button>
-</div>
-</div>
-</div>
-<div class="nav">
-<button onclick="showPage(1)">🧵<br>剩餘長度</button>
-<button onclick="showPage(2)">📏<br>刺皮長度</button>
-<button onclick="showPage(3)">🟫<br>鐵氟龍</button>
-<button onclick="showPage(4)">⚡<br>電熱管</button>
-</div>
-
-<div id="imgModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeImage()">×</span>
-<img id="helpImage" src="">
-</div>
 </div>
 
 <script>
-function showPage(page){
-    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('page'+page).classList.remove('hidden');
-}
 
-function getValue(id){
-    return parseFloat(document.getElementById(id).value) || 0;
-}
-
-function calcRemain(){
-    let od = getValue("outerDia");
-    let id = getValue("innerDia");
-    let total = getValue("totalThickness");
-    let layer = getValue("layerThickness");
-
-    let avg = ((od * Math.PI) + (id * Math.PI)) / 2;
-    let turns = layer > 0 ? total / layer : 0;
-    let len = avg * turns;
-
-    document.getElementById("remainResult").innerHTML = len.toFixed(2) + " mm";
-}
-
-function calcSkin(){
-    let face = getValue("faceLength");
-    let width = getValue("skinWidth");
-    let dia = getValue("skinDiameter");
-
-    let turns = width > 0 ? face / width : 0;
-    let len = turns * (dia * Math.PI);
-
-    document.getElementById("skinResult").innerHTML = len.toFixed(2) + " mm";
-}
-
-function calcTeflon(){
-    let dia = getValue("teflonDiameter");
-    let width = getValue("teflonWidth");
-    let face = getValue("teflonFace");
-    let qtys = getValue("qty");
-
-    let circumference = dia * Math.PI;
-    let sheets = width > 0 ? Math.ceil(circumference / width) : 0;
-    let len = face * sheets * qtys;
-
-    document.getElementById("teflonResult").innerHTML = len.toFixed(0) + " mm";
-}
-
-function calcHeater(){
-    let watt = getValue("heaterWatt");
-    let qty = getValue("heaterQty");
-    let voltage = getValue("machineVoltage");
-    let phase = document.getElementById("phaseType").value;
-
-    let totalWatt = watt * qty;
-    let amp = 0;
-
-    document.getElementById("heaterError").innerHTML = "";
-    if(phase === "3" && qty > 0 && qty % 3 !== 0){
-        document.getElementById("heaterError").innerHTML =
-        "支數錯誤：三相支數必須是 3 的倍數";
-        document.getElementById("heaterAmpResult").innerHTML =
-        "0.00 A";
-        document.getElementById("heaterTotalWatt").innerHTML =
-        totalWatt.toFixed(0);
-        return;
-    }
-    if(voltage > 0){
-        if(phase === "3"){
-            amp = totalWatt / voltage / 1.732;
-        }else{
-            amp = totalWatt / voltage;
-        }
-    }
-    document.getElementById("heaterAmpResult").innerHTML =
-    amp.toFixed(2) + " A";
-    document.getElementById("heaterTotalWatt").innerHTML =
-    totalWatt.toFixed(0);
-}
-
-function clearRemain(){
-    outerDia.value="";
-    innerDia.value="";
-    totalThickness.value="";
-    layerThickness.value="";
-    calcRemain();
-}
-
-function clearSkin(){
-    faceLength.value="";
-    skinWidth.value="";
-    skinDiameter.value="";
-    calcSkin();
-}
-
-function clearTeflon(){
-    teflonDiameter.value="";
-    teflonWidth.value="";
-    teflonFace.value="";
-    qty.value="";
-    calcTeflon();
-}
-
-function clearHeater(){
-    heaterWatt.value="";
-    heaterQty.value="";
-    machineVoltage.value="380";
-    phaseType.value="3";
-    calcHeater();
-}
-
-function showImage(fileName){
-    document.getElementById("helpImage").src = "./images/" + fileName + ".jpg";
-    document.getElementById("imgModal").style.display = "block";
-}
-
-function closeImage(){
-    document.getElementById("imgModal").style.display = "none";
-}
-
-document.getElementById("imgModal").addEventListener("click",function(e){
-    if(e.target.id === "imgModal"){
-        closeImage();
-    }
-});
-
-document.querySelectorAll("input,select").forEach(i=>{
-    i.addEventListener("input",()=>{
-        calcRemain();
-        calcSkin();
-        calcTeflon();
-        calcHeater();
-    });
-
-    i.addEventListener("change",()=>{
-        calcRemain();
-        calcSkin();
-        calcTeflon();
-        calcHeater();
-    });
-});
-
+/* ===== Sidebar ===== */
 let sidebarOpen = false;
 
-/* ===== 開關 Sidebar ===== */
 function toggleSidebar(){
-
     sidebarOpen = !sidebarOpen;
 
     document.getElementById("sidebar").classList.toggle("active");
     document.getElementById("overlay").classList.toggle("active");
-
     document.querySelector(".main").classList.toggle("shift");
     document.querySelector(".header").classList.toggle("shift");
 
     document.getElementById("menuBtn").innerHTML = sidebarOpen ? "✕" : "☰";
 }
 
-/* ===== 關閉 Sidebar（統一） ===== */
 function closeSidebar(){
-
     sidebarOpen = false;
 
     document.getElementById("sidebar").classList.remove("active");
     document.getElementById("overlay").classList.remove("active");
-
     document.querySelector(".main").classList.remove("shift");
     document.querySelector(".header").classList.remove("shift");
 
     document.getElementById("menuBtn").innerHTML = "☰";
 }
 
-/* ===== 點背景關閉 ===== */
 document.getElementById("overlay").addEventListener("click", closeSidebar);
 
-/* ===== 點選 menu 自動關閉（給 sidebar button 用） ===== */
 function closeSidebarAuto(){
     closeSidebar();
 }
-    
+
+/* ===== Pages ===== */
+function showPage(page){
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById('page'+page).classList.remove('hidden');
+}
+
+/* ===== Helpers ===== */
+function getValue(id){
+    return parseFloat(document.getElementById(id).value) || 0;
+}
+
+/* ===== Calculations ===== */
+function calcAll(){
+
+    let od = getValue("outerDia");
+    let id = getValue("innerDia");
+    let total = getValue("totalThickness");
+    let layer = getValue("layerThickness");
+    let len1 = ((od+id)/2)*Math.PI*(layer>0?total/layer:0);
+    document.getElementById("remainResult").innerText = len1.toFixed(2)+" mm";
+
+    let face = getValue("faceLength");
+    let width = getValue("skinWidth");
+    let dia = getValue("skinDiameter");
+    let len2 = (width>0?face/width:0)*(dia*Math.PI);
+    document.getElementById("skinResult").innerText = len2.toFixed(2)+" mm";
+
+    let td = getValue("teflonDiameter");
+    let tw = getValue("teflonWidth");
+    let tf = getValue("teflonFace");
+    let q = getValue("qty");
+    let len3 = tf*Math.ceil((td*Math.PI)/(tw||1))*q;
+    document.getElementById("teflonResult").innerText = len3.toFixed(0)+" mm";
+
+    let watt = getValue("heaterWatt");
+    let qty = getValue("heaterQty");
+    let v = getValue("machineVoltage");
+    let phase = document.getElementById("phaseType").value;
+    let totalW = watt*qty;
+    let amp = phase==="3"?totalW/v/1.732:totalW/v;
+    document.getElementById("heaterAmpResult").innerText = amp.toFixed(2)+" A";
+}
+
+/* ===== Auto calc ===== */
+document.querySelectorAll("input,select").forEach(i=>{
+    i.addEventListener("input",calcAll);
+});
+
 </script>
 
 </body>
