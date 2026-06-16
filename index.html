@@ -215,16 +215,16 @@ label{
 <h2>刺皮剩餘長度</h2>
 
 <label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
-<input id="outerDia" type="number">
+<input id="outerDia" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
-<input id="innerDia" type="number">
+<input id="innerDia" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
-<input id="totalThickness" type="number">
+<input id="totalThickness" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
-<input id="layerThickness" type="number">
+<input id="layerThickness" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <div class="total">
 <div>總長度</div>
@@ -241,13 +241,13 @@ label{
 <h2>輪子所需刺皮長度</h2>
 
 <label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="faceLength" type="number">
-
+<input id="faceLength" type="text" inputmode="decimal" pattern="[0-9]*">
+    
 <label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
-<input id="skinWidth" type="number">
+<input id="skinWidth" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="skinDiameter" type="number">
+<input id="skinDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <div class="total">
 <div>刺皮總長度</div>
@@ -264,16 +264,16 @@ label{
 <h2>鐵氟龍長度計算</h2>
 
 <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonDiameter" type="number">
+<input id="teflonDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>鐵氟龍寬度(mm)</label>
-<input id="teflonWidth" type="number">
+<input id="teflonWidth" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>輪面長度(mm)</label>
-<input id="teflonFace" type="number">
+<input id="teflonFace" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>支數</label>
-<input id="qty" type="number">
+<input id="qty" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <div class="total">
 <div>鐵氟龍總長度</div>
@@ -292,13 +292,13 @@ label{
 <div class="note">注意是機台電壓，不是電熱管電壓</div>
 
 <label>瓦特數(W)</label>
-<input id="heaterWatt" type="number">
+<input id="heaterWatt" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>支數</label>
-<input id="heaterQty" type="number">
+<input id="heaterQty" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>機台電壓(V)</label>
-<input id="machineVoltage" value="380" type="number">
+<input id="machineVoltage" type="text" inputmode="decimal" pattern="[0-9]*">
 
 <label>相數</label>
 <select id="phaseType">
@@ -379,16 +379,34 @@ function calcTeflon(){
 }
 
 function calcHeater(){
-    let w=getValue("heaterWatt");
-    let q=getValue("heaterQty");
-    let v=getValue("machineVoltage");
-    let p=document.getElementById("phaseType").value;
+    let watt = getValue("heaterWatt");
+    let qty = getValue("heaterQty");
+    let voltage = getValue("machineVoltage");
+    let phase = document.getElementById("phaseType").value;
 
-    let total=w*q;
-    let amp=p=="3"?total/v/1.732:total/v;
+    let totalWatt = watt * qty;
+    let amp = 0;
 
-    document.getElementById("heaterTotalWatt").innerText=total;
-    document.getElementById("heaterAmpResult").innerText=amp.toFixed(2)+" A";
+    // 清除錯誤
+    document.getElementById("heaterError").innerHTML = "";
+
+    // ✅ 三相檢查
+    if(phase === "3"){
+        if(qty % 3 !== 0 && qty > 0){
+            document.getElementById("heaterError").innerHTML = "支數錯誤";
+        }
+    }
+
+    if(voltage > 0){
+        if(phase === "3"){
+            amp = totalWatt / voltage / 1.732;
+        }else{
+            amp = totalWatt / voltage;
+        }
+    }
+
+    document.getElementById("heaterTotalWatt").innerText = totalWatt;
+    document.getElementById("heaterAmpResult").innerText = amp.toFixed(2) + " A";
 }
 
 /* ===== clear ===== */
