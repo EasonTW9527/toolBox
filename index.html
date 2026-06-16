@@ -15,10 +15,17 @@ body{
 .header{
     background:#003366;
     color:white;
-    text-align:center;
-    padding:15px;
+    padding:12px 15px;
     font-size:24px;
     font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+}
+    .logo{
+    height:45px;
+    width:auto;
 }
 
 .page{
@@ -169,7 +176,13 @@ label{
 
 <body>
 
-<div class="header">YESSING 工程計算</div>
+<div class="header">
+    <img
+        src="./images/logo.png"
+        class="logo"
+        alt="YESSING Logo">
+    <span>YESSING 工程計算</span>
+</div>
 
 <div id="page1" class="page">
 <div class="card">
