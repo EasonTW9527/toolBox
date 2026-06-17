@@ -480,6 +480,52 @@ body.dark .header{
     text-align:center;
 }
 
+.turn-formula{
+    font-size:18px;
+    text-align:center;
+    line-height:1.8;
+    margin:10px 0 15px;
+    font-weight:bold;
+}
+
+.turn-grid{
+    display:grid;
+    grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;
+    gap:8px;
+    align-items:end;
+}
+
+.turn-grid-2{
+    display:grid;
+    grid-template-columns:1fr 28px 1fr 28px 70px;
+    gap:8px;
+    align-items:end;
+}
+
+.turn-op{
+    font-size:24px;
+    font-weight:bold;
+    text-align:center;
+    padding-bottom:12px;
+}
+
+.sub-title{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin:5px 0 10px;
+}
+
+@media (max-width:768px){
+    .turn-grid,
+    .turn-grid-2{
+        grid-template-columns:1fr;
+    }
+    .turn-op{
+        padding-bottom:0;
+    }
+}
+
 body.dark .sidebar{
     background:#2a2a2a;
     color:white;
@@ -499,6 +545,187 @@ body.dark .sidebar-item:hover{
     background:#333;
 }
 
+/* ===== Excel 分子分母格式：轉速換算 ===== */
+.excel-card{
+    overflow-x:auto;
+}
+.excel-formula{
+    min-width:720px;
+    border:2px solid #000;
+    margin-top:12px;
+    background:white;
+}
+.excel-title{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    padding:6px;
+    border-bottom:1px solid #000;
+}
+.formula-line-excel{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:14px 8px;
+    flex-wrap:nowrap;
+}
+.frac-box{
+    width:360px;
+}
+.frac-top{
+    display:grid;
+    grid-template-columns:1fr 26px 1fr 26px 1fr;
+    align-items:center;
+}
+.frac-top input,
+.single-input input{
+    background:#ffff00;
+    border-radius:0;
+    border:1px solid #ddd;
+    height:44px;
+    font-size:22px;
+}
+.frac-bottom input{
+    background:#ffff00;
+    border-radius:0;
+    border:1px solid #ddd;
+    height:44px;
+    font-size:22px;
+}
+.frac-op{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+.frac-line{
+    border-top:2px solid #000;
+}
+.frac-bottom{
+    display:grid;
+    grid-template-columns:1fr;
+}
+.excel-equal{
+    font-size:22px;
+    font-weight:bold;
+}
+.excel-answer{
+    min-width:160px;
+    font-size:22px;
+    font-weight:bold;
+    text-align:center;
+}
+.single-input{
+    width:130px;
+}
+.readonly-cell{
+    min-width:150px;
+    background:#f5f5f5;
+    border:1px solid #ddd;
+    height:44px;
+    line-height:44px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+.red-answer{
+    color:red;
+    min-width:190px;
+}
+.excel-note{
+    display:block;
+    font-size:16px;
+    color:#000;
+}
+.excel-labels{
+    min-width:720px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-weight:bold;
+    margin-top:8px;
+}
+.excel-label-frac{
+    width:360px;
+    text-align:center;
+}
+.excel-label-answer{
+    min-width:160px;
+    text-align:center;
+}
+.excel-label-single{
+    width:130px;
+    text-align:center;
+}
+@media (max-width:768px){
+    .excel-formula,
+    .excel-labels{
+        min-width:680px;
+    }
+}
+body.dark .excel-formula{
+    background:#2a2a2a;
+    border-color:#777;
+}
+body.dark .excel-title{
+    border-bottom-color:#777;
+}
+body.dark .frac-line{
+    border-top-color:#777;
+}
+body.dark .readonly-cell{
+    background:#333;
+    color:white;
+}
+body.dark .excel-note{
+    color:white;
+}
+
+/* 轉轉第二段欄位寬度修正 */
+#page6 .formula-line-excel{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+#page6 .single-input{
+    width:150px;
+    min-width:150px;
+}
+
+#page6 #turnSteelDia{
+    width:100%;
+    min-width:150px;
+    height:55px;
+    font-size:28px;
+    text-align:center;
+    box-sizing:border-box;
+}
+
+.excel-label-frac{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:420px;
+}
+
+.frac-top-label,
+.frac-bottom-label{
+    font-size:18px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.frac-line-label{
+    width:100%;
+    border-top:2px solid #000;
+    margin:4px 0;
+}
+
+
 </style>
 </head>
 
@@ -511,7 +738,8 @@ body.dark .sidebar-item:hover{
         功能選單
         <span class="sidebar-close" onclick="closeSidebar()">×</span>
     </div>
-    <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
+    <button class="sidebar-item" onclick="goSidebarPage(5)">皮卡丘</button>
+    <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
 </div>
 
 
@@ -645,6 +873,7 @@ body.dark .sidebar-item:hover{
 <!-- PAGE 5 -->
 <div id="page5" class="page hidden">
 <div class="card">
+<h2>皮卡丘</h2>
 
 <div class="formula-line">電壓(V) × 安培(A) = 瓦特(W)</div>
 <div class="formula-row">
@@ -659,7 +888,7 @@ body.dark .sidebar-item:hover{
     </div>
 </div>
 <div class="total">
-<div>瓦特 (W)</div>
+<div>直接計算</div>
 <div id="pikachuWResult" class="total-value">0 W</div>
 </div>
 
@@ -678,7 +907,7 @@ body.dark .sidebar-item:hover{
     </div>
 </div>
 <div class="total">
-<div>安培 (A)</div>
+<div>直接計算</div>
 <div id="pikachuAResult" class="total-value">0 A</div>
 </div>
 
@@ -697,11 +926,112 @@ body.dark .sidebar-item:hover{
     </div>
 </div>
 <div class="total">
-<div>電壓 (V)</div>
+<div>直接計算</div>
 <div id="pikachuVResult" class="total-value">0 V</div>
 </div>
 
 <button class="btn" onclick="clearPikachu()">清除資料</button>
+</div>
+</div>
+
+
+<!-- PAGE 6 -->
+<div id="page6" class="page hidden">
+<div class="card excel-card">
+<h2>轉速換算</h2>
+
+<div class="sub-title">第一段：馬達轉速 → 鋼輪 r.p.m</div>
+
+<!-- 公式說明 -->
+<div class="excel-labels">
+
+    <div class="excel-label-frac">
+        <div class="frac-top-label">
+            （ 馬達 r.p.m ÷ 減速比 ） × 馬達齒輪數
+        </div>
+
+        <div class="frac-line-label"></div>
+
+        <div class="frac-bottom-label">
+            輪子齒輪數
+        </div>
+    </div>
+
+    <div class="excel-equal">=</div>
+
+    <div class="excel-label-answer">
+        鋼輪 r.p.m
+    </div>
+
+</div>
+
+<!-- 實際輸入區 -->
+<div class="excel-formula">
+    <div class="excel-title">第一段</div>
+
+    <div class="formula-line-excel">
+
+        <div class="frac-box">
+            <div class="frac-top">
+                <input id="turnMotorRpm" type="text" placeholder="馬達rpm">
+                <div class="frac-op">/</div>
+                <input id="turnRatio" type="text" placeholder="減速比">
+                <div class="frac-op">*</div>
+                <input id="turnMotorGear" type="text" placeholder="馬達齒輪">
+            </div>
+
+            <div class="frac-line"></div>
+
+            <div class="frac-bottom">
+                <input id="turnWheelGear" type="text" placeholder="輪子齒輪">
+            </div>
+        </div>
+
+        <div class="excel-equal">=</div>
+
+        <div id="turnSteelRpmResult" class="excel-answer">
+            0.00
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+<div class="card excel-card">
+<div class="sub-title">第二段：鋼輪 r.p.m → 線速度</div>
+<div class="turn-formula">鋼輪 r.p.m × 鋼輪直徑 mm × 3.14 = 鋼輪 mm/min = 鋼輪 M/min</div>
+
+<div class="excel-labels">
+    <div class="excel-label-answer">鋼輪 r.p.m</div>
+    <div class="excel-equal">*</div>
+    <div class="excel-label-single">鋼輪直徑mm</div>
+    <div class="excel-equal">*</div>
+    <div class="excel-label-single">3.14</div>
+    <div class="excel-equal">=</div>
+    <div class="excel-label-answer">鋼輪 mm/min</div>
+    <div class="excel-equal">=</div>
+    <div class="excel-label-answer">鋼輪 M/min</div>
+</div>
+
+<div class="excel-formula">
+    <div class="excel-title">第二段</div>
+    <div class="formula-line-excel">
+        <div id="turnSteelRpmDisplay" class="readonly-cell">0</div>
+        <div class="excel-equal">*</div>
+        <div class="single-input">
+            <input id="turnSteelDia" type="text" inputmode="decimal" pattern="[0-9]*" placeholder="直徑">
+        </div>
+        <div class="excel-equal">*</div>
+        <div class="readonly-cell">3.14</div>
+        <div class="excel-equal">=</div>
+        <div id="turnMmMinResult" class="excel-answer">0</div>
+        <div class="excel-equal">=</div>
+        <div id="turnMMinResult" class="excel-answer red-answer">0 M/min<span class="excel-note">(顯示值)</span></div>
+    </div>
+</div>
+
+<button class="btn" onclick="clearTurn()">清除資料</button>
 </div>
 </div>
 
@@ -758,6 +1088,38 @@ function calcPikachu(){
 function clearPikachu(){
     pikachuV1.value = pikachuA1.value = pikachuW2.value = pikachuV2.value = pikachuW3.value = pikachuA3.value = "";
     calcPikachu();
+}
+
+
+
+function calcTurn(){
+    let motorRpm = getValue("turnMotorRpm");
+    let ratio = getValue("turnRatio");
+    let motorGear = getValue("turnMotorGear");
+    let wheelGear = getValue("turnWheelGear");
+
+    let steelRpm = 0;
+    if(ratio > 0 && wheelGear > 0){
+        steelRpm = (motorRpm / ratio) * motorGear / wheelGear;
+    }
+
+    document.getElementById("turnSteelRpmResult").innerText = steelRpm.toFixed(2);
+    document.getElementById("turnSteelRpmDisplay").innerText = steelRpm.toFixed(2);
+
+    // 第二段鋼輪 r.p.m 直接帶入第一段答案，不另外輸入
+    let dia = getValue("turnSteelDia");
+
+    let mmMin = steelRpm * dia * 3.14;
+    let mMin = mmMin / 1000;
+
+    document.getElementById("turnMmMinResult").innerText = mmMin.toFixed(2);
+    document.getElementById("turnMMinResult").innerHTML = mMin.toFixed(2) + ' M/min<span class="excel-note">(顯示值)</span>';
+}
+
+function clearTurn(){
+    turnMotorRpm.value = turnRatio.value = turnMotorGear.value = turnWheelGear.value = "";
+    turnSteelDia.value = "";
+    calcTurn();
 }
 
 function showPage(p){
@@ -880,8 +1242,8 @@ document.getElementById("imgModal").onclick=function(e){
 
 /* auto calc */
 document.querySelectorAll("input,select").forEach(el=>{
-    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();});
-    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();});
+    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
+    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
 });
 
 const toggle = document.getElementById("themeToggle");
