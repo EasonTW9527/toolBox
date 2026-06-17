@@ -738,7 +738,7 @@ body.dark .excel-note{
         功能選單
         <span class="sidebar-close" onclick="closeSidebar()">×</span>
     </div>
-    <button class="sidebar-item" onclick="goSidebarPage(5)">皮卡丘</button>
+    <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
 </div>
 
@@ -873,7 +873,7 @@ body.dark .excel-note{
 <!-- PAGE 5 -->
 <div id="page5" class="page hidden">
 <div class="card">
-<h2>皮卡丘</h2>
+<h2>電電</h2>
 
 <div class="formula-line">電壓(V) × 安培(A) = 瓦特(W)</div>
 <div class="formula-row">
@@ -888,7 +888,7 @@ body.dark .excel-note{
     </div>
 </div>
 <div class="total">
-<div>直接計算</div>
+<div>瓦特(W)</div>
 <div id="pikachuWResult" class="total-value">0 W</div>
 </div>
 
@@ -907,7 +907,7 @@ body.dark .excel-note{
     </div>
 </div>
 <div class="total">
-<div>直接計算</div>
+<div>安培(A)</div>
 <div id="pikachuAResult" class="total-value">0 A</div>
 </div>
 
@@ -926,7 +926,7 @@ body.dark .excel-note{
     </div>
 </div>
 <div class="total">
-<div>直接計算</div>
+<div>電壓(V)</div>
 <div id="pikachuVResult" class="total-value">0 V</div>
 </div>
 
@@ -940,14 +940,14 @@ body.dark .excel-note{
 <div class="card excel-card">
 <h2>轉速換算</h2>
 
-<div class="sub-title">第一段：馬達轉速 → 鋼輪 r.p.m</div>
+<div class="sub-title">第一段：馬達轉速 → 鋼輪 RPM</div>
 
 <!-- 公式說明 -->
 <div class="excel-labels">
 
     <div class="excel-label-frac">
         <div class="frac-top-label">
-            （ 馬達 r.p.m ÷ 減速比 ） × 馬達齒輪數
+            （ 馬達 RPM ÷ 減速比 ） × 馬達齒輪數
         </div>
 
         <div class="frac-line-label"></div>
@@ -960,7 +960,7 @@ body.dark .excel-note{
     <div class="excel-equal">=</div>
 
     <div class="excel-label-answer">
-        鋼輪 r.p.m
+        鋼輪 RPM
     </div>
 
 </div>
@@ -999,8 +999,8 @@ body.dark .excel-note{
 </div>
 
 <div class="card excel-card">
-<div class="sub-title">第二段：鋼輪 r.p.m → 線速度</div>
-<div class="turn-formula">鋼輪 r.p.m × 鋼輪直徑 mm × 3.14 = 鋼輪 mm/min = 鋼輪 M/min</div>
+<div class="sub-title">第二段：鋼輪 RPM → 線速度</div>
+<div class="turn-formula">鋼輪 RPM × 鋼輪直徑 mm × 3.14 = 鋼輪 mm/min = 鋼輪 M/min</div>
 
 <div class="excel-labels">
     <div class="excel-label-answer">鋼輪 r.p.m</div>
@@ -1011,6 +1011,8 @@ body.dark .excel-note{
     <div class="excel-equal">=</div>
     <div class="excel-label-answer">鋼輪 mm/min</div>
     <div class="excel-equal">=</div>
+	</div>
+<div class="excel-labels">	
     <div class="excel-label-answer">鋼輪 M/min</div>
 </div>
 
