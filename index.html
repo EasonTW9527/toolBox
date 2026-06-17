@@ -254,9 +254,9 @@ body.dark .card{
 
 body.dark input,
 body.dark select{
-    background:#ffff66;
-    color:#000;
-    border:1px solid #999;
+    background:#333;
+    color:white;
+    border:1px solid #555;
 }
 
 body.dark .result{
@@ -363,9 +363,9 @@ body.dark .card{
 
 body.dark input,
 body.dark select{
-    background:#ffff66;
-    color:#000;
-    border:1px solid #999;
+    background:#333;
+    color:white;
+    border:1px solid #555;
 }
 
 body.dark .result{
@@ -666,14 +666,13 @@ body.dark .sidebar-item:hover{
 }
 body.dark .excel-formula{
     background:#2a2a2a;
-    border-color:#fff;
+    border-color:#777;
 }
 body.dark .excel-title{
     border-bottom-color:#777;
 }
-body.dark .frac-line,
-body.dark .frac-line-label{
-    border-top:2px solid #fff;
+body.dark .frac-line{
+    border-top-color:#777;
 }
 body.dark .readonly-cell{
     background:#333;
@@ -727,140 +726,19 @@ body.dark .excel-note{
 }
 
 
-/* ===== 深色模式：input/select 保持黃底黑字 ===== */
-body.dark input,
-body.dark select{
-    background:#ffff66 !important;
-    color:#000 !important;
-    border:1px solid #999 !important;
+/* ===== mm 轉 M 顯示 ===== */
+.meter-value{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:8px;
 }
 
-/* ===== 轉轉頁面 RWD 自動縮放 ===== */
 @media (max-width:768px){
-
-    #page6 .excel-card{
-        overflow-x:hidden;
-    }
-
-    #page6 .excel-formula,
-    #page6 .excel-labels{
-        min-width:0;
-        width:100%;
-    }
-
-    #page6 .formula-line-excel{
-        flex-wrap:wrap;
-        gap:8px;
-        padding:10px 4px;
-    }
-
-    #page6 .frac-box{
-        width:100%;
-        max-width:360px;
-    }
-
-    #page6 .frac-top{
-        grid-template-columns:1fr 22px 1fr 22px 1fr;
-    }
-
-    #page6 .frac-top input,
-    #page6 .frac-bottom input{
-        height:42px;
-        font-size:16px;
-    }
-
-    #page6 .frac-op,
-    #page6 .excel-equal{
-        font-size:18px;
-    }
-
-    #page6 .excel-answer,
-    #page6 .readonly-cell{
-        min-width:120px;
-        font-size:18px;
-    }
-
-    #page6 .excel-labels{
-        flex-wrap:wrap;
-        gap:6px;
-        font-size:15px;
-    }
-
-    #page6 .excel-label-frac{
-        min-width:0;
-        width:100%;
-        max-width:360px;
-    }
-
-    #page6 .frac-top-label,
-    #page6 .frac-bottom-label{
-        font-size:15px;
-    }
-
-    #page6 .excel-label-answer{
-        min-width:100px;
-    }
-
-    #page6 .excel-label-single{
-        width:100px;
-    }
-
-    #page6 #turnSteelDia{
-        min-width:120px;
-        font-size:20px;
-    }
-
-    #page6 .red-answer{
-        min-width:150px;
+    .meter-value{
+        font-size:22px;
     }
 }
 
-.card h2{
-    text-align:center;
-    margin-top:0;
-}
-
-.wire-table{
-    width:100%;
-    max-width:360px;
-    margin:20px auto;
-    border-collapse:collapse;
-    background:white;
-    font-size:22px;
-    text-align:center;
-}
-
-.wire-table th,
-.wire-table td{
-    border:1px solid #999;
-    padding:8px 12px;
-}
-
-.wire-table th{
-    font-weight:bold;
-    background:#f5f5f5;
-}
-
-.wire-note{
-    text-align:center;
-    font-size:20px;
-    font-weight:bold;
-    margin-top:15px;
-}
-
-body.dark .wire-table{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark .wire-table th{
-    background:#333;
-}
-
-body.dark .wire-table th,
-body.dark .wire-table td{
-    border-color:#777;
-}
 
 </style>
 </head>
@@ -876,7 +754,6 @@ body.dark .wire-table td{
     </div>
     <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
-	<button class="sidebar-item" onclick="goSidebarPage(7)">電線小抄</button>
 </div>
 
 
@@ -914,6 +791,7 @@ body.dark .wire-table td{
 <div class="total">
 <div>總長度</div>
 <div id="remainResult" class="total-value">0 mm</div>
+<div id="remainResultM" class="meter-value">0.00 M</div>
 </div>
 
 <button class="btn" onclick="clearRemain()">清除資料</button>
@@ -937,6 +815,7 @@ body.dark .wire-table td{
 <div class="total">
 <div>刺皮總長度</div>
 <div id="skinResult" class="total-value">0 mm</div>
+<div id="skinResultM" class="meter-value">0.00 M</div>
 </div>
 
 <button class="btn" onclick="clearSkin()">清除資料</button>
@@ -963,6 +842,7 @@ body.dark .wire-table td{
 <div class="total">
 <div>鐵氟龍總長度</div>
 <div id="teflonResult" class="total-value">0 mm</div>
+<div id="teflonResultM" class="meter-value">0.00 M</div>
 </div>
 
 <button class="btn" onclick="clearTeflon()">清除資料</button>
@@ -1174,34 +1054,6 @@ body.dark .wire-table td{
 </div>
 </div>
 
-<!-- PAGE 7 -->
-<div id="page7" class="page hidden">
-<div class="card">
-<h2>電線小抄</h2>
-
-<table class="wire-table">
-    <tr>
-        <th>線徑 mm²</th>
-        <th>可負載最大電流(A)</th>
-    </tr>
-    <tr><td>1.25</td><td>&lt; 18</td></tr>
-    <tr><td>2.0</td><td>&lt; 25</td></tr>
-    <tr><td>3.5</td><td>&lt; 35</td></tr>
-    <tr><td>5.5</td><td>&lt; 47</td></tr>
-    <tr><td>8</td><td>&lt; 61</td></tr>
-    <tr><td>14</td><td>&lt; 91</td></tr>
-    <tr><td>22</td><td>&lt; 122</td></tr>
-    <tr><td>38</td><td>&lt; 171</td></tr>
-    <tr><td>50</td><td>&lt; 203</td></tr>
-</table>
-
-<div class="wire-note">
-    ※ 實際電流容量需依配線方式、環境溫度、線材種類及法規修正。
-</div>
-
-</div>
-</div>
-
 <!-- bottom nav -->
 <div class="nav">
 <button onclick="showPage(1)">🧵<br>剩餘</button>
@@ -1307,7 +1159,10 @@ function calcRemain(){
 
     let avg=((od*Math.PI)+(id*Math.PI))/2;
     let turns=l>0?t/l:0;
-    document.getElementById("remainResult").innerText=(avg*turns).toFixed(2)+" mm";
+    let result = avg * turns;
+
+    document.getElementById("remainResult").innerText = result.toFixed(2) + " mm";
+    document.getElementById("remainResultM").innerText = (result / 1000).toFixed(2) + " M";
 }
 
 function calcSkin(){
@@ -1316,7 +1171,10 @@ function calcSkin(){
     let d=getValue("skinDiameter");
 
     let turns=w>0?f/w:0;
-    document.getElementById("skinResult").innerText=(turns*d*Math.PI).toFixed(2)+" mm";
+    let result = turns * d * Math.PI;
+
+    document.getElementById("skinResult").innerText = result.toFixed(2) + " mm";
+    document.getElementById("skinResultM").innerText = (result / 1000).toFixed(2) + " M";
 }
 
 function calcTeflon(){
@@ -1335,8 +1193,8 @@ function calcTeflon(){
         len = face * sheets * qtys;
     }
 
-    document.getElementById("teflonResult").innerText =
-        len.toFixed(0) + " mm";
+    document.getElementById("teflonResult").innerText = len.toFixed(0) + " mm";
+    document.getElementById("teflonResultM").innerText = (len / 1000).toFixed(2) + " M";
 }
 
 function calcHeater(){
