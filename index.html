@@ -242,7 +242,7 @@ label{
 }
 
 /* ===== 深色模式 ===== */
-body.dark {
+body.dark{
     background:#1e1e1e;
     color:white;
 }
@@ -252,11 +252,12 @@ body.dark .card{
     color:white;
 }
 
+/* 保持黃底輸入框 */
 body.dark input,
 body.dark select{
-    background:#333;
-    color:white;
-    border:1px solid #555;
+    background:#ffff66 !important;
+    color:#000 !important;
+    border:1px solid #999 !important;
 }
 
 body.dark .result{
@@ -274,6 +275,64 @@ body.dark .nav button{
 
 body.dark .header{
     background:#111;
+}
+
+body.dark .sidebar{
+    background:#2a2a2a;
+    color:white;
+}
+
+body.dark .sidebar-header{
+    background:#111;
+}
+
+body.dark .sidebar-item{
+    background:#2a2a2a;
+    color:white;
+    border-bottom:1px solid #444;
+}
+
+body.dark .sidebar-item:hover{
+    background:#333;
+}
+
+/* 轉轉頁面 */
+body.dark .excel-formula{
+    background:#2a2a2a;
+    border-color:#fff;
+}
+
+body.dark .excel-title{
+    border-bottom-color:#777;
+}
+
+body.dark .frac-line,
+body.dark .frac-line-label{
+    border-top:2px solid #fff;
+}
+
+body.dark .readonly-cell{
+    background:#333;
+    color:#fff;
+}
+
+body.dark .excel-note{
+    color:#fff;
+}
+
+/* 電線小抄 */
+body.dark .wire-table{
+    background:#2a2a2a;
+    color:white;
+}
+
+body.dark .wire-table th{
+    background:#333;
+}
+
+body.dark .wire-table th,
+body.dark .wire-table td{
+    border-color:#777;
 }
 
 /* ===== switch base ===== */
