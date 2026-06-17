@@ -666,13 +666,14 @@ body.dark .sidebar-item:hover{
 }
 body.dark .excel-formula{
     background:#2a2a2a;
-    border-color:#777;
+    border-color:#fff;
 }
 body.dark .excel-title{
     border-bottom-color:#777;
 }
-body.dark .frac-line{
-    border-top-color:#777;
+body.dark .frac-line,
+body.dark .frac-line-label{
+    border-top:2px solid #fff;
 }
 body.dark .readonly-cell{
     background:#333;
@@ -734,6 +735,90 @@ body.dark select{
     border:1px solid #999 !important;
 }
 
+/* ===== 轉轉頁面 RWD 自動縮放 ===== */
+@media (max-width:768px){
+
+    #page6 .excel-card{
+        overflow-x:hidden;
+    }
+
+    #page6 .excel-formula,
+    #page6 .excel-labels{
+        min-width:0;
+        width:100%;
+    }
+
+    #page6 .formula-line-excel{
+        flex-wrap:wrap;
+        gap:8px;
+        padding:10px 4px;
+    }
+
+    #page6 .frac-box{
+        width:100%;
+        max-width:360px;
+    }
+
+    #page6 .frac-top{
+        grid-template-columns:1fr 22px 1fr 22px 1fr;
+    }
+
+    #page6 .frac-top input,
+    #page6 .frac-bottom input{
+        height:42px;
+        font-size:16px;
+    }
+
+    #page6 .frac-op,
+    #page6 .excel-equal{
+        font-size:18px;
+    }
+
+    #page6 .excel-answer,
+    #page6 .readonly-cell{
+        min-width:120px;
+        font-size:18px;
+    }
+
+    #page6 .excel-labels{
+        flex-wrap:wrap;
+        gap:6px;
+        font-size:15px;
+    }
+
+    #page6 .excel-label-frac{
+        min-width:0;
+        width:100%;
+        max-width:360px;
+    }
+
+    #page6 .frac-top-label,
+    #page6 .frac-bottom-label{
+        font-size:15px;
+    }
+
+    #page6 .excel-label-answer{
+        min-width:100px;
+    }
+
+    #page6 .excel-label-single{
+        width:100px;
+    }
+
+    #page6 #turnSteelDia{
+        min-width:120px;
+        font-size:20px;
+    }
+
+    #page6 .red-answer{
+        min-width:150px;
+    }
+}
+
+.card h2{
+    text-align:center;
+    margin-top:0;
+}
 
 </style>
 </head>
