@@ -386,13 +386,138 @@ body.dark .header{
 }
 
 
+/* ===== 左側 Sidebar ===== */
+.menu-btn{
+    position:absolute;
+    left:15px;
+    top:13px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:32px;
+    cursor:pointer;
+}
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:-260px;
+    width:260px;
+    height:100%;
+    background:white;
+    z-index:10001;
+    box-shadow:2px 0 10px rgba(0,0,0,.25);
+    transition:.3s;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-header{
+    background:#003366;
+    color:white;
+    padding:18px;
+    font-size:22px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.sidebar-close{
+    cursor:pointer;
+    font-size:30px;
+}
+
+.sidebar-item{
+    width:100%;
+    padding:18px;
+    border:none;
+    background:white;
+    text-align:left;
+    font-size:20px;
+    cursor:pointer;
+    border-bottom:1px solid #eee;
+}
+
+.sidebar-item:hover{
+    background:#f3f4f6;
+}
+
+.sidebar-mask{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.45);
+    z-index:10000;
+}
+
+.sidebar-mask.show{
+    display:block;
+}
+
+.formula-line{
+    font-size:20px;
+    text-align:center;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.formula-row{
+    display:grid;
+    grid-template-columns:1fr 40px 1fr;
+    gap:10px;
+    align-items:center;
+}
+
+.formula-equal{
+    font-size:28px;
+    font-weight:bold;
+    text-align:center;
+}
+
+body.dark .sidebar{
+    background:#2a2a2a;
+    color:white;
+}
+
+body.dark .sidebar-header{
+    background:#111;
+}
+
+body.dark .sidebar-item{
+    background:#2a2a2a;
+    color:white;
+    border-bottom:1px solid #444;
+}
+
+body.dark .sidebar-item:hover{
+    background:#333;
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- sidebar -->
+<div id="sidebarMask" class="sidebar-mask" onclick="closeSidebar()"></div>
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        功能選單
+        <span class="sidebar-close" onclick="closeSidebar()">×</span>
+    </div>
+    <button class="sidebar-item" onclick="goSidebarPage(5)">皮卡丘</button>
+</div>
+
+
 <!-- header -->
 <div class="header">
+    <button class="menu-btn" onclick="openSidebar()">☰</button>
     <img src="./images/logo.jpg" class="logo">
     Yessing 小算盤
    <label class="switch">
@@ -516,6 +641,71 @@ body.dark .header{
 </div>
 </div>
 
+
+<!-- PAGE 5 -->
+<div id="page5" class="page hidden">
+<div class="card">
+<h2>皮卡丘</h2>
+
+<div class="formula-line">電壓(V) × 安培(A) = 瓦特(W)</div>
+<div class="formula-row">
+    <div>
+        <label>電壓(V)</label>
+        <input id="pikachuV1" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+    <div class="formula-equal">×</div>
+    <div>
+        <label>安培(A)</label>
+        <input id="pikachuA1" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+</div>
+<div class="total">
+<div>直接計算</div>
+<div id="pikachuWResult" class="total-value">0 W</div>
+</div>
+
+<hr>
+
+<div class="formula-line">瓦特(W) ÷ 電壓(V) ÷ √3 = 安培(A)</div>
+<div class="formula-row">
+    <div>
+        <label>瓦特(W)</label>
+        <input id="pikachuW2" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+    <div class="formula-equal">÷</div>
+    <div>
+        <label>電壓(V)</label>
+        <input id="pikachuV2" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+</div>
+<div class="total">
+<div>直接計算</div>
+<div id="pikachuAResult" class="total-value">0 A</div>
+</div>
+
+<hr>
+
+<div class="formula-line">瓦特(W) ÷ 安培(A) = 電壓(V)</div>
+<div class="formula-row">
+    <div>
+        <label>瓦特(W)</label>
+        <input id="pikachuW3" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+    <div class="formula-equal">÷</div>
+    <div>
+        <label>安培(A)</label>
+        <input id="pikachuA3" type="text" inputmode="decimal" pattern="[0-9]*">
+    </div>
+</div>
+<div class="total">
+<div>直接計算</div>
+<div id="pikachuVResult" class="total-value">0 V</div>
+</div>
+
+<button class="btn" onclick="clearPikachu()">清除資料</button>
+</div>
+</div>
+
 <!-- bottom nav -->
 <div class="nav">
 <button onclick="showPage(1)">🧵<br>剩餘</button>
@@ -533,6 +723,44 @@ body.dark .header{
 </div>
 
 <script>
+
+function openSidebar(){
+    document.getElementById("sidebar").classList.add("open");
+    document.getElementById("sidebarMask").classList.add("show");
+}
+
+function closeSidebar(){
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("sidebarMask").classList.remove("show");
+}
+
+function goSidebarPage(p){
+    showPage(p);
+    closeSidebar();
+}
+
+function calcPikachu(){
+    let v1 = getValue("pikachuV1");
+    let a1 = getValue("pikachuA1");
+    let w2 = getValue("pikachuW2");
+    let v2 = getValue("pikachuV2");
+    let w3 = getValue("pikachuW3");
+    let a3 = getValue("pikachuA3");
+
+    let watt = v1 * a1;
+    let amp = v2 > 0 ? w2 / v2 / 1.732 : 0;
+    let volt = a3 > 0 ? w3 / a3 : 0;
+
+    document.getElementById("pikachuWResult").innerText = watt.toFixed(2) + " W";
+    document.getElementById("pikachuAResult").innerText = amp.toFixed(2) + " A";
+    document.getElementById("pikachuVResult").innerText = volt.toFixed(2) + " V";
+}
+
+function clearPikachu(){
+    pikachuV1.value = pikachuA1.value = pikachuW2.value = pikachuV2.value = pikachuW3.value = pikachuA3.value = "";
+    calcPikachu();
+}
+
 function showPage(p){
     document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
     document.getElementById('page'+p).classList.remove('hidden');
@@ -653,8 +881,8 @@ document.getElementById("imgModal").onclick=function(e){
 
 /* auto calc */
 document.querySelectorAll("input,select").forEach(el=>{
-    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();});
-    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();});
+    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();});
+    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();});
 });
 
 const toggle = document.getElementById("themeToggle");
