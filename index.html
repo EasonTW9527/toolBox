@@ -820,6 +820,48 @@ body.dark select{
     margin-top:0;
 }
 
+.wire-table{
+    width:100%;
+    max-width:360px;
+    margin:20px auto;
+    border-collapse:collapse;
+    background:white;
+    font-size:22px;
+    text-align:center;
+}
+
+.wire-table th,
+.wire-table td{
+    border:1px solid #999;
+    padding:8px 12px;
+}
+
+.wire-table th{
+    font-weight:bold;
+    background:#f5f5f5;
+}
+
+.wire-note{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+body.dark .wire-table{
+    background:#2a2a2a;
+    color:white;
+}
+
+body.dark .wire-table th{
+    background:#333;
+}
+
+body.dark .wire-table th,
+body.dark .wire-table td{
+    border-color:#777;
+}
+
 </style>
 </head>
 
@@ -834,6 +876,7 @@ body.dark select{
     </div>
     <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
+	<button class="sidebar-item" onclick="goSidebarPage(7)">電線小抄</button>
 </div>
 
 
@@ -1128,6 +1171,34 @@ body.dark select{
 </div>
 
 <button class="btn" onclick="clearTurn()">清除資料</button>
+</div>
+</div>
+
+<!-- PAGE 7 -->
+<div id="page7" class="page hidden">
+<div class="card">
+<h2>電線小抄</h2>
+
+<table class="wire-table">
+    <tr>
+        <th>線徑 mm²</th>
+        <th>可負載最大電流(A)</th>
+    </tr>
+    <tr><td>1.25</td><td>&lt; 18</td></tr>
+    <tr><td>2.0</td><td>&lt; 25</td></tr>
+    <tr><td>3.5</td><td>&lt; 35</td></tr>
+    <tr><td>5.5</td><td>&lt; 47</td></tr>
+    <tr><td>8</td><td>&lt; 61</td></tr>
+    <tr><td>14</td><td>&lt; 91</td></tr>
+    <tr><td>22</td><td>&lt; 122</td></tr>
+    <tr><td>38</td><td>&lt; 171</td></tr>
+    <tr><td>50</td><td>&lt; 203</td></tr>
+</table>
+
+<div class="wire-note">
+    ※ 實際電流容量需依配線方式、環境溫度、線材種類及法規修正。
+</div>
+
 </div>
 </div>
 
