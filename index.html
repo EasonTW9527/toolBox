@@ -886,6 +886,26 @@ body.dark .wire-table td{
     }
 }
 
+#page8{
+    max-width:none;
+    width:100%;
+    padding:0;
+    padding-bottom:0;
+}
+
+.pdf-viewer{
+    width:100%;
+    height:calc(100vh - 70px);
+    border:none;
+    display:block;
+}
+
+@media (max-width:768px){
+    .pdf-viewer{
+        height:calc(100vh - 70px);
+    }
+}
+
 </style>
 </head>
 
@@ -901,13 +921,18 @@ body.dark .wire-table td{
     <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線小抄</button>
+	<button class="sidebar-item" onclick="goSidebarPage(8)">PDF檢視</button>
 </div>
 
 
 <!-- header -->
 <div class="header">
     <button class="menu-btn" onclick="openSidebar()">☰</button>
-    <img src="./images/logo.jpg" class="logo">
+    <img
+    src="./images/logo.jpg"
+    class="logo"
+    onclick="goHome()"
+    style="cursor:pointer;">
     Yessing 小算盤
    <label class="switch">
     <input type="checkbox" id="themeToggle">
@@ -1230,8 +1255,16 @@ body.dark .wire-table td{
 </div>
 </div>
 
+<!-- PAGE 8 -->
+<div id="page8" class="page hidden">
+    <iframe
+        src="PDF/test.pdf"
+        class="pdf-viewer">
+    </iframe>
+</div>
+
 <!-- bottom nav -->
-<div class="nav">
+<div class="nav" id="bottomNav">
 <button onclick="showPage(1)">🧵<br>剩餘</button>
 <button onclick="showPage(2)">📏<br>刺皮</button>
 <button onclick="showPage(3)">🟫<br>鐵氟龍</button>
@@ -1318,8 +1351,20 @@ function clearTurn(){
 }
 
 function showPage(p){
-    document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
-    document.getElementById('page'+p).classList.remove('hidden');
+
+    document.querySelectorAll('.page')
+        .forEach(x=>x.classList.add('hidden'));
+
+    document.getElementById('page'+p)
+        .classList.remove('hidden');
+
+    const nav = document.getElementById('bottomNav');
+
+    if(p === 8){
+        nav.style.display = 'none';
+    }else{
+        nav.style.display = 'flex';
+    }
 }
 
 function getValue(id){
@@ -1465,6 +1510,11 @@ toggle.addEventListener("change", function(){
         localStorage.setItem("theme","light");
     }
 });
+
+function goHome(){
+    showPage(1);
+    closeSidebar();
+}
     
 </script>
 
