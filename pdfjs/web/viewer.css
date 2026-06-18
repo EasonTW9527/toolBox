@@ -7777,3 +7777,35 @@ body{
 .pdfViewer .page{
   background-color:#ffffff;
 }
+
+/* 淺色 */
+html:not(:has(body)) {
+}
+
+/* PDF.js 深色模式 */
+body:has(#viewerContainer){
+    background:#d4d4d7;
+}
+
+#viewerContainer{
+    background:#d4d4d7;
+}
+
+#toolbarContainer,
+.toolbar{
+    background:var(--toolbar-bg-color);
+}
+
+/* 當網址帶 theme=dark 時，需搭配 viewer.html 加 class */
+body.dark-pdf{
+    background:#1e1e1e !important;
+}
+
+body.dark-pdf #viewerContainer{
+    background:#1e1e1e !important;
+}
+
+body.dark-pdf #toolbarContainer,
+body.dark-pdf .toolbar{
+    background:#111111 !important;
+}

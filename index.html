@@ -1350,8 +1350,11 @@ function openPdf(fileName){
         .map(part => encodeURIComponent(part))
         .join("/");
 
-    document.getElementById("pdfFrame").src =
-        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath;
+    const isDark = document.body.classList.contains("dark");
+
+document.getElementById("pdfFrame").src =
+    "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath +
+    "&theme=" + (isDark ? "dark" : "light");
 
     showPage(8);
     closeSidebar();
