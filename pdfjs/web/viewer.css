@@ -7749,3 +7749,31 @@ dialog :link{
     display:none;
   }
 }
+
+/* ===== Yessing PDF.js dark style ===== */
+:root{
+  --body-bg-color:#1e1e1e;
+  --toolbar-bg-color:#111111;
+  --sidebar-toolbar-bg-color:#111111;
+  --toolbar-border-color:#111111;
+  --main-color:#ffffff;
+  --field-bg-color:#2a2a2a;
+  --field-color:#ffffff;
+}
+
+body{
+  background:#1e1e1e !important;
+}
+
+#viewerContainer{
+  background:#1e1e1e !important;
+}
+
+#toolbarContainer,
+.toolbar{
+  background:#111111 !important;
+}
+
+.pdfViewer .page{
+  background-color:#ffffff;
+}
