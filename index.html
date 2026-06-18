@@ -991,19 +991,27 @@ body.dark .submenu-item:hover{
 <!-- 說明書下拉選單 -->
 <div id="manualMenu" class="submenu hidden">
 
-    <!-- <button class="submenu-item" onclick="openPdf('test.pdf')">測試</button> -->
+    <!-- <button class="submenu-item" onclick="openPdf('/xxx/xxx.pdf')">測試</button> -->
 	
-    <button class="submenu-item" onclick="openPdf('TAIE_PID.pdf')">台儀溫控</button>
+    <button class="submenu-item" onclick="openPdf('/TAIE/TAIE_PID.pdf')">台儀溫控</button>
 	
-	<button class="submenu-item" onclick="openPdf('International_list.pdf')">各國電壓參考</button>
+	<button class="submenu-item" onclick="openDrivePdf('16vSP7ezM6E4-GlSoLAg41JJLRjr9u2YT')">各國電壓參考</button>
 	
-	<button class="submenu-item" onclick="openPdf('TC-2050_P_Manual.pdf')">TC-2050標準</button>
+	<button class="submenu-item" onclick="openPdf('/EUNTAY/TC-2050_P_Manual.pdf')">TC-2050標準</button>
 	
-	<button class="submenu-item" onclick="openPdf('TC-2050_Communication Guide.pdf')">TC-2050通訊</button>
+	<button class="submenu-item" onclick="openPdf('/EUNTAY/TC-2050_Communication Guide.pdf')">TC-2050通訊</button>
 	
-	<button class="submenu-item" onclick="openPdf('TC-3050_P_Manual.pdf')">TC-3050標準</button>
+	<button class="submenu-item" onclick="openPdf('/EUNTAY/TC-3050_P_Manual.pdf')">TC-3050標準</button>
 	
-	<button class="submenu-item" onclick="openPdf('TC-3050_Communication Guide.pdf')">TC-3050通訊</button>
+	<button class="submenu-item" onclick="openPdf('/EUNTAY/TC-3050_Communication Guide.pdf')">TC-3050通訊</button>
+	
+	<button class="submenu-item" onclick="openPdf('/YASKAWA/A1000.pdf')">A1000說明書</button>
+	
+	<button class="submenu-item" onclick="openPdf('/YASKAWA/GA500.pdf')">GA500說明書</button>
+	
+	<button class="submenu-item" onclick="openPdf('/YASKAWA/GA700.pdf')">GA700說明書</button>
+	
+	<button class="submenu-item" onclick="openPdf('/YASKAWA/V1000.pdf')">V1000說明書</button>
 	
 </div>
 </div>
@@ -1610,6 +1618,14 @@ function toggleManualMenu(){
 function openPdf(fileName){
     document.getElementById("pdfFrame").src =
         "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + fileName;
+
+    showPage(8);
+    closeSidebar();
+}
+
+function openDrivePdf(fileId){
+    document.getElementById("pdfFrame").src =
+        "https://drive.google.com/file/d/" + fileId + "/preview";
 
     showPage(8);
     closeSidebar();
