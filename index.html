@@ -937,6 +937,39 @@ body{
     }
 }
 
+.submenu{
+    background:#f7f7f7;
+}
+
+.submenu-item{
+    width:100%;
+    padding:14px 18px 14px 35px;
+    border:none;
+    background:#f7f7f7;
+    text-align:left;
+    font-size:18px;
+    cursor:pointer;
+    border-bottom:1px solid #e5e5e5;
+}
+
+.submenu-item:hover{
+    background:#eeeeee;
+}
+
+body.dark .submenu{
+    background:#222;
+}
+
+body.dark .submenu-item{
+    background:#222;
+    color:white;
+    border-bottom:1px solid #444;
+}
+
+body.dark .submenu-item:hover{
+    background:#333;
+}
+
 </style>
 </head>
 
@@ -952,7 +985,12 @@ body{
     <button class="sidebar-item" onclick="goSidebarPage(5)">電電</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉轉</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線小抄</button>
-	<button class="sidebar-item" onclick="goSidebarPage(8)">PDF檢視</button>
+	<button class="sidebar-item" onclick="toggleManualMenu()">說明書 ▾</button>
+
+<div id="manualMenu" class="submenu hidden">
+    <button class="submenu-item" onclick="openPdf('test.pdf')">測試</button>
+    <button class="submenu-item" onclick="openPdf('TAIE_PID.pdf')">台儀溫控</button>
+</div>
 </div>
 
 
@@ -1290,9 +1328,10 @@ body{
 <div id="page8" class="page hidden">
     <div class="pdf-wrap">
         <iframe
-    src="./pdfjs/web/viewer.html?file=/toolBox/pdf/test.pdf"
-    class="pdf-viewer">
-</iframe>
+            id="pdfFrame"
+            src=""
+            class="pdf-viewer">
+        </iframe>
     </div>
 </div>
 
@@ -1546,6 +1585,18 @@ toggle.addEventListener("change", function(){
 
 function goHome(){
     showPage(1);
+    closeSidebar();
+}
+
+function toggleManualMenu(){
+    document.getElementById("manualMenu").classList.toggle("hidden");
+}
+
+function openPdf(fileName){
+    document.getElementById("pdfFrame").src =
+        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + fileName;
+
+    showPage(8);
     closeSidebar();
 }
     
