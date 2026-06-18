@@ -691,6 +691,30 @@ body.dark .submenu-item:hover{
         min-width:150px;
     }
 }
+
+.submenu-category{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.arrow{
+    font-size:18px;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.submenu-category.active{
+    background:#dbeafe;
+    color:#003366;
+    font-weight:bold;
+}
+
+body.dark .submenu-category.active{
+    background:#1e3a5f;
+    color:#ffffff;
+}
+
 </style>
 </head>
 
@@ -707,22 +731,22 @@ body.dark .submenu-item:hover{
     <button class="sidebar-item" onclick="goSidebarPage(5)">功率換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉速換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線負載</button>
-    <button class="sidebar-item" onclick="toggleManualMenu()">說明書 ▾</button>
+    <button class="sidebar-item" onclick="toggleManualMenu(this)">說明書 <span class="arrow">▸</span></button>
 	
 <!-- 說明書選單 -->
 <div id="manualMenu" class="submenu hidden">
 
-    <button class="submenu-category" onclick="toggleSubMenu('manualCommon')">共用 ▾</button>
+    <button class="submenu-category" onclick="toggleSubMenu(this,'manualCommon')">共用 <span class="arrow">▸</span></button>
     <div id="manualCommon" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('International_list.pdf')">各國電壓參考</button>
     </div>
 
-    <button class="submenu-category" onclick="toggleSubMenu('manualTAIE')">台儀 TAIE ▾</button>
+    <button class="submenu-category" onclick="toggleSubMenu(this,'manualTAIE')">台儀 TAIE <span class="arrow">▸</span></button>
     <div id="manualTAIE" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('TAIE/TAIE_PID.pdf')">台儀溫控</button>
     </div>
 
-    <button class="submenu-category" onclick="toggleSubMenu('manualEUNTAY')">運泰 EUNTAY ▾</button>
+    <button class="submenu-category" onclick="toggleSubMenu(this,'manualEUNTAY')">運泰 EUNTAY <span class="arrow">▸</span></button>
     <div id="manualEUNTAY" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-2050_P_Manual.pdf')">TC-2050 標準</button>
 		
@@ -733,7 +757,7 @@ body.dark .submenu-item:hover{
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_Communication_Guide.pdf')">TC-3050 通訊</button>
     </div>
 
-    <button class="submenu-category" onclick="toggleSubMenu('manualYASKAWA')">安川 YASKAWA ▾</button>
+    <button class="submenu-category" onclick="toggleSubMenu(this,'manualYASKAWA')">安川 YASKAWA <span class="arrow">▸</span></button>
     <div id="manualYASKAWA" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('YASKAWA/GA500_Manual.pdf')">GA500 說明書</button>
 		
@@ -1268,21 +1292,45 @@ toggle.addEventListener("change",function(){
     }
 });
 
-function toggleManualMenu(){
-    document.getElementById("manualMenu").classList.toggle("hidden");
+function toggleManualMenu(btn){
+
+    const menu = document.getElementById("manualMenu");
+    const arrow = btn.querySelector(".arrow");
+
+    menu.classList.toggle("hidden");
+
+    if(menu.classList.contains("hidden")){
+        arrow.textContent = "▸";
+    }else{
+        arrow.textContent = "▾";
+    }
 }
 
-function toggleSubMenu(id){
+function toggleSubMenu(btn,id){
 
     const target = document.getElementById(id);
     const isOpen = !target.classList.contains("hidden");
 
+    // 關閉所有群組
     document.querySelectorAll(".submenu-group").forEach(group=>{
         group.classList.add("hidden");
     });
 
+    // 所有箭頭恢復
+    document.querySelectorAll(".submenu-category .arrow").forEach(arrow=>{
+        arrow.textContent = "▸";
+    });
+
+    // 移除所有 active
+    document.querySelectorAll(".submenu-category").forEach(item=>{
+        item.classList.remove("active");
+    });
+
+    // 如果原本沒開啟，則打開
     if(!isOpen){
         target.classList.remove("hidden");
+        btn.querySelector(".arrow").textContent = "▾";
+        btn.classList.add("active");
     }
 }
 
