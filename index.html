@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Yessing 小算盤</title>
 <link rel="icon" type="image/png" href="./images/calculator_icon.png">
 <link rel="apple-touch-icon" href="./images/calculator_icon.png">
-<style>
 
-body{
+<style>
+html,body{
     margin:0;
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
     background:#f3f4f6;
     font-family:"Microsoft JhengHei";
 }
-
 .header{
     background:#003366;
     color:white;
@@ -25,21 +26,29 @@ body{
     gap:12px;
     font-size:24px;
     font-weight:bold;
+    position:relative;
 }
-
 .logo{
     height:50px;
     width:auto;
     display:block;
 }
-
+.menu-btn{
+    position:absolute;
+    left:15px;
+    top:13px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:32px;
+    cursor:pointer;
+}
 .page{
     max-width:800px;
     margin:auto;
     padding:15px;
     padding-bottom:90px;
 }
-
 .card{
     background:white;
     border-radius:12px;
@@ -47,7 +56,10 @@ body{
     margin-bottom:15px;
     box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-
+.card h2{
+    text-align:center;
+    margin-top:0;
+}
 input,select{
     width:100%;
     height:50px;
@@ -58,14 +70,12 @@ input,select{
     border-radius:8px;
     box-sizing:border-box;
 }
-
 label{
     display:block;
     margin-bottom:5px;
     margin-top:12px;
     font-weight:bold;
 }
-
 .total{
     background:#ff3333;
     color:white;
@@ -74,12 +84,15 @@ label{
     border-radius:12px;
     margin-top:15px;
 }
-
 .total-value{
     font-size:42px;
     font-weight:bold;
 }
-
+.meter-value{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:8px;
+}
 .result{
     background:#fafafa;
     border-radius:8px;
@@ -88,31 +101,6 @@ label{
     text-align:center;
     font-size:20px;
 }
-
-/* ===== 底部導航 ===== */
-.nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:70px;
-    background:white;
-    display:flex;
-    border-top:1px solid #ddd;
-}
-
-.nav button{
-    flex:1;
-    border:none;
-    background:white;
-    font-size:14px;
-}
-
-/* ===== 隱藏頁 ===== */
-.hidden{
-    display:none;
-}
-
 .btn{
     width:100%;
     height:50px;
@@ -123,7 +111,6 @@ label{
     color:white;
     font-size:18px;
 }
-
 .help-btn{
     display:inline-block;
     width:22px;
@@ -137,7 +124,6 @@ label{
     font-size:14px;
     margin-left:5px;
 }
-
 .note{
     background:#fff3cd;
     color:red;
@@ -147,40 +133,6 @@ label{
     font-weight:bold;
     margin-bottom:10px;
 }
-
-.modal{
-    display:none;
-    position:fixed;
-    z-index:9999;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.7);
-}
-
-.modal-content{
-    background:white;
-    margin:5% auto;
-    padding:15px;
-    width:90%;
-    max-width:600px;
-    border-radius:12px;
-    text-align:center;
-}
-
-.modal-content img{
-    width:100%;
-    max-width:550px;
-}
-
-.close{
-    float:right;
-    font-size:30px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
 .error-msg{
     color:red;
     font-size:22px;
@@ -188,236 +140,45 @@ label{
     text-align:center;
     margin-top:10px;
 }
-
-@media (max-width:768px){
-    input,select{
-        font-size:20px;
-        height:55px;
-    }
-    .total-value{
-        font-size:34px;
-    }
+.hidden{
+    display:none !important;
 }
 
-/* ===== 右上角 toggle ===== */
-.switch {
-    position: absolute;
-    right: 15px;
-    top: 12px;
-    width: 50px;
-    height: 26px;
+/* 底部導航 */
+.nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:70px;
+    background:white;
+    display:flex;
+    border-top:1px solid #ddd;
+    z-index:9000;
 }
-
-.switch input {
-    display: none;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    transition: .3s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .3s;
-    border-radius: 50%;
-}
-
-.switch input:checked + .slider {
-    background-color: #4CAF50;
-}
-
-.switch input:checked + .slider:before {
-    transform: translateX(24px);
-}
-
-/* ===== 深色模式 ===== */
-body.dark {
-    background:#1e1e1e;
-    color:white;
-}
-
-body.dark .card{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark input{
-    background:#ffff66;
-    color:#000;
-    border:1px solid #999;
-}
-
-body.dark .readonly-cell{
-    background:#333;   /* 計算結果維持深色 */
-    color:#fff;
-}
-
-body.dark .result{
-    background:#333;
-}
-
-body.dark .nav{
-    background:#2a2a2a;
-}
-
-body.dark .nav button{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark .header{
-    background:#111;
-}
-
-/* ===== switch base ===== */
-.switch {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    width: 60px;
-    height: 28px;
-}
-
-.switch input {
-    display: none;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    border-radius: 34px;
-    transition: .3s;
-}
-
-/* 圓點 */
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    border-radius: 50%;
-    transition: .3s;
-    z-index: 2;
-}
-
-/* icon */
-.icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 14px;
-    transition: .3s;
-    z-index: 1;
-}
-
-.sun {
-    left: 6px;
-    opacity: 1;
-}
-
-.moon {
-    right: 6px;
-    opacity: 0.3;
-}
-
-/* checked 狀態 */
-.switch input:checked + .slider {
-    background-color: #4CAF50;
-}
-
-.switch input:checked + .slider:before {
-    transform: translateX(32px);
-}
-
-/* icon 切換效果 */
-.switch input:checked + .slider .sun {
-    opacity: 0.3;
-}
-
-.switch input:checked + .slider .moon {
-    opacity: 1;
-}
-
-/* ===== dark mode（保留你原本）===== */
-body.dark {
-    background:#1e1e1e;
-    color:white;
-}
-
-body.dark .card{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark input,
-body.dark select{
-    background:#333;
-    color:white;
-    border:1px solid #555;
-}
-
-body.dark .result{
-    background:#333;
-}
-
-body.dark .nav{
-    background:#2a2a2a;
-}
-
-body.dark .nav button{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark .header{
-    background:#111;
-}
-
-
-/* ===== 左側 Sidebar ===== */
-.menu-btn{
-    position:absolute;
-    left:15px;
-    top:13px;
-    background:none;
+.nav button{
+    flex:1;
     border:none;
-    color:white;
-    font-size:32px;
-    cursor:pointer;
+    background:white;
+    font-size:14px;
 }
 
+/* Sidebar */
 .sidebar{
     position:fixed;
     top:0;
-    left:-260px;
-    width:260px;
+    left:-280px;
+    width:280px;
     height:100%;
     background:white;
     z-index:10001;
     box-shadow:2px 0 10px rgba(0,0,0,.25);
     transition:.3s;
+    overflow-y:auto;
 }
-
 .sidebar.open{
     left:0;
 }
-
 .sidebar-header{
     background:#003366;
     color:white;
@@ -428,12 +189,10 @@ body.dark .header{
     justify-content:space-between;
     align-items:center;
 }
-
 .sidebar-close{
     cursor:pointer;
     font-size:30px;
 }
-
 .sidebar-item{
     width:100%;
     padding:18px;
@@ -444,11 +203,9 @@ body.dark .header{
     cursor:pointer;
     border-bottom:1px solid #eee;
 }
-
 .sidebar-item:hover{
     background:#f3f4f6;
 }
-
 .sidebar-mask{
     display:none;
     position:fixed;
@@ -459,99 +216,148 @@ body.dark .header{
     background:rgba(0,0,0,.45);
     z-index:10000;
 }
-
 .sidebar-mask.show{
     display:block;
 }
 
+/* 說明書選單 */
+.submenu{
+    background:#f7f7f7;
+}
+.submenu-category{
+    width:100%;
+    padding:14px 18px 14px 28px;
+    border:none;
+    background:#ededed;
+    text-align:left;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    border-bottom:1px solid #ddd;
+}
+.submenu-category:hover{
+    background:#e2e2e2;
+}
+.submenu-group{
+    background:#fafafa;
+}
+.submenu-item{
+    width:100%;
+    padding:14px 18px 14px 45px;
+    border:none;
+    background:#fafafa;
+    text-align:left;
+    font-size:17px;
+    cursor:pointer;
+    border-bottom:1px solid #e5e5e5;
+}
+.submenu-item:hover{
+    background:#eeeeee;
+}
+
+/* 深色切換 */
+.switch {
+    position:absolute;
+    right:15px;
+    top:10px;
+    width:60px;
+    height:28px;
+}
+.switch input{
+    display:none;
+}
+.slider {
+    position:absolute;
+    cursor:pointer;
+    top:0; left:0; right:0; bottom:0;
+    background-color:#ccc;
+    border-radius:34px;
+    transition:.3s;
+}
+.slider:before {
+    position:absolute;
+    content:"";
+    height:22px;
+    width:22px;
+    left:3px;
+    bottom:3px;
+    background-color:white;
+    border-radius:50%;
+    transition:.3s;
+    z-index:2;
+}
+.icon {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:14px;
+    transition:.3s;
+    z-index:1;
+}
+.sun{left:6px;opacity:1;}
+.moon{right:6px;opacity:.3;}
+.switch input:checked + .slider{background-color:#4CAF50;}
+.switch input:checked + .slider:before{transform:translateX(32px);}
+.switch input:checked + .slider .sun{opacity:.3;}
+.switch input:checked + .slider .moon{opacity:1;}
+
+/* 圖片彈窗 */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.7);
+}
+.modal-content{
+    background:white;
+    margin:5% auto;
+    padding:15px;
+    width:90%;
+    max-width:600px;
+    border-radius:12px;
+    text-align:center;
+}
+.modal-content img{
+    width:100%;
+    max-width:550px;
+}
+.close{
+    float:right;
+    font-size:30px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* 轉速換算 */
 .formula-line{
     font-size:20px;
     text-align:center;
     line-height:1.8;
     margin-bottom:15px;
 }
-
 .formula-row{
     display:grid;
     grid-template-columns:1fr 40px 1fr;
     gap:10px;
     align-items:center;
 }
-
 .formula-equal{
     font-size:28px;
     font-weight:bold;
     text-align:center;
 }
-
-.turn-formula{
-    font-size:18px;
-    text-align:center;
-    line-height:1.8;
-    margin:10px 0 15px;
-    font-weight:bold;
+.excel-card{
+    overflow-x:auto;
 }
-
-.turn-grid{
-    display:grid;
-    grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;
-    gap:8px;
-    align-items:end;
-}
-
-.turn-grid-2{
-    display:grid;
-    grid-template-columns:1fr 28px 1fr 28px 70px;
-    gap:8px;
-    align-items:end;
-}
-
-.turn-op{
-    font-size:24px;
-    font-weight:bold;
-    text-align:center;
-    padding-bottom:12px;
-}
-
 .sub-title{
     text-align:center;
     font-size:20px;
     font-weight:bold;
     margin:5px 0 10px;
-}
-
-@media (max-width:768px){
-    .turn-grid,
-    .turn-grid-2{
-        grid-template-columns:1fr;
-    }
-    .turn-op{
-        padding-bottom:0;
-    }
-}
-
-body.dark .sidebar{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark .sidebar-header{
-    background:#111;
-}
-
-body.dark .sidebar-item{
-    background:#2a2a2a;
-    color:white;
-    border-bottom:1px solid #444;
-}
-
-body.dark .sidebar-item:hover{
-    background:#333;
-}
-
-/* ===== Excel 分子分母格式：轉速換算 ===== */
-.excel-card{
-    overflow-x:auto;
 }
 .excel-formula{
     min-width:720px;
@@ -570,9 +376,9 @@ body.dark .sidebar-item:hover{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:10px;
+    gap:12px;
     padding:14px 8px;
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
 }
 .frac-box{
     width:360px;
@@ -582,7 +388,12 @@ body.dark .sidebar-item:hover{
     grid-template-columns:1fr 26px 1fr 26px 1fr;
     align-items:center;
 }
+.frac-bottom{
+    display:grid;
+    grid-template-columns:1fr;
+}
 .frac-top input,
+.frac-bottom input,
 .single-input input{
     background:#ffff00;
     border-radius:0;
@@ -590,14 +401,8 @@ body.dark .sidebar-item:hover{
     height:44px;
     font-size:22px;
 }
-.frac-bottom input{
-    background:#ffff00;
-    border-radius:0;
-    border:1px solid #ddd;
-    height:44px;
-    font-size:22px;
-}
-.frac-op{
+.frac-op,
+.excel-equal{
     text-align:center;
     font-size:22px;
     font-weight:bold;
@@ -605,22 +410,11 @@ body.dark .sidebar-item:hover{
 .frac-line{
     border-top:2px solid #000;
 }
-.frac-bottom{
-    display:grid;
-    grid-template-columns:1fr;
-}
-.excel-equal{
-    font-size:22px;
-    font-weight:bold;
-}
 .excel-answer{
     min-width:160px;
     font-size:22px;
     font-weight:bold;
     text-align:center;
-}
-.single-input{
-    width:130px;
 }
 .readonly-cell{
     min-width:150px;
@@ -651,8 +445,21 @@ body.dark .sidebar-item:hover{
     margin-top:8px;
 }
 .excel-label-frac{
-    width:360px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:420px;
+}
+.frac-top-label,
+.frac-bottom-label{
+    font-size:18px;
+    font-weight:bold;
     text-align:center;
+}
+.frac-line-label{
+    width:100%;
+    border-top:2px solid #000;
+    margin:4px 0;
 }
 .excel-label-answer{
     min-width:160px;
@@ -662,44 +469,10 @@ body.dark .sidebar-item:hover{
     width:130px;
     text-align:center;
 }
-@media (max-width:768px){
-    .excel-formula,
-    .excel-labels{
-        min-width:680px;
-    }
-}
-body.dark .excel-formula{
-    background:#2a2a2a;
-    border-color:#777;
-}
-body.dark .excel-title{
-    border-bottom-color:#777;
-}
-body.dark .frac-line{
-    border-top-color:#777;
-}
-body.dark .readonly-cell{
-    background:#333;
-    color:white;
-}
-body.dark .excel-note{
-    color:white;
-}
-
-/* 轉轉第二段欄位寬度修正 */
-#page6 .formula-line-excel{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
 #page6 .single-input{
     width:150px;
     min-width:150px;
 }
-
 #page6 #turnSteelDia{
     width:100%;
     min-width:150px;
@@ -709,62 +482,7 @@ body.dark .excel-note{
     box-sizing:border-box;
 }
 
-.excel-label-frac{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    min-width:420px;
-}
-
-.frac-top-label,
-.frac-bottom-label{
-    font-size:18px;
-    font-weight:bold;
-    text-align:center;
-}
-
-.frac-line-label{
-    width:100%;
-    border-top:2px solid #000;
-    margin:4px 0;
-}
-
-
-
-/* mm 轉 M 顯示 */
-.meter-value{
-    font-size:24px;
-    font-weight:bold;
-    margin-top:8px;
-}
-
-@media (max-width:768px){
-    .meter-value{
-        font-size:22px;
-    }
-}
-
-/* ===== 最終修正：保留黃底 input、電線小抄、轉轉 RWD ===== */
-.card h2{
-    text-align:center;
-    margin-top:0;
-}
-
-/* 深色模式下，所有輸入欄位保持黃底黑字 */
-body.dark input,
-body.dark select{
-    background:#ffff66 !important;
-    color:#000 !important;
-    border:1px solid #999 !important;
-}
-
-/* 深色模式下，轉轉分子分母線條加亮 */
-body.dark .frac-line,
-body.dark .frac-line-label{
-    border-top:2px solid #fff !important;
-}
-
-/* 電線小抄表格 */
+/* 電線小抄 */
 .wire-table{
     width:100%;
     max-width:360px;
@@ -774,18 +492,15 @@ body.dark .frac-line-label{
     font-size:22px;
     text-align:center;
 }
-
 .wire-table th,
 .wire-table td{
     border:1px solid #999;
     padding:8px 12px;
 }
-
 .wire-table th{
     font-weight:bold;
     background:#f5f5f5;
 }
-
 .wire-note{
     text-align:center;
     font-size:20px;
@@ -793,107 +508,7 @@ body.dark .frac-line-label{
     margin-top:15px;
 }
 
-body.dark .wire-table{
-    background:#2a2a2a;
-    color:white;
-}
-
-body.dark .wire-table th{
-    background:#333;
-}
-
-body.dark .wire-table th,
-body.dark .wire-table td{
-    border-color:#777;
-}
-
-/* 轉轉頁面 RWD 自動縮放 */
-@media (max-width:768px){
-    #page6 .excel-card{
-        overflow-x:hidden;
-    }
-
-    #page6 .excel-formula,
-    #page6 .excel-labels{
-        min-width:0;
-        width:100%;
-    }
-
-    #page6 .formula-line-excel{
-        flex-wrap:wrap;
-        gap:8px;
-        padding:10px 4px;
-    }
-
-    #page6 .frac-box{
-        width:100%;
-        max-width:360px;
-    }
-
-    #page6 .frac-top{
-        grid-template-columns:1fr 22px 1fr 22px 1fr;
-    }
-
-    #page6 .frac-top input,
-    #page6 .frac-bottom input{
-        height:42px;
-        font-size:16px;
-    }
-
-    #page6 .frac-op,
-    #page6 .excel-equal{
-        font-size:18px;
-    }
-
-    #page6 .excel-answer,
-    #page6 .readonly-cell{
-        min-width:120px;
-        font-size:18px;
-    }
-
-    #page6 .excel-labels{
-        flex-wrap:wrap;
-        gap:6px;
-        font-size:15px;
-    }
-
-    #page6 .excel-label-frac{
-        min-width:0;
-        width:100%;
-        max-width:360px;
-    }
-
-    #page6 .frac-top-label,
-    #page6 .frac-bottom-label{
-        font-size:15px;
-    }
-
-    #page6 .excel-label-answer{
-        min-width:100px;
-    }
-
-    #page6 .excel-label-single{
-        width:100px;
-    }
-
-    #page6 #turnSteelDia{
-        min-width:120px;
-        font-size:20px;
-    }
-
-    #page6 .red-answer{
-        min-width:150px;
-    }
-}
-
-/* ===== PDF 檢視頁 ===== */
-html,
-body{
-    width:100%;
-    max-width:100%;
-    overflow-x:hidden;
-}
-
+/* PDF 檢視 */
 #page8{
     max-width:none;
     width:100%;
@@ -901,13 +516,11 @@ body{
     margin:0;
     overflow:hidden;
 }
-
 .pdf-wrap{
     width:100%;
     height:calc(100dvh - 70px);
     overflow:hidden;
 }
-
 .pdf-viewer{
     width:100%;
     height:100%;
@@ -915,61 +528,169 @@ body{
     display:block;
 }
 
-/* 手機版 */
-@media (max-width:768px){
-    #page8{
-        max-width:none;
-        width:100%;
-        padding:0;
-        margin:0;
-        overflow:hidden;
-    }
-
-    .pdf-wrap{
-        width:100%;
-        height:calc(100dvh - 70px);
-        overflow:hidden;
-    }
-
-    .pdf-viewer{
-        width:100%;
-        height:100%;
-    }
+/* 深色模式 */
+body.dark{
+    background:#1e1e1e;
+    color:white;
 }
-
-.submenu{
-    background:#f7f7f7;
+body.dark .header,
+body.dark .sidebar-header{
+    background:#111;
 }
-
-.submenu-item{
-    width:100%;
-    padding:14px 18px 14px 35px;
-    border:none;
-    background:#f7f7f7;
-    text-align:left;
-    font-size:18px;
-    cursor:pointer;
-    border-bottom:1px solid #e5e5e5;
+body.dark .card,
+body.dark .sidebar,
+body.dark .nav{
+    background:#2a2a2a;
+    color:white;
 }
-
-.submenu-item:hover{
-    background:#eeeeee;
-}
-
-body.dark .submenu{
-    background:#222;
-}
-
-body.dark .submenu-item{
-    background:#222;
+body.dark .nav button,
+body.dark .sidebar-item{
+    background:#2a2a2a;
     color:white;
     border-bottom:1px solid #444;
 }
-
+body.dark .sidebar-item:hover{
+    background:#333;
+}
+body.dark input,
+body.dark select{
+    background:#ffff66 !important;
+    color:#000 !important;
+    border:1px solid #999 !important;
+}
+body.dark .result,
+body.dark .readonly-cell{
+    background:#333;
+    color:white;
+}
+body.dark .excel-formula{
+    background:#2a2a2a;
+    border-color:#777;
+}
+body.dark .excel-title{
+    border-bottom-color:#777;
+}
+body.dark .frac-line,
+body.dark .frac-line-label{
+    border-top:2px solid #fff !important;
+}
+body.dark .excel-note{
+    color:white;
+}
+body.dark .wire-table{
+    background:#2a2a2a;
+    color:white;
+}
+body.dark .wire-table th{
+    background:#333;
+}
+body.dark .wire-table th,
+body.dark .wire-table td{
+    border-color:#777;
+}
+body.dark .submenu{
+    background:#222;
+}
+body.dark .submenu-category{
+    background:#333;
+    color:white;
+    border-bottom:1px solid #444;
+}
+body.dark .submenu-category:hover{
+    background:#3a3a3a;
+}
+body.dark .submenu-group,
+body.dark .submenu-item{
+    background:#222;
+    color:white;
+}
+body.dark .submenu-item{
+    border-bottom:1px solid #444;
+}
 body.dark .submenu-item:hover{
     background:#333;
 }
 
+@media (max-width:768px){
+    .header{
+        font-size:20px;
+        gap:8px;
+    }
+    .logo{
+        height:48px;
+    }
+    input,select{
+        font-size:20px;
+        height:55px;
+    }
+    .total-value{
+        font-size:34px;
+    }
+    .meter-value{
+        font-size:22px;
+    }
+    #page6 .excel-card{
+        overflow-x:hidden;
+    }
+    #page6 .excel-formula,
+    #page6 .excel-labels{
+        min-width:0;
+        width:100%;
+    }
+    #page6 .formula-line-excel{
+        flex-wrap:wrap;
+        gap:8px;
+        padding:10px 4px;
+    }
+    #page6 .frac-box{
+        width:100%;
+        max-width:360px;
+    }
+    #page6 .frac-top{
+        grid-template-columns:1fr 22px 1fr 22px 1fr;
+    }
+    #page6 .frac-top input,
+    #page6 .frac-bottom input{
+        height:42px;
+        font-size:16px;
+    }
+    #page6 .frac-op,
+    #page6 .excel-equal{
+        font-size:18px;
+    }
+    #page6 .excel-answer,
+    #page6 .readonly-cell{
+        min-width:120px;
+        font-size:18px;
+    }
+    #page6 .excel-labels{
+        flex-wrap:wrap;
+        gap:6px;
+        font-size:15px;
+    }
+    #page6 .excel-label-frac{
+        min-width:0;
+        width:100%;
+        max-width:360px;
+    }
+    #page6 .frac-top-label,
+    #page6 .frac-bottom-label{
+        font-size:15px;
+    }
+    #page6 .excel-label-answer{
+        min-width:100px;
+    }
+    #page6 .excel-label-single{
+        width:100px;
+    }
+    #page6 #turnSteelDia{
+        min-width:120px;
+        font-size:20px;
+    }
+    #page6 .red-answer{
+        min-width:150px;
+    }
+}
 </style>
 </head>
 
@@ -982,400 +703,350 @@ body.dark .submenu-item:hover{
         功能選單
         <span class="sidebar-close" onclick="closeSidebar()">×</span>
     </div>
+
     <button class="sidebar-item" onclick="goSidebarPage(5)">功率換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉速換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線負載</button>
-	<button class="sidebar-item" onclick="toggleManualMenu()">說明書 ▾</button>
+    <button class="sidebar-item" onclick="toggleManualMenu()">說明書 ▾</button>
 
-
-<!-- 說明書下拉選單 -->
 <div id="manualMenu" class="submenu hidden">
 
-    <!-- <button class="submenu-item" onclick="openPdf('/xxx/xxx.pdf')">測試</button> -->
-	
-	<!-- <button class="submenu-item" onclick="openDrivePdf('google drive link')">xxx</button> -->
-	
-    <button class="submenu-item" onclick="openDrivePdf('12FDLMVdE_bwuBxH30r6dykd6HtbDNGna')">台儀溫控</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('16vSP7ezM6E4-GlSoLAg41JJLRjr9u2YT')">各國電壓參考</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1xPNAi8YHLuwCTlU45wuXa-uI-Bdb0MT4')">TC-2050標準</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1ac0bJdYXlIjwKbePBSFvG4odEJdmVse7')">TC-2050通訊</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1QNhKiePvI9lAUXf4WO4E9jvjtNhR16Ze')">TC-3050標準</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1JTg4DRTvGVjV8_DMq17jr2Hs8a2yp6wT')">TC-3050通訊</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1i6lQ4-FoDGrGJ6K56YTe6u6JB7n0DrUh')">GA500說明書</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1w--iu0VTKIw-CageGAm7XHK3esswU1Na')">GA700說明書</button>
-	
-	<button class="submenu-item" onclick="openDrivePdf('1Tsq5f9WkylhzajyI_7_1V3ytEra56e-g')">V1000說明書</button>
-	
-</div>
+    <button class="submenu-category" onclick="toggleSubMenu('manualCommon')">共用 ▾</button>
+    <div id="manualCommon" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('International_list.pdf')">各國電壓參考</button>
+    </div>
+
+    <button class="submenu-category" onclick="toggleSubMenu('manualTAIE')">台儀 TAIE ▾</button>
+    <div id="manualTAIE" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('TAIE/TAIE_PID.pdf')">台儀溫控</button>
+    </div>
+
+    <button class="submenu-category" onclick="toggleSubMenu('manualEUNTAY')">EUNTAY ▾</button>
+    <div id="manualEUNTAY" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('EUNTAY/TC-2050_P_Manual.pdf')">TC-2050 標準</button>
+        <button class="submenu-item" onclick="openPdf('EUNTAY/TC-2050_Communication_Guide.pdf')">TC-2050 通訊</button>
+        <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_P_Manual.pdf')">TC-3050 標準</button>
+        <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_Communication_Guide.pdf')">TC-3050 通訊</button>
+    </div>
+
+    <button class="submenu-category" onclick="toggleSubMenu('manualYASKAWA')">安川 YASKAWA ▾</button>
+    <div id="manualYASKAWA" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('YASKAWA/GA500_Manual.pdf')">GA500 說明書</button>
+        <button class="submenu-item" onclick="openPdf('YASKAWA/GA700_Manual.pdf')">GA700 說明書</button>
+        <button class="submenu-item" onclick="openPdf('YASKAWA/V1000_Manual.pdf')">V1000 說明書</button>
+    </div>
+
 </div>
 
-
+</div>
 <!-- header -->
 <div class="header">
     <button class="menu-btn" onclick="openSidebar()">☰</button>
-    <img
-    src="./images/logo.jpg"
-    class="logo"
-    onclick="goHome()"
-    style="cursor:pointer;">
+    <img src="./images/logo.jpg" class="logo" onclick="goHome()" style="cursor:pointer;">
     Yessing 小算盤
-   <label class="switch">
-    <input type="checkbox" id="themeToggle">
-    <span class="slider">
-        <span class="icon sun">☀️</span>
-        <span class="icon moon">🌙</span>
-    </span>
-</label>
+    <label class="switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider">
+            <span class="icon sun">☀️</span>
+            <span class="icon moon">🌙</span>
+        </span>
+    </label>
 </div>
 
 <!-- PAGE 1 -->
 <div id="page1" class="page">
-<div class="card">
-<h2>刺皮剩餘長度</h2>
+    <div class="card">
+        <h2>刺皮剩餘長度</h2>
 
-<label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
-<input id="outerDia" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>外徑(mm)<span class="help-btn" onclick="showImage('outer_diameter')">?</span></label>
+        <input id="outerDia" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
-<input id="innerDia" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>內徑(mm)<span class="help-btn" onclick="showImage('inner_diameter')">?</span></label>
+        <input id="innerDia" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
-<input id="totalThickness" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>剩皮總厚(mm)<span class="help-btn" onclick="showImage('total_thickness')">?</span></label>
+        <input id="totalThickness" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
-<input id="layerThickness" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>次皮厚(mm)<span class="help-btn" onclick="showImage('layer_thickness')">?</span></label>
+        <input id="layerThickness" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<div class="total">
-<div>總長度</div>
-<div id="remainResult" class="total-value">0 mm</div>
-<div id="remainResultM" class="meter-value">0.00 M</div>
-</div>
+        <div class="total">
+            <div>總長度</div>
+            <div id="remainResult" class="total-value">0 mm</div>
+            <div id="remainResultM" class="meter-value">0.00 M</div>
+        </div>
 
-<button class="btn" onclick="clearRemain()">清除資料</button>
-</div>
+        <button class="btn" onclick="clearRemain()">清除資料</button>
+    </div>
 </div>
 
 <!-- PAGE 2 -->
 <div id="page2" class="page hidden">
-<div class="card">
-<h2>輪子所需刺皮長度</h2>
+    <div class="card">
+        <h2>輪子所需刺皮長度</h2>
 
-<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="faceLength" type="text" inputmode="decimal" pattern="[0-9]*">
-    
-<label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
-<input id="skinWidth" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
+        <input id="faceLength" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="skinDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>刺皮寬度(mm)<span class="help-btn" onclick="showImage('skin_width')">?</span></label>
+        <input id="skinWidth" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<div class="total">
-<div>刺皮總長度</div>
-<div id="skinResult" class="total-value">0 mm</div>
-<div id="skinResultM" class="meter-value">0.00 M</div>
-</div>
+        <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
+        <input id="skinDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<button class="btn" onclick="clearSkin()">清除資料</button>
-</div>
+        <div class="total">
+            <div>刺皮總長度</div>
+            <div id="skinResult" class="total-value">0 mm</div>
+            <div id="skinResultM" class="meter-value">0.00 M</div>
+        </div>
+
+        <button class="btn" onclick="clearSkin()">清除資料</button>
+    </div>
 </div>
 
 <!-- PAGE 3 -->
 <div id="page3" class="page hidden">
-<div class="card">
-<h2>鐵氟龍長度計算</h2>
+    <div class="card">
+        <h2>鐵氟龍長度計算</h2>
 
-<label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>輪子直徑(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
+        <input id="teflonDiameter" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>鐵氟龍寬度(mm)</label>
-<input id="teflonWidth" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>鐵氟龍寬度(mm)</label>
+        <input id="teflonWidth" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
-<input id="teflonFace" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>輪面長度(mm)<span class="help-btn" onclick="showImage('surface_length')">?</span></label>
+        <input id="teflonFace" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>支數</label>
-<input id="qty" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>支數</label>
+        <input id="qty" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<div class="total">
-<div>鐵氟龍總長度</div>
-<div id="teflonResult" class="total-value">0 mm</div>
-<div id="teflonResultM" class="meter-value">0.00 M</div>
-</div>
+        <div class="total">
+            <div>鐵氟龍總長度</div>
+            <div id="teflonResult" class="total-value">0 mm</div>
+            <div id="teflonResultM" class="meter-value">0.00 M</div>
+        </div>
 
-<button class="btn" onclick="clearTeflon()">清除資料</button>
-</div>
+        <button class="btn" onclick="clearTeflon()">清除資料</button>
+    </div>
 </div>
 
 <!-- PAGE 4 -->
 <div id="page4" class="page hidden">
-<div class="card">
-<h2>電熱管電流計算</h2>
+    <div class="card">
+        <h2>電熱管電流計算</h2>
 
-<div class="note">注意是機台電壓，不是電熱管電壓</div>
+        <div class="note">注意是機台電壓，不是電熱管電壓</div>
 
-<label>瓦特數(W)</label>
-<input id="heaterWatt" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>瓦特數(W)</label>
+        <input id="heaterWatt" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>支數</label>
-<input id="heaterQty" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>支數</label>
+        <input id="heaterQty" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>機台電壓(V)</label>
-<input id="machineVoltage" type="text" inputmode="decimal" pattern="[0-9]*">
+        <label>機台電壓(V)</label>
+        <input id="machineVoltage" type="text" inputmode="decimal" pattern="[0-9]*">
 
-<label>相數</label>
-<select id="phaseType">
-<option value="3">三相</option>
-<option value="1">單相</option>
-</select>
+        <label>相數</label>
+        <select id="phaseType">
+            <option value="3">三相</option>
+            <option value="1">單相</option>
+        </select>
 
-<div class="total">
-<div>安培數</div>
-<div id="heaterAmpResult" class="total-value">0.00 A</div>
+        <div class="total">
+            <div>安培數</div>
+            <div id="heaterAmpResult" class="total-value">0.00 A</div>
+        </div>
+
+        <div class="result">
+            總瓦數：<span id="heaterTotalWatt">0</span> W
+        </div>
+
+        <div id="heaterError" class="error-msg"></div>
+
+        <button class="btn" onclick="clearHeater()">清除資料</button>
+    </div>
 </div>
-
-<div class="result">
-總瓦數：<span id="heaterTotalWatt">0</span> W
-</div>
-
-<div id="heaterError" class="error-msg"></div>
-
-<button class="btn" onclick="clearHeater()">清除資料</button>
-</div>
-</div>
-
 
 <!-- PAGE 5 -->
 <div id="page5" class="page hidden">
-<div class="card">
-<h2>電電</h2>
+    <div class="card">
+        <h2>功率換算</h2>
 
-<div class="formula-line">電壓(V) × 安培(A) = 瓦特(W)</div>
-<div class="formula-row">
-    <div>
-        <label>電壓(V)</label>
-        <input id="pikachuV1" type="text" inputmode="decimal" pattern="[0-9]*">
+        <div class="formula-line">電壓(V) × 安培(A) = 瓦特(W)</div>
+        <div class="formula-row">
+            <div>
+                <label>電壓(V)</label>
+                <input id="pikachuV1" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+            <div class="formula-equal">×</div>
+            <div>
+                <label>安培(A)</label>
+                <input id="pikachuA1" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+        </div>
+        <div class="total">
+            <div>瓦特(W)</div>
+            <div id="pikachuWResult" class="total-value">0 W</div>
+        </div>
+
+        <hr>
+
+        <div class="formula-line">瓦特(W) ÷ 電壓(V) ÷ √3 = 安培(A)</div>
+        <div class="formula-row">
+            <div>
+                <label>瓦特(W)</label>
+                <input id="pikachuW2" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+            <div class="formula-equal">÷</div>
+            <div>
+                <label>電壓(V)</label>
+                <input id="pikachuV2" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+        </div>
+        <div class="total">
+            <div>安培(A)</div>
+            <div id="pikachuAResult" class="total-value">0 A</div>
+        </div>
+
+        <hr>
+
+        <div class="formula-line">瓦特(W) ÷ 安培(A) = 電壓(V)</div>
+        <div class="formula-row">
+            <div>
+                <label>瓦特(W)</label>
+                <input id="pikachuW3" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+            <div class="formula-equal">÷</div>
+            <div>
+                <label>安培(A)</label>
+                <input id="pikachuA3" type="text" inputmode="decimal" pattern="[0-9]*">
+            </div>
+        </div>
+        <div class="total">
+            <div>電壓(V)</div>
+            <div id="pikachuVResult" class="total-value">0 V</div>
+        </div>
+
+        <button class="btn" onclick="clearPikachu()">清除資料</button>
     </div>
-    <div class="formula-equal">×</div>
-    <div>
-        <label>安培(A)</label>
-        <input id="pikachuA1" type="text" inputmode="decimal" pattern="[0-9]*">
-    </div>
 </div>
-<div class="total">
-<div>瓦特(W)</div>
-<div id="pikachuWResult" class="total-value">0 W</div>
-</div>
-
-<hr>
-
-<div class="formula-line">瓦特(W) ÷ 電壓(V) ÷ √3 = 安培(A)</div>
-<div class="formula-row">
-    <div>
-        <label>瓦特(W)</label>
-        <input id="pikachuW2" type="text" inputmode="decimal" pattern="[0-9]*">
-    </div>
-    <div class="formula-equal">÷</div>
-    <div>
-        <label>電壓(V)</label>
-        <input id="pikachuV2" type="text" inputmode="decimal" pattern="[0-9]*">
-    </div>
-</div>
-<div class="total">
-<div>安培(A)</div>
-<div id="pikachuAResult" class="total-value">0 A</div>
-</div>
-
-<hr>
-
-<div class="formula-line">瓦特(W) ÷ 安培(A) = 電壓(V)</div>
-<div class="formula-row">
-    <div>
-        <label>瓦特(W)</label>
-        <input id="pikachuW3" type="text" inputmode="decimal" pattern="[0-9]*">
-    </div>
-    <div class="formula-equal">÷</div>
-    <div>
-        <label>安培(A)</label>
-        <input id="pikachuA3" type="text" inputmode="decimal" pattern="[0-9]*">
-    </div>
-</div>
-<div class="total">
-<div>電壓(V)</div>
-<div id="pikachuVResult" class="total-value">0 V</div>
-</div>
-
-<button class="btn" onclick="clearPikachu()">清除資料</button>
-</div>
-</div>
-
 
 <!-- PAGE 6 -->
 <div id="page6" class="page hidden">
-<div class="card excel-card">
-<h2>轉速換算</h2>
+    <div class="card excel-card">
+        <h2>轉速換算</h2>
 
-<div class="sub-title">第一段：馬達轉速 → 鋼輪 RPM</div>
+        <div class="sub-title">第一段：馬達轉速 → 鋼輪 RPM</div>
 
-<!-- 公式說明 -->
-<div class="excel-labels">
-
-    <div class="excel-label-frac">
-        <div class="frac-top-label">
-            （ 馬達 RPM ÷ 減速比 ） × 馬達齒輪數
-        </div>
-
-        <div class="frac-line-label"></div>
-
-        <div class="frac-bottom-label">
-            輪子齒輪數
-        </div>
-    </div>
-
-    <div class="excel-equal">=</div>
-
-    <div class="excel-label-answer">
-        鋼輪 RPM
-    </div>
-
-</div>
-
-<!-- 實際輸入區 -->
-<div class="excel-formula">
-    <div class="excel-title">第一段</div>
-
-    <div class="formula-line-excel">
-
-        <div class="frac-box">
-            <div class="frac-top">
-                <input id="turnMotorRpm" type="text" placeholder="馬達rpm">
-                <div class="frac-op">/</div>
-                <input id="turnRatio" type="text" placeholder="減速比">
-                <div class="frac-op">*</div>
-                <input id="turnMotorGear" type="text" placeholder="馬達齒輪">
+        <div class="excel-labels">
+            <div class="excel-label-frac">
+                <div class="frac-top-label">（ 馬達 RPM ÷ 減速比 ） × 馬達齒輪數</div>
+                <div class="frac-line-label"></div>
+                <div class="frac-bottom-label">輪子齒輪數</div>
             </div>
+            <div class="excel-equal">=</div>
+            <div class="excel-label-answer">鋼輪 RPM</div>
+        </div>
 
-            <div class="frac-line"></div>
-
-            <div class="frac-bottom">
-                <input id="turnWheelGear" type="text" placeholder="輪子齒輪">
+        <div class="excel-formula">
+            <div class="excel-title">第一段</div>
+            <div class="formula-line-excel">
+                <div class="frac-box">
+                    <div class="frac-top">
+                        <input id="turnMotorRpm" type="text" placeholder="馬達rpm">
+                        <div class="frac-op">/</div>
+                        <input id="turnRatio" type="text" placeholder="減速比">
+                        <div class="frac-op">*</div>
+                        <input id="turnMotorGear" type="text" placeholder="馬達齒輪">
+                    </div>
+                    <div class="frac-line"></div>
+                    <div class="frac-bottom">
+                        <input id="turnWheelGear" type="text" placeholder="輪子齒輪">
+                    </div>
+                </div>
+                <div class="excel-equal">=</div>
+                <div id="turnSteelRpmResult" class="excel-answer">0.00</div>
             </div>
         </div>
+    </div>
 
-        <div class="excel-equal">=</div>
+    <div class="card excel-card">
+        <div class="sub-title">第二段：鋼輪 RPM → 線速度</div>
+        <div class="formula-line">鋼輪 RPM × 鋼輪直徑 mm × 3.14 = 鋼輪 mm/min = 鋼輪 M/min</div>
 
-        <div id="turnSteelRpmResult" class="excel-answer">
-            0.00
+        <div class="excel-formula">
+            <div class="excel-title">第二段</div>
+            <div class="formula-line-excel">
+                <div id="turnSteelRpmDisplay" class="readonly-cell">0</div>
+                <div class="excel-equal">*</div>
+                <div class="single-input">
+                    <input id="turnSteelDia" type="text" inputmode="decimal" pattern="[0-9]*" placeholder="直徑">
+                </div>
+                <div class="excel-equal">*</div>
+                <div class="readonly-cell">3.14</div>
+                <div class="excel-equal">=</div>
+                <div id="turnMmMinResult" class="excel-answer">0</div>
+                <div class="excel-equal">=</div>
+                <div id="turnMMinResult" class="excel-answer red-answer">0 M/min<span class="excel-note">(顯示值)</span></div>
+            </div>
         </div>
 
+        <button class="btn" onclick="clearTurn()">清除資料</button>
     </div>
 </div>
-
-</div>
-
-<div class="card excel-card">
-<div class="sub-title">第二段：鋼輪 RPM → 線速度</div>
-<div class="turn-formula">鋼輪 RPM × 鋼輪直徑 mm × 3.14 = 鋼輪 mm/min = 鋼輪 M/min</div>
-
-<div class="excel-labels">
-    <div class="excel-label-answer">鋼輪 r.p.m</div>
-    <div class="excel-equal">*</div>
-    <div class="excel-label-single">鋼輪直徑mm</div>
-    <div class="excel-equal">*</div>
-    <div class="excel-label-single">3.14</div>
-    <div class="excel-equal">=</div>
-    <div class="excel-label-answer">鋼輪 mm/min</div>
-    <div class="excel-equal">=</div>
-	</div>
-<div class="excel-labels">	
-    <div class="excel-label-answer">鋼輪 M/min</div>
-</div>
-
-<div class="excel-formula">
-    <div class="excel-title">第二段</div>
-    <div class="formula-line-excel">
-        <div id="turnSteelRpmDisplay" class="readonly-cell">0</div>
-        <div class="excel-equal">*</div>
-        <div class="single-input">
-            <input id="turnSteelDia" type="text" inputmode="decimal" pattern="[0-9]*" placeholder="直徑">
-        </div>
-        <div class="excel-equal">*</div>
-        <div class="readonly-cell">3.14</div>
-        <div class="excel-equal">=</div>
-        <div id="turnMmMinResult" class="excel-answer">0</div>
-        <div class="excel-equal">=</div>
-        <div id="turnMMinResult" class="excel-answer red-answer">0 M/min<span class="excel-note">(顯示值)</span></div>
-    </div>
-</div>
-
-<button class="btn" onclick="clearTurn()">清除資料</button>
-</div>
-</div>
-
 
 <!-- PAGE 7 -->
 <div id="page7" class="page hidden">
-<div class="card">
-<h2>電線小抄</h2>
+    <div class="card">
+        <h2>電線負載</h2>
 
-<table class="wire-table">
-    <tr>
-        <th>線徑 mm²</th>
-        <th>可負載最大電流(A)</th>
-    </tr>
-    <tr><td>1.25</td><td>&lt; 18</td></tr>
-    <tr><td>2.0</td><td>&lt; 25</td></tr>
-    <tr><td>3.5</td><td>&lt; 35</td></tr>
-    <tr><td>5.5</td><td>&lt; 47</td></tr>
-    <tr><td>8</td><td>&lt; 61</td></tr>
-    <tr><td>14</td><td>&lt; 91</td></tr>
-    <tr><td>22</td><td>&lt; 122</td></tr>
-    <tr><td>38</td><td>&lt; 171</td></tr>
-    <tr><td>50</td><td>&lt; 203</td></tr>
-</table>
+        <table class="wire-table">
+            <tr>
+                <th>線徑 mm²</th>
+                <th>可負載最大電流(A)</th>
+            </tr>
+            <tr><td>1.25</td><td>&lt; 18</td></tr>
+            <tr><td>2.0</td><td>&lt; 25</td></tr>
+            <tr><td>3.5</td><td>&lt; 35</td></tr>
+            <tr><td>5.5</td><td>&lt; 47</td></tr>
+            <tr><td>8</td><td>&lt; 61</td></tr>
+            <tr><td>14</td><td>&lt; 91</td></tr>
+            <tr><td>22</td><td>&lt; 122</td></tr>
+            <tr><td>38</td><td>&lt; 171</td></tr>
+            <tr><td>50</td><td>&lt; 203</td></tr>
+        </table>
 
-<div class="wire-note">
-    ※ 實際電流容量需依配線方式、環境溫度、線材種類及法規修正。
-</div>
-
-</div>
+        <div class="wire-note">
+            ※ 實際電流容量需依配線方式、環境溫度、線材種類及法規修正。
+        </div>
+    </div>
 </div>
 
 <!-- PAGE 8 -->
 <div id="page8" class="page hidden">
     <div class="pdf-wrap">
-        <iframe
-            id="pdfFrame"
-            src=""
-            class="pdf-viewer">
-        </iframe>
+        <iframe id="pdfFrame" src="" class="pdf-viewer"></iframe>
     </div>
 </div>
 
 <!-- bottom nav -->
 <div class="nav" id="bottomNav">
-<button onclick="showPage(1)">🧵<br>剩餘</button>
-<button onclick="showPage(2)">📏<br>刺皮</button>
-<button onclick="showPage(3)">🟫<br>鐵氟龍</button>
-<button onclick="showPage(4)">⚡<br>電熱</button>
+    <button onclick="showPage(1)">🧵<br>剩餘</button>
+    <button onclick="showPage(2)">📏<br>刺皮</button>
+    <button onclick="showPage(3)">🟫<br>鐵氟龍</button>
+    <button onclick="showPage(4)">⚡<br>電熱</button>
 </div>
 
-<!-- image modal（完整保留） -->
+<!-- image modal -->
 <div id="imgModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeImage()">×</span>
-<img id="helpImage">
-</div>
+    <div class="modal-content">
+        <span class="close" onclick="closeImage()">×</span>
+        <img id="helpImage">
+    </div>
 </div>
 
 <script>
-
 function openSidebar(){
     document.getElementById("sidebar").classList.add("open");
     document.getElementById("sidebarMask").classList.add("show");
@@ -1391,82 +1062,27 @@ function goSidebarPage(p){
     closeSidebar();
 }
 
-function calcPikachu(){
-    let v1 = getValue("pikachuV1");
-    let a1 = getValue("pikachuA1");
-    let w2 = getValue("pikachuW2");
-    let v2 = getValue("pikachuV2");
-    let w3 = getValue("pikachuW3");
-    let a3 = getValue("pikachuA3");
-
-    let watt = v1 * a1;
-    let amp = v2 > 0 ? w2 / v2 / 1.732 : 0;
-    let volt = a3 > 0 ? w3 / a3 : 0;
-
-    document.getElementById("pikachuWResult").innerText = watt.toFixed(2) + " W";
-    document.getElementById("pikachuAResult").innerText = amp.toFixed(2) + " A";
-    document.getElementById("pikachuVResult").innerText = volt.toFixed(2) + " V";
-}
-
-function clearPikachu(){
-    pikachuV1.value = pikachuA1.value = pikachuW2.value = pikachuV2.value = pikachuW3.value = pikachuA3.value = "";
-    calcPikachu();
-}
-
-
-
-function calcTurn(){
-    let motorRpm = getValue("turnMotorRpm");
-    let ratio = getValue("turnRatio");
-    let motorGear = getValue("turnMotorGear");
-    let wheelGear = getValue("turnWheelGear");
-
-    let steelRpm = 0;
-    if(ratio > 0 && wheelGear > 0){
-        steelRpm = (motorRpm / ratio) * motorGear / wheelGear;
-    }
-
-    document.getElementById("turnSteelRpmResult").innerText = steelRpm.toFixed(2);
-    document.getElementById("turnSteelRpmDisplay").innerText = steelRpm.toFixed(2);
-
-    // 第二段鋼輪 r.p.m 直接帶入第一段答案，不另外輸入
-    let dia = getValue("turnSteelDia");
-
-    let mmMin = steelRpm * dia * 3.14;
-    let mMin = mmMin / 1000;
-
-    document.getElementById("turnMmMinResult").innerText = mmMin.toFixed(2);
-    document.getElementById("turnMMinResult").innerHTML = mMin.toFixed(2) + ' M/min<span class="excel-note">(顯示值)</span>';
-}
-
-function clearTurn(){
-    turnMotorRpm.value = turnRatio.value = turnMotorGear.value = turnWheelGear.value = "";
-    turnSteelDia.value = "";
-    calcTurn();
-}
-
 function showPage(p){
+    document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
+    document.getElementById("page"+p).classList.remove("hidden");
 
-    document.querySelectorAll('.page')
-        .forEach(x=>x.classList.add('hidden'));
-
-    document.getElementById('page'+p)
-        .classList.remove('hidden');
-
-    const nav = document.getElementById('bottomNav');
-
+    const nav = document.getElementById("bottomNav");
     if(p === 8){
-        nav.style.display = 'none';
+        nav.style.display = "none";
     }else{
-        nav.style.display = 'flex';
+        nav.style.display = "flex";
     }
+}
+
+function goHome(){
+    showPage(1);
+    closeSidebar();
 }
 
 function getValue(id){
     return parseFloat(document.getElementById(id).value) || 0;
 }
 
-/* ===== calculations ===== */
 function calcRemain(){
     let od=getValue("outerDia");
     let id=getValue("innerDia");
@@ -1475,10 +1091,10 @@ function calcRemain(){
 
     let avg=((od*Math.PI)+(id*Math.PI))/2;
     let turns=l>0?t/l:0;
-    let result = avg * turns;
+    let result=avg*turns;
 
-    document.getElementById("remainResult").innerText = result.toFixed(2) + " mm";
-    document.getElementById("remainResultM").innerText = (result / 1000).toFixed(2) + " M";
+    document.getElementById("remainResult").innerText=result.toFixed(2)+" mm";
+    document.getElementById("remainResultM").innerText=(result/1000).toFixed(2)+" M";
 }
 
 function calcSkin(){
@@ -1487,64 +1103,97 @@ function calcSkin(){
     let d=getValue("skinDiameter");
 
     let turns=w>0?f/w:0;
-    let result = turns * d * Math.PI;
+    let result=turns*d*Math.PI;
 
-    document.getElementById("skinResult").innerText = result.toFixed(2) + " mm";
-    document.getElementById("skinResultM").innerText = (result / 1000).toFixed(2) + " M";
+    document.getElementById("skinResult").innerText=result.toFixed(2)+" mm";
+    document.getElementById("skinResultM").innerText=(result/1000).toFixed(2)+" M";
 }
 
 function calcTeflon(){
-    let dia = getValue("teflonDiameter");
-    let width = getValue("teflonWidth");
-    let face = getValue("teflonFace");
-    let qtys = getValue("qty");
+    let dia=getValue("teflonDiameter");
+    let width=getValue("teflonWidth");
+    let face=getValue("teflonFace");
+    let qtys=getValue("qty");
 
-    let len = 0;
-
-    if(dia > 0 && width > 0 && face > 0 && qtys > 0){
-
-        let circumference = dia * Math.PI;
-        let sheets = Math.ceil(circumference / width);
-
-        len = face * sheets * qtys;
+    let len=0;
+    if(dia>0 && width>0 && face>0 && qtys>0){
+        let circumference=dia*Math.PI;
+        let sheets=Math.ceil(circumference/width);
+        len=face*sheets*qtys;
     }
 
-    document.getElementById("teflonResult").innerText = len.toFixed(0) + " mm";
-    document.getElementById("teflonResultM").innerText = (len / 1000).toFixed(2) + " M";
+    document.getElementById("teflonResult").innerText=len.toFixed(0)+" mm";
+    document.getElementById("teflonResultM").innerText=(len/1000).toFixed(2)+" M";
 }
 
 function calcHeater(){
-    let watt = getValue("heaterWatt");
-    let qty = getValue("heaterQty");
-    let voltage = getValue("machineVoltage");
-    let phase = document.getElementById("phaseType").value;
+    let watt=getValue("heaterWatt");
+    let qty=getValue("heaterQty");
+    let voltage=getValue("machineVoltage");
+    let phase=document.getElementById("phaseType").value;
 
-    let totalWatt = watt * qty;
-    let amp = 0;
+    let totalWatt=watt*qty;
+    let amp=0;
 
-    // 清除錯誤
-    document.getElementById("heaterError").innerHTML = "";
+    document.getElementById("heaterError").innerHTML="";
 
-    // ✅ 三相檢查
-    if(phase === "3"){
+    if(phase==="3"){
         if(qty % 3 !== 0 && qty > 0){
-            document.getElementById("heaterError").innerHTML = "支數錯誤";
+            document.getElementById("heaterError").innerHTML="支數錯誤";
         }
     }
 
-    if(voltage > 0){
-        if(phase === "3"){
-            amp = totalWatt / voltage / 1.732;
+    if(voltage>0){
+        if(phase==="3"){
+            amp=totalWatt/voltage/1.732;
         }else{
-            amp = totalWatt / voltage;
+            amp=totalWatt/voltage;
         }
     }
 
-    document.getElementById("heaterTotalWatt").innerText = totalWatt;
-    document.getElementById("heaterAmpResult").innerText = amp.toFixed(2) + " A";
+    document.getElementById("heaterTotalWatt").innerText=totalWatt;
+    document.getElementById("heaterAmpResult").innerText=amp.toFixed(2)+" A";
 }
 
-/* ===== clear ===== */
+function calcPikachu(){
+    let v1=getValue("pikachuV1");
+    let a1=getValue("pikachuA1");
+    let w2=getValue("pikachuW2");
+    let v2=getValue("pikachuV2");
+    let w3=getValue("pikachuW3");
+    let a3=getValue("pikachuA3");
+
+    let watt=v1*a1;
+    let amp=v2>0?w2/v2/1.732:0;
+    let volt=a3>0?w3/a3:0;
+
+    document.getElementById("pikachuWResult").innerText=watt.toFixed(2)+" W";
+    document.getElementById("pikachuAResult").innerText=amp.toFixed(2)+" A";
+    document.getElementById("pikachuVResult").innerText=volt.toFixed(2)+" V";
+}
+
+function calcTurn(){
+    let motorRpm=getValue("turnMotorRpm");
+    let ratio=getValue("turnRatio");
+    let motorGear=getValue("turnMotorGear");
+    let wheelGear=getValue("turnWheelGear");
+
+    let steelRpm=0;
+    if(ratio>0 && wheelGear>0){
+        steelRpm=(motorRpm/ratio)*motorGear/wheelGear;
+    }
+
+    document.getElementById("turnSteelRpmResult").innerText=steelRpm.toFixed(2);
+    document.getElementById("turnSteelRpmDisplay").innerText=steelRpm.toFixed(2);
+
+    let dia=getValue("turnSteelDia");
+    let mmMin=steelRpm*dia*3.14;
+    let mMin=mmMin/1000;
+
+    document.getElementById("turnMmMinResult").innerText=mmMin.toFixed(2);
+    document.getElementById("turnMMinResult").innerHTML=mMin.toFixed(2)+' M/min<span class="excel-note">(顯示值)</span>';
+}
+
 function clearRemain(){
     outerDia.value=innerDia.value=totalThickness.value=layerThickness.value="";
     calcRemain();
@@ -1567,7 +1216,17 @@ function clearHeater(){
     calcHeater();
 }
 
-/* ===== image modal ===== */
+function clearPikachu(){
+    pikachuV1.value=pikachuA1.value=pikachuW2.value=pikachuV2.value=pikachuW3.value=pikachuA3.value="";
+    calcPikachu();
+}
+
+function clearTurn(){
+    turnMotorRpm.value=turnRatio.value=turnMotorGear.value=turnWheelGear.value="";
+    turnSteelDia.value="";
+    calcTurn();
+}
+
 function showImage(name){
     document.getElementById("helpImage").src="./images/"+name+".jpg";
     document.getElementById("imgModal").style.display="block";
@@ -1581,22 +1240,19 @@ document.getElementById("imgModal").onclick=function(e){
     if(e.target.id==="imgModal") closeImage();
 };
 
-/* auto calc */
 document.querySelectorAll("input,select").forEach(el=>{
     el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
     el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
 });
 
-const toggle = document.getElementById("themeToggle");
+const toggle=document.getElementById("themeToggle");
 
-// 讀取記憶
-if(localStorage.getItem("theme") === "dark"){
+if(localStorage.getItem("theme")==="dark"){
     document.body.classList.add("dark");
-    toggle.checked = true;
+    toggle.checked=true;
 }
 
-// 切換
-toggle.addEventListener("change", function(){
+toggle.addEventListener("change",function(){
     if(this.checked){
         document.body.classList.add("dark");
         localStorage.setItem("theme","dark");
@@ -1606,31 +1262,26 @@ toggle.addEventListener("change", function(){
     }
 });
 
-function goHome(){
-    showPage(1);
-    closeSidebar();
-}
-
 function toggleManualMenu(){
     document.getElementById("manualMenu").classList.toggle("hidden");
 }
 
+function toggleSubMenu(id){
+    document.getElementById(id).classList.toggle("hidden");
+}
+
 function openPdf(fileName){
+    const encodedPath = fileName
+        .split("/")
+        .map(part => encodeURIComponent(part))
+        .join("/");
+
     document.getElementById("pdfFrame").src =
-        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + fileName;
+        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath;
 
     showPage(8);
     closeSidebar();
 }
-
-function openDrivePdf(fileId){
-    document.getElementById("pdfFrame").src =
-        "https://drive.google.com/file/d/" + fileId + "/preview";
-
-    showPage(8);
-    closeSidebar();
-}
-    
 </script>
 
 </body>
