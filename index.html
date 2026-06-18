@@ -745,6 +745,11 @@ body.dark .submenu-category.active{
     <div id="manualCommon" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('International_list.pdf')">各國電壓參考</button>
     </div>
+	
+	 <button class="submenu-category" onclick="toggleSubMenu(this,'manualChiangly')">強力 <span class="arrow">▸</span></button>
+    <div id="manualChiangly" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('PC100.pdf')">電動缸手冊</button>
+    </div>
 
     <button class="submenu-category" onclick="toggleSubMenu(this,'manualTAIE')">台儀 TAIE <span class="arrow">▸</span></button>
     <div id="manualTAIE" class="submenu-group hidden">
@@ -791,7 +796,7 @@ body.dark .submenu-category.active{
 		<button class="submenu-category" onclick="toggleSubMenu(this,'manualOMRON')">歐姆龍 OMRON <span class="arrow">▸</span></button>
     <div id="manualOMRON" class="submenu-group hidden">
 	<button class="submenu-item" onclick="openPdf('OMRON/E5EC.pdf')">E5EC 說明書</button>
-	<button class="submenu-item" onclick="openPdf('OMRON/E5EC_Communication.pdf')">E5EC 通訊手冊</button>
+	<button class="submenu-item" onclick="openPdf('OMRON/E5CC_Communication.pdf')">E5EC 通訊手冊</button>
 	</div>
 	
 	<button class="submenu-category" onclick="toggleSubMenu(this,'manualMitsubishi')">三菱 Mitsubishi <span class="arrow">▸</span></button>
