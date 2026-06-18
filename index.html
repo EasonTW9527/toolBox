@@ -1345,16 +1345,14 @@ function toggleSubMenu(btn,id){
 }
 
 function openPdf(fileName){
+
     const encodedPath = fileName
         .split("/")
         .map(part => encodeURIComponent(part))
         .join("/");
 
-    const isDark = document.body.classList.contains("dark");
-
-document.getElementById("pdfFrame").src =
-    "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath +
-    "&theme=" + (isDark ? "dark" : "light");
+    document.getElementById("pdfFrame").src =
+        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath;
 
     showPage(8);
     closeSidebar();
