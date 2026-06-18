@@ -1273,7 +1273,17 @@ function toggleManualMenu(){
 }
 
 function toggleSubMenu(id){
-    document.getElementById(id).classList.toggle("hidden");
+
+    const target = document.getElementById(id);
+    const isOpen = !target.classList.contains("hidden");
+
+    document.querySelectorAll(".submenu-group").forEach(group=>{
+        group.classList.add("hidden");
+    });
+
+    if(!isOpen){
+        target.classList.remove("hidden");
+    }
 }
 
 function openPdf(fileName){
