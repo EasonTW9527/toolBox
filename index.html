@@ -708,7 +708,8 @@ body.dark .submenu-item:hover{
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉速換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線負載</button>
     <button class="sidebar-item" onclick="toggleManualMenu()">說明書 ▾</button>
-
+	
+<!-- 說明書選單 -->
 <div id="manualMenu" class="submenu hidden">
 
     <button class="submenu-category" onclick="toggleSubMenu('manualCommon')">共用 ▾</button>
@@ -721,18 +722,23 @@ body.dark .submenu-item:hover{
         <button class="submenu-item" onclick="openPdf('TAIE/TAIE_PID.pdf')">台儀溫控</button>
     </div>
 
-    <button class="submenu-category" onclick="toggleSubMenu('manualEUNTAY')">EUNTAY ▾</button>
+    <button class="submenu-category" onclick="toggleSubMenu('manualEUNTAY')">運泰 EUNTAY ▾</button>
     <div id="manualEUNTAY" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-2050_P_Manual.pdf')">TC-2050 標準</button>
+		
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-2050_Communication_Guide.pdf')">TC-2050 通訊</button>
+		
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_P_Manual.pdf')">TC-3050 標準</button>
+		
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_Communication_Guide.pdf')">TC-3050 通訊</button>
     </div>
 
     <button class="submenu-category" onclick="toggleSubMenu('manualYASKAWA')">安川 YASKAWA ▾</button>
     <div id="manualYASKAWA" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('YASKAWA/GA500_Manual.pdf')">GA500 說明書</button>
+		
         <button class="submenu-item" onclick="openPdf('YASKAWA/GA700_Manual.pdf')">GA700 說明書</button>
+		
         <button class="submenu-item" onclick="openPdf('YASKAWA/V1000_Manual.pdf')">V1000 說明書</button>
     </div>
 
