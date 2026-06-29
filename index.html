@@ -748,10 +748,26 @@ body.dark .submenu-category.active{
 		<button class="submenu-item" onclick="openPdf('Automatic_Cutter.pdf')">百世代裁刀</button>
     </div>
 	
+	<button class="submenu-category" onclick="toggleSubMenu(this,'manualEton')">一彤 <span class="arrow">▸</span></button>
+	 
+    <div id="manualEton" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('Eton/PN_Manual.pdf')">展開輪說明書</button>
+    </div>
+	
 	 <button class="submenu-category" onclick="toggleSubMenu(this,'manualChiangly')">強力 <span class="arrow">▸</span></button>
 	 
     <div id="manualChiangly" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('Chiangly/PC100.pdf')">電動缸手冊</button>
+    </div>
+	
+	<button class="submenu-category" onclick="toggleSubMenu(this,'manualHes')">皇尚 <span class="arrow">▸</span></button>
+	 
+    <div id="manualHes" class="submenu-group hidden">
+        <button class="submenu-item" onclick="openPdf('Hes/HD118AL_Manual.pdf')">HD118AL說明書</button>
+		
+		<button class="submenu-item" onclick="openPdf('Hes/HS5206B_Manual.pdf')">HS5206B說明書</button>
+		
+		<button class="submenu-item" onclick="openPdf('Hes/LYS02A-1_Manual.pdf')">LYS02A-1說明書</button>
     </div>
 	
 	 <button class="submenu-category" onclick="toggleSubMenu(this,'manualGuanPiin')">冠品 <span class="arrow">▸</span></button>
@@ -778,6 +794,8 @@ body.dark .submenu-category.active{
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_P_Manual.pdf')">TC-3050 標準</button>
 		
         <button class="submenu-item" onclick="openPdf('EUNTAY/TC-3050_Communication_Guide.pdf')">TC-3050 通訊</button>
+		
+		<button class="submenu-item" onclick="openPdf('EUNTAY/PDSManual.pdf')">PDS 說明書</button>
     </div>
 
     <button class="submenu-category" onclick="toggleSubMenu(this,'manualYASKAWA')">安川 YASKAWA <span class="arrow">▸</span></button>
