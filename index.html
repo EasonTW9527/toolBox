@@ -735,6 +735,22 @@ body.dark #videoTitle{
     height:calc(100% - 60px);
 }
 
+.youtube-link{
+    display:flex;
+    align-items:center;
+    margin-left:8px;
+}
+
+.youtube-icon{
+    width:30px;
+    height:30px;
+    transition:.2s;
+}
+
+.youtube-icon:hover{
+    transform:scale(1.15);
+
+
 
 </style>
 </head>
@@ -865,8 +881,20 @@ body.dark #videoTitle{
 <!-- header -->
 <div class="header">
     <button class="menu-btn" onclick="openSidebar()">☰</button>
-    <img src="./images/logo.jpg" class="logo" onclick="goHome()" style="cursor:pointer;">
-    Yessing 小工具
+
+    <img src="./images/logo.jpg"
+         class="logo"
+         onclick="goHome()"
+         style="cursor:pointer;">
+
+    <span>Yessing 小工具</span>
+
+    <a href="https://www.youtube.com/channel/UCAS_UvN6h6G_9gbT3vYNuoQ"
+       target="_blank"
+       class="youtube-link">
+        <img src="./images/YouTube.png" class="youtube-icon">
+    </a>
+
     <label class="switch">
         <input type="checkbox" id="themeToggle">
         <span class="slider">
