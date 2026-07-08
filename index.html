@@ -731,6 +731,9 @@ body.dark #videoTitle{
     color:white;
 }
 
+#videoPlayer{
+    height:calc(100% - 60px);
+}
 
 
 </style>
@@ -1147,7 +1150,7 @@ body.dark #videoTitle{
 <div id="page8" class="page hidden">
     <div class="pdf-wrap">
 	
-	    <h2 id="Sensor校正" class="hidden"></h2>
+	    <h2 id="videoTitle" class="hidden"></h2>
 
         <iframe id="pdfFrame" class="pdf-viewer"></iframe>
 
@@ -1434,6 +1437,27 @@ function toggleSubMenu(btn,id){
     }
 }
 
+function openPdf(fileName){
+
+    // 隱藏影片標題
+    document.getElementById("videoTitle").classList.add("hidden");
+
+    // 顯示 PDF、隱藏影片
+    document.getElementById("pdfFrame").classList.remove("hidden");
+    document.getElementById("videoPlayer").classList.add("hidden");
+
+    const encodedPath = fileName
+        .split("/")
+        .map(part => encodeURIComponent(part))
+        .join("/");
+
+    document.getElementById("pdfFrame").src =
+        "./pdfjs/web/viewer.html?file=/toolBox/pdf/" + encodedPath;
+
+    showPage(8);
+    closeSidebar();
+}
+
 function openVideo(fileName, title){
 
     document.getElementById("pdfFrame").classList.add("hidden");
@@ -1441,24 +1465,8 @@ function openVideo(fileName, title){
     const video = document.getElementById("videoPlayer");
     const videoTitle = document.getElementById("videoTitle");
 
-    video.classList.remove("hidden");
-
     videoTitle.innerText = title;
     videoTitle.classList.remove("hidden");
-
-    video.src = "./video/" + encodeURI(fileName);
-    video.load();
-    video.play();
-
-    showPage(8);
-    closeSidebar();
-}
-
-function openVideo(fileName){
-
-    document.getElementById("pdfFrame").classList.add("hidden");
-
-    const video = document.getElementById("videoPlayer");
 
     video.classList.remove("hidden");
     video.src = "./video/" + encodeURI(fileName);
