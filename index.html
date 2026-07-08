@@ -758,7 +758,7 @@ body.dark .submenu-category.active{
 	 
     <div id="manualChiangly" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('Chiangly/PC100.pdf')">電動缸手冊</button>
-		
+				
 		<button class="submenu-item" onclick="openVideo('Sensor calibration.mp4')">校正Sensor步驟</button>
 		
     </div>
@@ -1133,7 +1133,15 @@ body.dark .submenu-category.active{
 <!-- PAGE 8 -->
 <div id="page8" class="page hidden">
     <div class="pdf-wrap">
-        <iframe id="pdfFrame" src="" class="pdf-viewer"></iframe>
+
+        <iframe id="pdfFrame" class="pdf-viewer"></iframe>
+
+        <video id="videoPlayer"
+               class="pdf-viewer hidden"
+               controls
+               autoplay>
+        </video>
+
     </div>
 </div>
 
@@ -1413,6 +1421,9 @@ function toggleSubMenu(btn,id){
 
 function openPdf(fileName){
 
+    document.getElementById("pdfFrame").classList.remove("hidden");
+    document.getElementById("videoPlayer").classList.add("hidden");
+
     const encodedPath = fileName
         .split("/")
         .map(part => encodeURIComponent(part))
@@ -1427,9 +1438,17 @@ function openPdf(fileName){
 
 function openVideo(fileName){
 
-    const encodedPath = encodeURIComponent(fileName);
+    document.getElementById("pdfFrame").classList.add("hidden");
 
-    window.open("./video/" + encodedPath, "_blank");
+    const video = document.getElementById("videoPlayer");
+
+    video.classList.remove("hidden");
+    video.src = "./video/" + encodeURI(fileName);
+    video.load();
+    video.play();
+
+    showPage(8);
+    closeSidebar();
 }
 
 
