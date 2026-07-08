@@ -758,6 +758,9 @@ body.dark .submenu-category.active{
 	 
     <div id="manualChiangly" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('Chiangly/PC100.pdf')">電動缸手冊</button>
+		
+		<button class="submenu-item" onclick="openVideo('Sensor calibration.mp4')">校正Sensor步驟</button>
+		
     </div>
 	
 	<button class="submenu-category" onclick="toggleSubMenu(this,'manualHes')">皇尚 <span class="arrow">▸</span></button>
@@ -1421,6 +1424,15 @@ function openPdf(fileName){
     showPage(8);
     closeSidebar();
 }
+
+function openVideo(fileName){
+
+    const encodedPath = encodeURIComponent(fileName);
+
+    window.open("./video/" + encodedPath, "_blank");
+}
+
+
 </script>
 
 </body>
