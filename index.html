@@ -749,8 +749,7 @@ body.dark #videoTitle{
 
 .youtube-icon:hover{
     transform:scale(1.15);
-
-
+}
 
 </style>
 </head>
@@ -888,7 +887,7 @@ body.dark #videoTitle{
 	<button class="submenu-category" onclick="toggleSubMenu(this,'manualMitsubishi')">三菱 Mitsubishi <span class="arrow">▸</span></button>
     <div id="manualMitsubishi" class="submenu-group hidden">
 	<button class="submenu-item" onclick="openPdf('Mitsubishi/MR-J4_B_TYPE.pdf')">MR-J4_B 伺服驅動資料</button>
-	<button class="submenu-item" onclick="openPdf('Mitsubishi/MR-JE_A.pdf.pdf')">MR-JE_A 伺服放大資料</button>
+	<button class="submenu-item" onclick="openPdf('Mitsubishi/MR-JE_A.pdf')">MR-JE_A 伺服放大資料</button>
 	</div>
 	
 	<button class="submenu-category" onclick="toggleSubMenu(this,'manualMinply')">正綱 Minply(張力控制器) <span class="arrow">▸</span></button>
@@ -897,7 +896,6 @@ body.dark #videoTitle{
 	<button class="submenu-item" onclick="openPdf('Minply/TCD030T.pdf')">TCD030T 手冊</button>
 	</div>
 
-</div>
 </div>
 </div>
 <!-- header -->
@@ -914,7 +912,7 @@ body.dark #videoTitle{
     <a href="https://www.youtube.com/channel/UCAS_UvN6h6G_9gbT3vYNuoQ"
        target="_blank"
        class="youtube-link">
-        <img src="./images/YouTube.png" class="youtube-icon">
+        <img src="./images/YouTube.png" class="youtube-icon" alt="YouTube">
     </a>
 
     <label class="switch">
@@ -1240,6 +1238,23 @@ function closeSidebar(){
     document.getElementById("sidebarMask").classList.remove("show");
 }
 
+function stopVideo(){
+    const video = document.getElementById("videoPlayer");
+    if(video){
+        video.pause();
+        video.currentTime = 0;
+        video.removeAttribute("src");
+        video.load();
+    }
+}
+
+function clearPdf(){
+    const pdfFrame = document.getElementById("pdfFrame");
+    if(pdfFrame){
+        pdfFrame.src = "";
+    }
+}
+
 function goSidebarPage(p){
     showPage(p);
     closeSidebar();
@@ -1258,6 +1273,8 @@ function showPage(p){
 }
 
 function goHome(){
+    stopVideo();
+    clearPdf();
     showPage(1);
     closeSidebar();
 }
@@ -1513,19 +1530,22 @@ function toggleGlueMenu(btn){
 
     if(menu.classList.contains("hidden")){
         arrow.textContent = "▸";
+        btn.classList.remove("active");
     }else{
         arrow.textContent = "▾";
+        btn.classList.add("active");
     }
 }
 
 function openPdf(fileName){
 
-    // 隱藏影片標題
+    // 停止並隱藏影片
+    stopVideo();
     document.getElementById("videoTitle").classList.add("hidden");
-
-    // 顯示 PDF、隱藏影片
-    document.getElementById("pdfFrame").classList.remove("hidden");
     document.getElementById("videoPlayer").classList.add("hidden");
+
+    // 顯示 PDF
+    document.getElementById("pdfFrame").classList.remove("hidden");
 
     const encodedPath = fileName
         .split("/")
@@ -1541,6 +1561,7 @@ function openPdf(fileName){
 
 function openVideo(fileName, title){
 
+    clearPdf();
     document.getElementById("pdfFrame").classList.add("hidden");
 
     const video = document.getElementById("videoPlayer");
@@ -1552,7 +1573,7 @@ function openVideo(fileName, title){
     video.classList.remove("hidden");
     video.src = "./video/" + encodeURI(fileName);
     video.load();
-    video.play();
+    video.play().catch(()=>{});
 
     showPage(8);
     closeSidebar();
