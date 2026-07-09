@@ -768,6 +768,28 @@ body.dark #videoTitle{
     <button class="sidebar-item" onclick="goSidebarPage(5)">功率換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉速換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線負載</button>
+	<button class="sidebar-item" onclick="toggleGlueMenu(this)">膠水曲線表 <span class="arrow">▸</span>
+</button>
+
+<div id="glueMenu" class="submenu hidden">
+
+    <button class="submenu-item" onclick="openPdf('PUR/PUR2701.pdf')">
+        PUR2701 溫度曲線表
+    </button>
+	
+	<button class="submenu-item" onclick="openPdf('PUR/PUR215.pdf')">
+        PUR215 溫度曲線表
+    </button>
+	
+	<button class="submenu-item" onclick="openPdf('PUR/PUR2502U.pdf')">
+        PUR2502U 溫度曲線表
+    </button>
+	
+	<button class="submenu-item" onclick="openPdf('PUR/PUR2505.pdf')">
+        PUR2505 溫度曲線表
+    </button>
+	
+</div>
     <button class="sidebar-item" onclick="toggleManualMenu(this)">說明書 <span class="arrow">▸</span></button>
 	
 <!-- 說明書選單 -->
@@ -777,7 +799,7 @@ body.dark #videoTitle{
     <div id="manualCommon" class="submenu-group hidden">
         <button class="submenu-item" onclick="openPdf('International_list.pdf')">各國電壓參考</button>
 		
-		<button class="submenu-item" onclick="openPdf('Automatic_Cutter.pdf')">百世代裁刀</button>
+		<button class="submenu-item" onclick="openPdf('Automatic_Cutter.pdf')">百世興裁刀</button>
     </div>
 	
 	<button class="submenu-category" onclick="toggleSubMenu(this,'manualEton')">一彤(展開輪) <span class="arrow">▸</span></button>
@@ -1462,6 +1484,37 @@ function toggleSubMenu(btn,id){
         target.classList.remove("hidden");
         btn.querySelector(".arrow").textContent = "▾";
         btn.classList.add("active");
+    }
+}
+
+let glueUnlocked = false;
+
+function toggleGlueMenu(btn){
+
+    const menu = document.getElementById("glueMenu");
+    const arrow = btn.querySelector(".arrow");
+
+    if(!glueUnlocked){
+        const password = prompt("請輸入密碼");
+
+        if(password === null){
+            return;
+        }
+
+        if(password !== "84512883"){
+            alert("密碼錯誤");
+            return;
+        }
+
+        glueUnlocked = true;
+    }
+
+    menu.classList.toggle("hidden");
+
+    if(menu.classList.contains("hidden")){
+        arrow.textContent = "▸";
+    }else{
+        arrow.textContent = "▾";
     }
 }
 
