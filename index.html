@@ -834,6 +834,78 @@ body.dark .password-cancel{
     color:white;
 }
 
+
+/* 膠水覆蓋率 */
+.coverage-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+.coverage-card{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:15px;
+    background:#fafafa;
+}
+.coverage-card h3{
+    margin:0 0 12px;
+    text-align:center;
+    font-size:22px;
+}
+.coverage-formula{
+    background:#fff3cd;
+    color:#222;
+    padding:12px;
+    border-radius:8px;
+    margin-top:12px;
+    text-align:center;
+    line-height:1.7;
+    font-weight:bold;
+}
+.coverage-result{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+.coverage-result-box{
+    background:#ff3333;
+    color:white;
+    border-radius:10px;
+    padding:14px 8px;
+    text-align:center;
+}
+.coverage-result-label{
+    font-size:17px;
+    font-weight:bold;
+}
+.coverage-result-value{
+    margin-top:6px;
+    font-size:28px;
+    font-weight:bold;
+    word-break:break-word;
+}
+.lock-icon{
+    margin-left:6px;
+    font-size:17px;
+}
+body.dark .coverage-card{
+    background:#222;
+    border-color:#555;
+}
+body.dark .coverage-formula{
+    background:#fff3cd;
+    color:#222 !important;
+}
+@media (max-width:768px){
+    .coverage-grid{
+        grid-template-columns:1fr;
+    }
+    .coverage-result-value{
+        font-size:24px;
+    }
+}
+
 </style>
 </head>
 
@@ -850,6 +922,7 @@ body.dark .password-cancel{
     <button class="sidebar-item" onclick="goSidebarPage(5)">功率換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(6)">轉速換算</button>
     <button class="sidebar-item" onclick="goSidebarPage(7)">電線負載</button>
+    <button class="sidebar-item" onclick="requestCoverageAccess()">膠水覆蓋率 <span class="lock-icon">🔒</span></button>
 	<button class="sidebar-item" onclick="toggleGlueMenu(this)">膠水曲線表 <span class="arrow">▸</span>
 </button>
 
@@ -1295,6 +1368,82 @@ body.dark .password-cancel{
     </div>
 </div>
 
+
+<!-- PAGE 9 -->
+<div id="page9" class="page hidden">
+    <div class="card">
+        <h2>膠水覆蓋率</h2>
+
+        <div class="coverage-grid">
+            <div class="coverage-card">
+                <h3>圓點算法</h3>
+
+                <label>圓點直徑 (mm)</label>
+                <input id="roundDiameter" type="text" inputmode="decimal" pattern="[0-9.]*">
+
+                <label>點數（1"點數）</label>
+                <input id="roundDotCount" type="text" inputmode="decimal" pattern="[0-9.]*" value="1156">
+
+                <label>深度 (mm)</label>
+                <input id="roundDepth" type="text" inputmode="decimal" pattern="[0-9.]*">
+
+                <div class="coverage-formula">
+                    半徑(cm)＝直徑(mm) ÷ 20<br>
+                    覆蓋率(%)＝〔半徑² × π × 點數 ÷ 6.4516〕× 100<br>
+                    深度(μm)＝深度(mm) × 1000<br>
+                    全塗量＝覆蓋率比例 × 深度(μm) × 35%
+                </div>
+
+                <div class="coverage-result">
+                    <div class="coverage-result-box">
+                        <div class="coverage-result-label">覆蓋率</div>
+                        <div id="roundCoverageResult" class="coverage-result-value">0.00 %</div>
+                    </div>
+                    <div class="coverage-result-box">
+                        <div class="coverage-result-label">全塗量</div>
+                        <div id="roundCoatResult" class="coverage-result-value">0.00 g/m²</div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="clearRoundCoverage()">清除資料</button>
+            </div>
+
+            <div class="coverage-card">
+                <h3>四方點算法</h3>
+
+                <label>邊長 (mm)</label>
+                <input id="squareSide" type="text" inputmode="decimal" pattern="[0-9.]*">
+
+                <label>點數（1"點數）</label>
+                <input id="squareDotCount" type="text" inputmode="decimal" pattern="[0-9.]*" value="1156">
+
+                <label>深度 (mm)</label>
+                <input id="squareDepth" type="text" inputmode="decimal" pattern="[0-9.]*">
+
+                <div class="coverage-formula">
+                    邊長(cm)＝邊長(mm) ÷ 10<br>
+                    覆蓋率(%)＝〔邊長(cm)² × 點數 ÷ 6.4516〕× 100<br>
+                    深度(μm)＝深度(mm) × 1000<br>
+                    全塗量＝覆蓋率比例 × 深度(μm) × 35%
+                </div>
+
+                <div class="coverage-result">
+                    <div class="coverage-result-box">
+                        <div class="coverage-result-label">覆蓋率</div>
+                        <div id="squareCoverageResult" class="coverage-result-value">0.00 %</div>
+                    </div>
+                    <div class="coverage-result-box">
+                        <div class="coverage-result-label">全塗量</div>
+                        <div id="squareCoatResult" class="coverage-result-value">0.00 g/m²</div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="clearSquareCoverage()">清除資料</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- PAGE 8 -->
 <div id="page8" class="page hidden">
     <div class="pdf-wrap">
@@ -1340,6 +1489,23 @@ body.dark .password-cancel{
         <div class="password-actions">
             <button type="button" class="password-ok" onclick="confirmPassword()">確定</button>
             <button type="button" class="password-cancel" onclick="closePasswordModal()">取消</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- coverage password modal -->
+<div id="coveragePasswordModal" class="password-modal">
+    <div class="password-box">
+        <div class="password-title">管理員說</div>
+        <div class="password-body">
+            <label for="coveragePasswordInput">請輸入密碼</label>
+            <input id="coveragePasswordInput" type="password" autocomplete="off">
+            <div id="coveragePasswordError" class="password-error"></div>
+        </div>
+        <div class="password-actions">
+            <button type="button" class="password-ok" onclick="confirmCoveragePassword()">確定</button>
+            <button type="button" class="password-cancel" onclick="closeCoveragePasswordModal()">取消</button>
         </div>
     </div>
 </div>
@@ -1493,6 +1659,65 @@ function calcTurn(){
     document.getElementById("turnMMinResult").innerHTML=mMin.toFixed(2)+' M/min<span class="excel-note">(顯示值)</span>';
 }
 
+
+function calcCoverage(){
+    const roundDiameterMm = getValue("roundDiameter");
+    const roundDots = getValue("roundDotCount");
+    const roundDepthMm = getValue("roundDepth");
+
+    const roundRadiusCm = roundDiameterMm / 20;
+    const roundCoverageRatio =
+        (roundRadiusCm * roundRadiusCm * Math.PI * roundDots) / 6.4516;
+    const roundCoveragePercent = roundCoverageRatio * 100;
+    const roundDepthUm = roundDepthMm * 1000;
+    const roundCoat = roundCoverageRatio * roundDepthUm * 0.35;
+
+    const roundCoverageEl = document.getElementById("roundCoverageResult");
+    const roundCoatEl = document.getElementById("roundCoatResult");
+
+    if(roundCoverageEl){
+        roundCoverageEl.innerText = roundCoveragePercent.toFixed(2) + " %";
+    }
+    if(roundCoatEl){
+        roundCoatEl.innerText = roundCoat.toFixed(2) + " g/m²";
+    }
+
+    const squareSideMm = getValue("squareSide");
+    const squareDots = getValue("squareDotCount");
+    const squareDepthMm = getValue("squareDepth");
+
+    const squareSideCm = squareSideMm / 10;
+    const squareCoverageRatio =
+        (squareSideCm * squareSideCm * squareDots) / 6.4516;
+    const squareCoveragePercent = squareCoverageRatio * 100;
+    const squareDepthUm = squareDepthMm * 1000;
+    const squareCoat = squareCoverageRatio * squareDepthUm * 0.35;
+
+    const squareCoverageEl = document.getElementById("squareCoverageResult");
+    const squareCoatEl = document.getElementById("squareCoatResult");
+
+    if(squareCoverageEl){
+        squareCoverageEl.innerText = squareCoveragePercent.toFixed(2) + " %";
+    }
+    if(squareCoatEl){
+        squareCoatEl.innerText = squareCoat.toFixed(2) + " g/m²";
+    }
+}
+
+function clearRoundCoverage(){
+    document.getElementById("roundDiameter").value = "";
+    document.getElementById("roundDotCount").value = "1156";
+    document.getElementById("roundDepth").value = "";
+    calcCoverage();
+}
+
+function clearSquareCoverage(){
+    document.getElementById("squareSide").value = "";
+    document.getElementById("squareDotCount").value = "1156";
+    document.getElementById("squareDepth").value = "";
+    calcCoverage();
+}
+
 function clearRemain(){
     outerDia.value=innerDia.value=totalThickness.value=layerThickness.value="";
     calcRemain();
@@ -1540,8 +1765,8 @@ document.getElementById("imgModal").onclick=function(e){
 };
 
 document.querySelectorAll("input,select").forEach(el=>{
-    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
-    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();});
+    el.addEventListener("input",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();calcCoverage();});
+    el.addEventListener("change",()=>{calcRemain();calcSkin();calcTeflon();calcHeater();calcPikachu();calcTurn();calcCoverage();});
 });
 
 const toggle=document.getElementById("themeToggle");
@@ -1687,6 +1912,70 @@ document.getElementById("passwordModal").addEventListener("click",function(e){
     }
 });
 
+
+let coverageUnlocked = false;
+const COVERAGE_PASSWORD_HASH =
+    "cfbd2849df24dc7bab30f220d5bf50fb34e4a2171b8b54482b7115b84a179155";
+
+function requestCoverageAccess(){
+    if(coverageUnlocked){
+        goSidebarPage(9);
+        return;
+    }
+
+    const modal = document.getElementById("coveragePasswordModal");
+    const input = document.getElementById("coveragePasswordInput");
+    const error = document.getElementById("coveragePasswordError");
+
+    error.innerText = "";
+    input.value = "";
+    modal.classList.add("show");
+    setTimeout(()=>input.focus(),100);
+}
+
+function closeCoveragePasswordModal(){
+    document.getElementById("coveragePasswordModal").classList.remove("show");
+}
+
+async function sha256Text(value){
+    const data = new TextEncoder().encode(value);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(byte => byte.toString(16).padStart(2,"0"))
+        .join("");
+}
+
+async function confirmCoveragePassword(){
+    const input = document.getElementById("coveragePasswordInput");
+    const error = document.getElementById("coveragePasswordError");
+    const inputHash = await sha256Text(input.value);
+
+    if(inputHash !== COVERAGE_PASSWORD_HASH){
+        error.innerText = "密碼錯誤";
+        input.select();
+        return;
+    }
+
+    coverageUnlocked = true;
+    closeCoveragePasswordModal();
+    goSidebarPage(9);
+}
+
+document.getElementById("coveragePasswordModal").addEventListener("click",function(e){
+    if(e.target.id === "coveragePasswordModal"){
+        closeCoveragePasswordModal();
+    }
+});
+
+document.getElementById("coveragePasswordInput").addEventListener("keydown",function(e){
+    if(e.key === "Enter"){
+        confirmCoveragePassword();
+    }
+    if(e.key === "Escape"){
+        closeCoveragePasswordModal();
+    }
+});
+
 function stopVideo(){
     const video = document.getElementById("videoPlayer");
     if(video){
@@ -1740,6 +2029,9 @@ function openVideo(fileName, title){
     showPage(8);
     closeSidebar();
 }
+
+
+calcCoverage();
 
 
 </script>
