@@ -1604,6 +1604,17 @@ function showPage(p){
 
 function goHome(){
     stopVideo();
+
+    const pdfFrame = document.getElementById("pdfFrame");
+    const imagePage = document.getElementById("imagePage");
+    const imageViewer = document.getElementById("imagePageViewer");
+
+    pdfFrame.src = "";
+    pdfFrame.classList.add("hidden");
+
+    imagePage.classList.add("hidden");
+    imageViewer.removeAttribute("src");
+
     showPage(1);
     closeSidebar();
 }
