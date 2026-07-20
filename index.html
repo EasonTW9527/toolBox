@@ -1949,17 +1949,24 @@ function closePasswordModal(){
     glueButton = null;
 }
 
-function confirmPassword(){
+const GLUE_PASSWORD_HASH =
+"8d3c30c60ec4e8f8fd761f7a522dd1e0d6f9ec23c4fd8f64f7f2a57c61d8d69c";
+
+async function confirmPassword(){
+
     const input = document.getElementById("passwordInput");
     const error = document.getElementById("passwordError");
 
-    if(input.value !== "84512883"){
+    const inputHash = await sha256Text(input.value);
+
+    if(inputHash !== GLUE_PASSWORD_HASH){
         error.innerText = "密碼錯誤";
         input.select();
         return;
     }
 
     glueUnlocked = true;
+
     document.getElementById("passwordModal").classList.remove("show");
 
     if(glueButton){
