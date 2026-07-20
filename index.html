@@ -1794,35 +1794,52 @@ function clearSquareCoverage(){
 }
 
 function clearRemain(){
-    outerDia.value=innerDia.value=totalThickness.value=layerThickness.value="";
+    document.getElementById("outerDia").value = "";
+    document.getElementById("innerDia").value = "";
+    document.getElementById("totalThickness").value = "";
+    document.getElementById("layerThickness").value = "";
     calcRemain();
 }
 
 function clearSkin(){
-    faceLength.value=skinWidth.value=skinDiameter.value="";
+    document.getElementById("faceLength").value = "";
+    document.getElementById("skinWidth").value = "";
+    document.getElementById("skinDiameter").value = "";
     calcSkin();
 }
 
 function clearTeflon(){
-    teflonDiameter.value=teflonWidth.value=teflonFace.value=qty.value="";
+    document.getElementById("teflonDiameter").value = "";
+    document.getElementById("teflonWidth").value = "";
+    document.getElementById("teflonFace").value = "";
+    document.getElementById("qty").value = "";
     calcTeflon();
 }
 
 function clearHeater(){
-    heaterWatt.value=heaterQty.value="";
-    machineVoltage.value=380;
-    phaseType.value=3;
+    document.getElementById("heaterWatt").value = "";
+    document.getElementById("heaterQty").value = "";
+    document.getElementById("machineVoltage").value = "380";
+    document.getElementById("phaseType").value = "3";
     calcHeater();
 }
 
 function clearPikachu(){
-    pikachuV1.value=pikachuA1.value=pikachuW2.value=pikachuV2.value=pikachuW3.value=pikachuA3.value="";
+    document.getElementById("pikachuV1").value = "";
+    document.getElementById("pikachuA1").value = "";
+    document.getElementById("pikachuW2").value = "";
+    document.getElementById("pikachuV2").value = "";
+    document.getElementById("pikachuW3").value = "";
+    document.getElementById("pikachuA3").value = "";
     calcPikachu();
 }
 
 function clearTurn(){
-    turnMotorRpm.value=turnRatio.value=turnMotorGear.value=turnWheelGear.value="";
-    turnSteelDia.value="";
+    document.getElementById("turnMotorRpm").value = "";
+    document.getElementById("turnRatio").value = "";
+    document.getElementById("turnMotorGear").value = "";
+    document.getElementById("turnWheelGear").value = "";
+    document.getElementById("turnSteelDia").value = "";
     calcTurn();
 }
 
@@ -1904,7 +1921,14 @@ function toggleSubMenu(btn,id){
 }
 
 let glueUnlocked = false;
+let coverageUnlocked = false;
 let glueButton = null;
+
+const GLUE_PASSWORD_HASH =
+"b102a3a1da0a84f6e17fc2d6e4aa8d02a43006e1763fd5636a5d153a2b01498f";
+
+const COVERAGE_PASSWORD_HASH =
+"cfbd2849df24dc7bab30f220d5bf50fb34e4a2171b8b54482b7115b84a179155";
 
 function toggleGlueMenu(btn){
 
@@ -1992,16 +2016,6 @@ document.getElementById("passwordModal").addEventListener("click",function(e){
         closePasswordModal();
     }
 });
-
-
-let glueUnlocked = false;
-let coverageUnlocked = false;
-
-const GLUE_PASSWORD_HASH =
-"8d3c30c60ec4e8f8fd761f7a522dd1e0d6f9ec23c4fd8f64f7f2a57c61d8d69c";
-
-const COVERAGE_PASSWORD_HASH =
-"cfbd2849df24dc7bab30f220d5bf50fb34e4a2171b8b54482b7115b84a179155";
 
 function requestCoverageAccess(){
     if(coverageUnlocked){
