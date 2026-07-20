@@ -1949,8 +1949,7 @@ function closePasswordModal(){
     glueButton = null;
 }
 
-const GLUE_PASSWORD_HASH =
-"8d3c30c60ec4e8f8fd761f7a522dd1e0d6f9ec23c4fd8f64f7f2a57c61d8d69c";
+
 
 async function confirmPassword(){
 
@@ -1995,9 +1994,14 @@ document.getElementById("passwordModal").addEventListener("click",function(e){
 });
 
 
+let glueUnlocked = false;
 let coverageUnlocked = false;
+
+const GLUE_PASSWORD_HASH =
+"8d3c30c60ec4e8f8fd761f7a522dd1e0d6f9ec23c4fd8f64f7f2a57c61d8d69c";
+
 const COVERAGE_PASSWORD_HASH =
-    "cfbd2849df24dc7bab30f220d5bf50fb34e4a2171b8b54482b7115b84a179155";
+"cfbd2849df24dc7bab30f220d5bf50fb34e4a2171b8b54482b7115b84a179155";
 
 function requestCoverageAccess(){
     if(coverageUnlocked){
